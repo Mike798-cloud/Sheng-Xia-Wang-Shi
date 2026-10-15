@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>讯聊 Web 版</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #d9e2f0; padding-top: 10px; }
+  .qq-shell {
+    width: 980px; max-width: 98%; margin: 0 auto;
+    border: 1px solid #2b5aa8;
+    background: #f3f7fc;
+    box-shadow: 3px 3px 10px rgba(0,0,0,.25);
+    display: table; table-layout: fixed;
+  }
+  /* 顶部蓝色标题栏 */
+  .qq-titlebar {
+    background: linear-gradient(#3a8bdf, #0d4f9e);
+    color: #fff; padding: 6px 12px;
+    font-family: "Microsoft YaHei", sans-serif; font-size: 14px;
+  }
+  .qq-titlebar .win-btns { float: right; font-size: 12px; }
+  .qq-titlebar .win-btns span {
+    display: inline-block; width: 18px; height: 16px; line-height: 14px;
+    text-align: center; background: #2b6cb8; border: 1px solid #6fa3dd; margin-left: 3px;
+    cursor: pointer;
+  }
+  /* 左侧好友列表 */
+  .qq-left {
+    width: 200px; background: #eef4fc; border-right: 1px solid #c3d4ea;
+    padding: 8px 0; vertical-align: top;
+  }
+  .group { margin-bottom: 2px; }
+  .group-head {
+    padding: 5px 10px; font-size: 13px; cursor: pointer;
+    font-family: "Microsoft YaHei", sans-serif;
+    background: #dce8f8; border-top: 1px solid #c3d4ea; border-bottom: 1px solid #c3d4ea;
+    user-select: none;
+  }
+  .group-head:hover { background: #cfe0f5; }
+  .group-head .arrow { display: inline-block; width: 12px; color: #4a6a9a; }
+  .contact {
+    padding: 5px 12px 5px 22px; font-size: 13px; cursor: pointer;
+    color: #333;
+  }
+  .contact:hover { background: #d8e6f8; }
+  .contact.active { background: #b9d3f2; }
+  .contact .c-avatar {
+    display: inline-block; width: 20px; height: 20px; line-height: 18px;
+    text-align: center; background: #fff; border: 1px solid #9ab4d8;
+    font-size: 11px; margin-right: 5px; color: #5a7aa8;
+  }
+  .contact .off { color: #999; }
+  .group-body { display: block; }
+  .group.collapsed .group-body { display: none; }
+  /* 右侧聊天区 */
+  .qq-right { padding: 0; vertical-align: top; }
+  .chat-head {
+    background: #dce8f8; border-bottom: 1px solid #c3d4ea;
+    padding: 6px 12px; font-size: 13px; font-family: "Microsoft YaHei", sans-serif;
+  }
+  .chat-head .weiyu-link {
+    float: right; font-size: 12px;
+  }
+  .chat-log {
+    height: 460px; overflow-y: auto; padding: 12px; background: #fff;
+  }
+  .msg { margin-bottom: 10px; }
+  .msg .who { font-size: 11px; color: #888; margin-bottom: 2px; }
+  .bubble {
+    display: inline-block; max-width: 60%;
+    padding: 6px 10px; font-size: 13px; line-height: 1.8;
+    border: 1px solid #c9d8ec; background: #f4f8ff; border-radius: 4px;
+  }
+  .msg.me { text-align: right; }
+  .msg.me .bubble { background: #e2f2d9; border-color: #b5d9a5; }
+  .sys-line {
+    text-align: center; font-size: 11px; color: #999; margin: 10px 0;
+  }
+  .failed-mark {
+    color: #d9463a; font-weight: bold; margin-right: 4px; cursor: pointer;
+    font-size: 13px;
+  }
+  .failed-note { color: #999; font-size: 11px; margin-top: 2px; }
+  /* 底部输入区 */
+  .chat-input-bar { background: #eef4fc; border-top: 1px solid #c3d4ea; padding: 6px 10px; }
+  .chat-input-bar textarea {
+    width: 100%; height: 56px; border: 1px solid #9ab4d8; padding: 4px;
+    font-size: 13px; font-family: "宋体", SimSun, serif;
+  }
+  .emo-panel {
+    display: none; background: #fff; border: 1px solid #9ab4d8;
+    padding: 4px 6px; font-size: 13px; margin-bottom: 4px; cursor: default;
+  }
+  .emo-panel span { cursor: pointer; margin-right: 8px; }
+  .hidden-panel { display: none; }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '聊天记录里，妈妈提过一个生日。';</script>
+
+<div id="iebar-box"></div>
+
+<div class="qq-shell">
+  <div class="qq-titlebar">
+    讯聊 Web 版 V2.0 —— 欢迎回来，栀栀
+    <span class="win-btns"><span title="最小化">_</span><span title="关闭" onclick="alert('讯聊网页版将在关闭页面后断开连接。')">×</span></span>
+  </div>
+  <div style="display:table;width:100%;">
+    <!-- 左侧分组 -->
+    <div class="qq-left" style="display:table-cell;">
+      <div class="group" id="grp-class">
+        <div class="group-head" onclick="toggleGroup('grp-class')"><span class="arrow">▾</span>同学 (1)</div>
+        <div class="group-body">
+          <div class="contact" data-panel="panel-zhou" onclick="showPanel('panel-zhou', this)">
+            <span class="c-avatar">周</span><span class="off">周子浩（离线）</span>
+          </div>
+        </div>
+      </div>
+      <div class="group" id="grp-family">
+        <div class="group-head" onclick="toggleGroup('grp-family')"><span class="arrow">▾</span>家人 (1)</div>
+        <div class="group-body">
+          <div class="contact active" data-panel="panel-mom" onclick="showPanel('panel-mom', this)">
+            <span class="c-avatar">妈</span><span class="off">妈妈·苏晚琴（离线）</span>
+          </div>
+        </div>
+      </div>
+      <div class="group collapsed" id="grp-stranger">
+        <div class="group-head" onclick="toggleGroup('grp-stranger')"><span class="arrow">▸</span>陌生人 (1)</div>
+        <div class="group-body">
+          <div class="contact" data-panel="panel-unknown" onclick="showPanel('panel-unknown', this)">
+            <span class="c-avatar">周</span><span class="off">周子浩（离线）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧聊天区 -->
+    <div class="qq-right" style="display:table-cell;">
+
+      <!-- 妈妈面板（默认显示） -->
+      <div id="panel-mom" class="chat-panel">
+        <div class="chat-head">
+          与「妈妈·苏晚琴」的聊天记录
+          <a class="weiyu-link" href="../weiyu/index.html" title="进入对方微语主页">主页：晚琴的小日子 →</a>
+        </div>
+        <div class="chat-log">
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-03-03 07:12</div><span class="bubble">慢点儿走，别跟小朋友一起疯跑。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-03-05 18:40</div><span class="bubble">今天降温，厚外套放你书包里了。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-03-18 19:05</div><span class="bubble">奶奶送了定胜糕，药记得吃，别偷偷扔了。</span></div>
+          <div class="msg me"><div class="who">我 2012-03-19 06:58</div><span class="bubble">药太苦了……能不能不吃了</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-03-19 07:00</div><span class="bubble">不行。苦也要吃，吃了才好得快。</span></div>
+          <div class="msg me"><div class="who">我 2012-04-22 21:13</div><span class="bubble">妈，什么时候能去青岛看海啊</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-04-23 06:47</div><span class="bubble">等你病好了就去，说话算话。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-05-02 16:55</div><span class="bubble">放学早点转来，汤在锅里温着。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-06-12 07:30</div><span class="bubble">六月十二你就十岁了，想要什么生日礼物？</span></div>
+          <div class="msg me"><div class="who">我 2012-06-12 07:31</div><span class="bubble">想去看海！！！别的什么都不要</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-07-23 22:10</div><span class="bubble">花卷找到了就好，你别跟着着急。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-07-30 20:36</div><span class="bubble">相册密码不就是你生日嘛，笨囡囡，又忘？</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-08-05 09:20</div><span class="bubble">今天医生说指标稳住了，好事。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-08-10 20:02</div><span class="bubble">护士姐姐说你今天画画很乖。</span></div>
+          <div class="msg"><div class="who">妈妈·苏晚琴 2012-08-14 21:44</div><span class="bubble">听话，再睡几天，醒了我们就去海边。</span></div>
+          <div class="sys-line">您的好友已离线</div>
+        </div>
+        <div class="chat-input-bar">
+          <div class="emo-panel" id="emo-panel">
+            <span onclick="insertEmo(':)')">:)</span><span onclick="insertEmo(':|')">:|</span><span onclick="insertEmo(':(')">:(</span><span onclick="insertEmo('^_^')">^_^</span><span onclick="insertEmo('T_T')">T_T</span>
+          </div>
+          <textarea id="chat-input" placeholder="输入消息，发送给离线的好友……"></textarea>
+          <div style="margin-top:4px;">
+            <button class="btn btn-sm" onclick="toggleEmo()">表情</button>
+            <button class="btn btn-blue btn-sm" style="float:right;" onclick="sendMsg()">发送(S)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 周子浩面板 -->
+      <div id="panel-zhou" class="chat-panel hidden-panel">
+        <div class="chat-head">
+          与「周子浩」的聊天记录
+        </div>
+        <div class="chat-log">
+          <div class="msg me"><div class="who">我 2012-03-08 17:22</div><span class="bubble">耗子你把我画纸撕了！！</span></div>
+          <div class="msg"><div class="who">周子浩 2012-03-08 17:25</div><span class="bubble">我不是故意的……</span></div>
+          <div class="msg me"><div class="who">我 2012-03-08 17:26</div><span class="bubble">我再也不理你了！</span></div>
+          <div class="msg"><div class="who">周子浩 2012-03-09 06:50</div><span class="bubble">我给你带辣条，你别生气了。</span></div>
+          <div class="msg me"><div class="who">我 2012-03-09 07:01</div><span class="bubble">……两包。</span></div>
+          <div class="msg"><div class="who">周子浩 2012-04-09 18:30</div><span class="bubble">昨天春游你跑那么快干嘛，等等我们</span></div>
+          <div class="msg"><div class="who">周子浩 2012-05-15 19:44</div><span class="bubble">等你好了我们运动会报接力，肯定拿第一！</span></div>
+          <div class="msg me"><div class="who">我 2012-05-15 19:46</div><span class="bubble">好！说话算话！</span></div>
+          <div class="msg"><div class="who">周子浩 2012-06-12 18:03</div><span class="bubble">生日快乐！礼物放你抽屉里了</span></div>
+          <div class="msg"><div class="who">周子浩 2012-07-24 20:15</div><span class="bubble">花卷找到了？太好了</span></div>
+          <div class="msg"><div class="who">周子浩 2012-08-02 19:00</div><span class="bubble">你怎么不上线</span></div>
+          <div class="msg"><div class="who">周子浩 2012-08-09 18:47</div><span class="bubble">作业借你抄，开学给我</span></div>
+          <div class="msg"><div class="who">周子浩 2012-08-14 20:31</div><span class="bubble">你什么时候回来上课</span></div>
+          <div class="sys-line">您的好友已离线</div>
+        </div>
+        <div class="chat-input-bar">
+          <div class="emo-panel" id="emo-panel-z">
+            <span onclick="insertEmo(':)')">:)</span><span onclick="insertEmo(':|')">:|</span><span onclick="insertEmo(':(')">:(</span><span onclick="insertEmo('^_^')">^_^</span><span onclick="insertEmo('T_T')">T_T</span>
+          </div>
+          <textarea id="chat-input-z" placeholder="输入消息，发送给离线的好友……"></textarea>
+          <div style="margin-top:4px;">
+            <button class="btn btn-sm" onclick="toggleEmo('emo-panel-z')">表情</button>
+            <button class="btn btn-blue btn-sm" style="float:right;" onclick="sendMsg()">发送(S)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 陌生人面板：2013 发送失败消息 -->
+      <div id="panel-unknown" class="chat-panel hidden-panel">
+        <div class="chat-head">
+          与「周子浩」的聊天记录
+        </div>
+        <div class="chat-log">
+          <div class="sys-line">以下消息发送于 2013-08-17</div>
+          <div class="msg">
+            <div class="who">周子浩 2013-08-17 22:40</div>
+            <span class="failed-mark" title="重发" onclick="alert('对方账号已于2012年8月注销。')">！</span><span class="bubble">栀栀，我考上一中初中部了，之前说好了一起的。你在那边能跑了吧？</span>
+            <div class="failed-note">消息发送失败：对方账号不存在或已注销。</div>
+          </div>
+          <div class="sys-line">您的好友已离线</div>
+        </div>
+        <div class="chat-input-bar">
+          <textarea placeholder="输入消息，发送给离线的好友……"></textarea>
+          <div style="margin-top:4px;">
+            <button class="btn btn-blue btn-sm" style="float:right;" onclick="sendMsg()">发送(S)</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+<script>
+function toggleGroup(id) {
+  var g = document.getElementById(id);
+  g.className = (g.className.indexOf('collapsed') >= 0) ? g.className.replace(' collapsed', '') : g.className + ' collapsed';
+  var arrow = g.querySelector('.arrow');
+  if (arrow) arrow.textContent = (g.className.indexOf('collapsed') >= 0) ? '▸' : '▾';
+}
+function showPanel(pid, el) {
+  var panels = document.querySelectorAll('.chat-panel');
+  for (var i = 0; i < panels.length; i++) panels[i].className = 'chat-panel hidden-panel';
+  document.getElementById(pid).className = 'chat-panel';
+  var cs = document.querySelectorAll('.contact');
+  for (var j = 0; j < cs.length; j++) cs[j].className = cs[j].className.replace(' active', '');
+  if (el) el.className += ' active';
+}
+function toggleEmo(id) {
+  var p = document.getElementById(id || 'emo-panel');
+  p.style.display = (p.style.display === 'block') ? 'none' : 'block';
+}
+function insertEmo(e) {
+  var ta = document.querySelector('#panel-mom:not(.hidden-panel) #chat-input, #panel-zhou:not(.hidden-panel) #chat-input-z');
+  if (!ta) return;
+  ta.value += e;
+  ta.focus();
+}
+function sendMsg() {
+  alert('您的好友已离线。');
+}
+</script>
+</body>
+</html>

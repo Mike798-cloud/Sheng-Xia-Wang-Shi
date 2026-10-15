@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>晚琴的小日子 - 微语</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #f0f2f5; }
+  .wy-top {
+    background: #fff; border-bottom: 1px solid #d8d8d8; padding: 8px 0;
+  }
+  .wy-logo { font-family: "Microsoft YaHei", sans-serif; font-size: 20px; color: #f26c4f; font-weight: bold; }
+  .wy-top .search-box { float: right; margin-top: 2px; }
+  .wy-layout { display: table; width: 980px; margin: 12px auto; table-layout: fixed; }
+  .wy-side { width: 200px; background: #fff; border: 1px solid #e0e0e0; padding: 14px; vertical-align: top; }
+  .wy-main { width: 560px; background: #fff; border: 1px solid #e0e0e0; margin: 0 10px; vertical-align: top; }
+  .wy-right { width: 200px; vertical-align: top; }
+  .me-avatar {
+    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto;
+    background: radial-gradient(circle at 35% 30%, #ffd9a0, #f0a060);
+    border: 2px solid #fff; box-shadow: 0 0 3px #bbb;
+    text-align: center; line-height: 60px; color: #fff; font-size: 26px;
+    font-family: "Microsoft YaHei", sans-serif;
+  }
+  .me-name { text-align: center; font-weight: bold; font-size: 15px; margin-top: 8px; font-family: "Microsoft YaHei", sans-serif; }
+  .me-bio { text-align: center; color: #999; font-size: 12px; margin-top: 4px; }
+  .me-stats { display: table; width: 100%; margin-top: 10px; text-align: center; border-top: 1px solid #eee; padding-top: 8px; font-size: 12px; color: #666; }
+  .me-stats div { display: table-cell; }
+  .me-stats b { display: block; font-size: 16px; color: #333; }
+  /* 单条微博 */
+  .post { padding: 14px 16px; border-bottom: 1px solid #eee; }
+  .post .time { color: #999; font-size: 11px; margin-top: 4px; }
+  .post .body { line-height: 1.9; font-size: 14px; }
+  .post .acts { margin-top: 6px; font-size: 12px; }
+  .post .acts a { margin-right: 14px; }
+  .post .acts .like-count { color: #f26c4f; }
+  .comment-box {
+    display: none; margin-top: 6px; background: #f7f7f7; padding: 6px 8px;
+    font-size: 12px; color: #999;
+  }
+  /* 转发链条（彩蛋6） */
+  .repost-chain {
+    margin-top: 8px; background: #fafafa; border: 1px solid #eee; padding: 8px 10px;
+  }
+  .rc-avatar {
+    display: inline-block; width: 24px; height: 24px; line-height: 22px; text-align: center;
+    background: #eee; border: 1px solid #ccc; color: #999; font-size: 11px;
+    margin-right: 5px; vertical-align: middle;
+  }
+  .rc-head { font-size: 12px; color: #666; }
+  .rc-body { margin-top: 4px; font-size: 13px; }
+  /* 右侧边栏 */
+  .box { background: #fff; border: 1px solid #e0e0e0; padding: 10px 12px; margin-bottom: 10px; }
+  .box h3 { font-size: 13px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 6px; color: #444; }
+  .box li { list-style: none; font-size: 12px; line-height: 2.1; }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '六月十二，是什么日子？';</script>
+
+<div id="iebar-box"></div>
+
+<div class="wy-top">
+  <div class="wrap">
+    <span class="wy-logo">微语</span>
+    <span class="search-box">
+      <input class="txt" size="20" placeholder="搜索微语"> <button class="btn btn-sm dead" onclick="alert('搜索服务已关闭。')">搜索</button>
+    </span>
+  </div>
+</div>
+
+<div class="wy-layout">
+  <!-- 左：个人资料 -->
+  <div class="wy-side">
+    <div class="me-avatar">晚</div>
+    <div class="me-name">晚琴的小日子</div>
+    <div class="me-bio">一个普通妈妈的碎碎念</div>
+    <div class="me-stats">
+      <div><b>37</b>微博</div>
+      <div><b>128</b>关注</div>
+      <div><b>96</b>粉丝</div>
+    </div>
+  </div>
+
+  <!-- 中：时间线 -->
+  <div class="wy-main">
+
+    <div class="post">
+      <div class="body">今天油价又涨了，上下班开车都心疼。</div>
+      <div class="time">2011-12-05 18:22</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">0</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">2</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">栀栀今天画了只猫，歪歪扭扭的，已经贴冰箱上了。</div>
+      <div class="time">2012-02-14 20:41</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">3</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">5</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">奶奶送的青团，甜得齁，小丫头倒吃了俩。</div>
+      <div class="time">2012-03-28 19:15</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">1</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">3</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">又发烧了，半夜跑急诊。什么时候能安安稳稳睡一晚上。</div>
+      <div class="time">2012-04-15 03:47</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">4</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">6</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">今天医生说的话，听得我心揪。出来在楼梯间坐了半小时。</div>
+      <div class="time">2012-05-09 11:30</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">2</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">4</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">六月十二，栀栀满十周岁了。小丫头许愿要去看海。</div>
+      <div class="time">2012-06-12 19:58</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">8</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">12</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">
+        转发了一条：<br>
+        【童心计划】滨城儿童医院儿童心脏病救助公益行动启动，符合条件的家庭可携带病历到院咨询，详见<a href="../hospital/index.html">救助公示页</a>。家里有困难的，别一个人扛着。
+      </div>
+      <div class="time">2012-07-22 21:06</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">5</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">9</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+    </div>
+
+    <div class="post">
+      <div class="body">等你醒过来，我们就去青岛看海。</div>
+      <div class="time">2012-08-16 02:11</div>
+      <div class="acts">
+        <a class="dead" href="javascript:void(0)">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">0</span></a>
+        <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">0</span></a>
+      </div>
+      <div class="comment-box">存档页面，评论功能已关闭。</div>
+
+      <!-- 彩蛋6：匿名"好"字转发 -->
+      <div class="repost-chain">
+        <div class="rc-head">
+          <span class="rc-avatar">***</span>
+          <a class="dead" href="javascript:void(0)">***</a> 转发了「晚琴的小日子」的微博
+          <div class="tiny">该用户注册时间：2013年8月 · 转发时间：2013-08-20 23:41</div>
+        </div>
+        <div class="rc-body">好</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 右：热门话题 / 推荐关注 -->
+  <div class="wy-right">
+    <div class="box">
+      <h3>热门话题</h3>
+      <ul>
+        <li><a class="dead" href="javascript:void(0)">#滨城明起降温#</a></li>
+        <li><a class="dead" href="javascript:void(0)">#暑假作业你写完了吗#</a></li>
+        <li><a class="dead" href="javascript:void(0)">#老小区改造#</a></li>
+        <li><a class="dead" href="javascript:void(0)">#中考分数线预测#</a></li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>推荐关注</h3>
+      <ul>
+        <li><a class="dead" href="javascript:void(0)">滨城晚报</a></li>
+        <li><a class="dead" href="javascript:void(0)">向日葵论坛</a></li>
+        <li><a class="dead" href="javascript:void(0)">市儿童医院</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+<script>
+function toggleLike(el) {
+  var c = el.querySelector('.like-count');
+  var n = parseInt(c.textContent, 10) + 1;
+  c.textContent = n;
+  el.onclick = function () {
+    var m = parseInt(c.textContent, 10) - 1;
+    c.textContent = m;
+    el.onclick = toggleLike.bind(null, el);
+  };
+}
+function toggleComment(el) {
+  var box = el.parentNode.parentNode.querySelector('.comment-box');
+  box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

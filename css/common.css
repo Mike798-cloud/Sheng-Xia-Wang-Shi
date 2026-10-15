@@ -1,0 +1,381 @@
+/* ============================================================
+   《盛夏往事》全站公共样式 —— 2012 年中国地方网站视觉规范
+   表格布局 / 宋体正文 / 雅黑标题 / 蓝紫链接 / 渐变凸起按钮
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "宋体", SimSun, "Songti SC", "STSong", serif;
+  font-size: 14px;
+  color: #111;
+  background: #abb4c4;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, .yahei, th, .btn, input, button, select, textarea {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", sans-serif;
+}
+
+a { color: #0033cc; text-decoration: underline; }
+a:visited { color: #663399; }
+a:hover { color: #c00; text-decoration: underline; }
+a.plain { color: #0033cc; text-decoration: none; }
+a.plain:hover { color: #c00; text-decoration: underline; }
+
+img { border: 0; }
+
+/* ---------- 顶部 IE 提示条 ---------- */
+.ie-bar {
+  background: #ffffe1;
+  border-bottom: 1px solid #d9c98a;
+  color: #6b5d2b;
+  font-size: 12px;
+  text-align: center;
+  padding: 3px 8px;
+  font-family: "宋体", SimSun, serif;
+}
+
+/* ---------- 居中容器 ---------- */
+.wrap { width: 980px; margin: 0 auto; }
+.wrap-narrow { width: 760px; margin: 0 auto; }
+
+/* ---------- 渐变凸起按钮（2012 经典立体按钮） ---------- */
+.btn {
+  display: inline-block;
+  padding: 3px 16px;
+  font-size: 13px;
+  color: #000;
+  background: linear-gradient(#fdfdfd, #d8e4f4);
+  border: 1px solid #7f9db9;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 #fff;
+  line-height: 1.6;
+}
+.btn:hover { background: linear-gradient(#ffffff, #e6f0fc); color: #000; }
+.btn:active { background: #c4d8ef; box-shadow: inset 1px 1px 3px #8aa6c4; }
+.btn-green { background: linear-gradient(#fbfdfb, #dcefd6); border-color: #7aa874; }
+.btn-green:hover { background: linear-gradient(#ffffff, #eaf8e6); }
+.btn-blue { background: linear-gradient(#f5f9ff, #cfe0f7); border-color: #5b86c5; }
+.btn-sm { padding: 1px 8px; font-size: 12px; }
+
+/* ---------- 输入框 ---------- */
+input.txt, select.txt, textarea.txt {
+  border: 1px solid #7f9db9;
+  padding: 3px 5px;
+  font-size: 14px;
+  font-family: "宋体", SimSun, serif;
+  background: #fff;
+}
+
+/* ---------- 通用页头 ---------- */
+.site-header { background: #fff; }
+.site-logo { font-family: "Microsoft YaHei", "微软雅黑", sans-serif; }
+
+/* ---------- 页脚 ---------- */
+.site-footer {
+  background: #f4f4f0;
+  border-top: 2px solid #8a8a8a;
+  text-align: center;
+  color: #555;
+  font-size: 12px;
+  padding: 12px 10px 18px;
+  margin-top: 14px;
+  line-height: 2;
+}
+.site-footer a { color: #0033cc; }
+.site-footer .tech-mail {
+  margin-top: 6px;
+  color: #b9b9b9;
+  font-size: 11px;
+}
+.site-footer .tech-mail a { color: #b9b9b9; text-decoration: none; }
+
+/* ---------- 凸起功能条（设为首页 / 加入收藏 / 打印） ---------- */
+.toolbar {
+  background: #edf1f7;
+  border-top: 1px solid #c3cddb;
+  border-bottom: 1px solid #c3cddb;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.toolbar a { margin-right: 14px; }
+
+/* ---------- 计数器 ---------- */
+.counter {
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+.counter .digit {
+  display: inline-block;
+  background: #111;
+  color: #39ff6b;
+  padding: 1px 4px;
+  border: 1px solid #000;
+}
+.counter-thanks {
+  color: #c00;
+  font-weight: bold;
+  font-size: 13px;
+  margin-left: 8px;
+  font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+}
+
+/* ---------- 右侧浮动广告 ---------- */
+.float-ad {
+  position: fixed;
+  right: 12px;
+  top: 140px;
+  width: 108px;
+  z-index: 50;
+  background: #fff;
+  border: 1px solid #99a;
+  text-align: center;
+  font-size: 12px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,.25);
+}
+.float-ad .fa-head {
+  background: #d9463a;
+  color: #fff;
+  font-size: 12px;
+  padding: 1px 0;
+  cursor: pointer;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+.float-ad .fa-body { padding: 6px 5px 8px; }
+.float-ad .fa-body .pic {
+  width: 90px; height: 60px;
+  margin: 0 auto 4px;
+  display: block;
+}
+@media (max-width: 1200px) { .float-ad { display: none; } }
+
+/* ---------- 弹窗广告 ---------- */
+.popup-mask {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0);
+  z-index: 80;
+  display: none;
+}
+.popup-win {
+  position: fixed;
+  left: 50%; top: 50%;
+  width: 360px;
+  transform: translate(-50%, -50%);
+  background: #ece9d8;
+  border: 1px solid #0831d9;
+  box-shadow: 4px 4px 14px rgba(0,0,0,.4);
+  z-index: 81;
+  font-size: 13px;
+}
+.popup-titlebar {
+  background: linear-gradient(#0a64d6, #0a46a8);
+  color: #fff;
+  padding: 4px 8px;
+  font-family: "Microsoft YaHei", sans-serif;
+  font-size: 13px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.popup-titlebar .x {
+  cursor: pointer;
+  background: #d44;
+  border: 1px solid #fff;
+  width: 18px; height: 18px; line-height: 16px;
+  text-align: center; font-weight: bold;
+  display: inline-block;
+}
+.popup-body { padding: 14px 16px; background: #fff; }
+.popup-body .ad-title { font-size: 17px; font-weight: bold; color: #c00; text-align: center; margin-bottom: 8px; font-family: "Microsoft YaHei", sans-serif; }
+.popup-body .ad-pic { width: 100%; height: 120px; object-fit: cover; margin: 6px 0; }
+.popup-body .hotline-tiny { color: #999; font-size: 10px; text-align: center; margin-top: 6px; }
+.popup-body .ad-normal { line-height: 1.9; }
+
+/* ---------- 软引导（10分钟无进展） ---------- */
+.soft-hint {
+  position: fixed;
+  left: 14px; bottom: 12px;
+  color: #b9b9b9;
+  font-size: 12px;
+  z-index: 40;
+  opacity: 0;
+  transition: opacity 2s;
+  pointer-events: none;
+  max-width: 260px;
+}
+.soft-hint.show { opacity: 0.85; }
+
+/* ---------- 通用分隔线 ---------- */
+.dashed { border: 0; border-top: 1px dashed #999; }
+.solid { border: 0; border-top: 1px solid #bbb; }
+
+/* ---------- 小字号说明 ---------- */
+.gray { color: #777; }
+.tiny { font-size: 11px; color: #999; }
+.red { color: #c00; }
+.center { text-align: center; }
+.mt8 { margin-top: 8px; } .mt16 { margin-top: 16px; } .mb8 { margin-bottom: 8px; }
+
+/* ---------- 简单表格 ---------- */
+table.grid { border-collapse: collapse; width: 100%; }
+table.grid th, table.grid td { border: 1px solid #aaa; padding: 5px 8px; }
+table.grid th { background: #e8edf5; }
+
+/* ---------- 横向滚动表格容器（窄屏用） ---------- */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 8px;
+}
+.table-scroll table { margin-bottom: 0; }
+
+/* ---------- 老浏览器窗口下兼容 ---------- */
+@media (max-width: 1024px) {
+  .wrap, .wrap-narrow { width: 96%; }
+}
+
+/* ============================================================
+   移动端 / 窄屏（<768px）：全站流式改造
+   桌面端 1024×768 与宽屏布局不受影响
+   ============================================================ */
+@media (max-width: 768px) {
+  body { font-size: 15px; line-height: 1.75; }
+
+  /* 容器全部流式 */
+  .wrap, .wrap-narrow { width: 94%; }
+  .site-footer { padding-left: 12px; padding-right: 12px; }
+
+  /* 顶部 IE 条允许换行 */
+  .ie-bar { font-size: 11px; padding: 3px 10px; }
+
+  /* 弹窗不挡内容、可正常关闭 */
+  .popup-win { width: 92%; max-width: 92%; }
+  .popup-body { padding: 12px 14px; }
+  .popup-body .ad-pic { height: 150px; }
+  .popup-titlebar { font-size: 12px; }
+  .popup-titlebar .x { flex: 0 0 auto; }
+
+  /* 软引导收窄，避免占满 */
+  .soft-hint { max-width: 70%; font-size: 12px; }
+
+  /* 多列表格：保持最小可读宽度，窄屏横向滑动而非压挤 */
+  .table-scroll table { min-width: 600px; width: 100%; }
+  .table-scroll table.aid { min-width: 640px; }
+  .table-scroll table.board-table { min-width: 620px; }
+  .table-scroll table.dir-table { min-width: 600px; }
+
+  /* ---------- 档案馆入口 ---------- */
+  .archive-top { padding: 10px 14px; }
+  .archive-top h1 { font-size: 19px; display: block; margin-bottom: 6px; }
+  .archive-top nav { display: block; line-height: 2.1; }
+  .archive-top nav a { margin-right: 14px; white-space: nowrap; }
+  .crumb { padding: 6px 12px; }
+  .panel { padding: 14px 13px; margin: 12px auto; }
+
+  /* ---------- 晚报 ---------- */
+  .paper .mast-top { font-size: 11px; line-height: 1.8; }
+  .mast-top .right { float: none; display: block; }
+  .mast-head { padding: 14px 6px 8px; }
+  .mast-head h1 { font-size: 34px; letter-spacing: 8px; text-indent: 8px; }
+  .mast-nav { padding: 6px 10px; font-size: 13px; line-height: 2.2; }
+  .mast-nav .mini-search { float: none; display: block; margin-top: 6px; }
+  .mast-nav .mini-search input { width: 60%; }
+  .section { padding: 14px 13px; }
+  /* 报内表格改纵向堆叠 */
+  .y2012only table, .y2013only table, #minsheng table, #campus table { display: block; }
+  .y2012only table tr, .y2013only table tr, #minsheng table tr, #campus table tr { display: block; }
+  .y2012only table td, .y2013only table td, #minsheng table td, #campus table td {
+    display: block; width: 100% !important; padding: 4px 0;
+  }
+  .news-img { float: none !important; margin: 8px 0 !important; }
+  .news-img img { width: 100%; height: auto; }
+  .middle-seam { border: 0; padding: 8px 0; }
+  .essay { padding: 13px 14px; }
+  .essay .annotation {
+    position: static; transform: none; width: auto; display: none;
+    margin: 8px 0 4px; padding: 6px 8px; background: #fbf2e6;
+  }
+  body.y2013 .essay .annotation { display: block; }
+  .friend-links { line-height: 2.2; }
+  .dead-features { text-align: left; line-height: 2.2; }
+
+  /* ---------- 论坛板块列表 ---------- */
+  .tb-header .wrap { display: block; }
+  .tb-logo { font-size: 25px; }
+  .tb-topbar { float: none; display: block; margin-top: 8px; }
+  .tb-nav { line-height: 2.2; }
+  .board-table { font-size: 14px; }
+  .board-table td { padding: 8px 9px; }
+
+  /* ---------- 论坛长帖 / 宠物帖楼层：纵向堆叠 ---------- */
+  .floor { display: block !important; }
+  .floor[style*="none"] { display: none !important; }
+  .floor .u-col, .floor .c-col {
+    display: block !important; width: 100% !important;
+    padding: 10px 12px;
+  }
+  .floor .u-col { border-right: 0; border-bottom: 1px solid #d8e6c8; }
+  .post-body img.draw { max-width: 100%; }
+  .pager { line-height: 2.4; }
+  .pager a, .pager span.cur { margin-bottom: 5px; }
+
+  /* ---------- 讯聊 ---------- */
+  .qq-shell { width: 96% !important; max-width: 96% !important; }
+  .qq-shell > div[style*="display: table"],
+  .qq-shell > div { display: block !important; }
+  .qq-left, .qq-right { display: block !important; width: 100% !important; }
+  .qq-left { border-right: 0; border-bottom: 1px solid #c3d4ea; }
+  .chat-log { height: 360px; padding: 10px; }
+  .bubble { max-width: 82%; }
+  .chat-input-bar textarea { font-size: 16px !important; }
+  .group-head { min-height: 38px; }
+  .contact { min-height: 40px; padding-top: 8px; padding-bottom: 8px; }
+
+  /* ---------- 微语 ---------- */
+  .wy-layout { display: block !important; width: 94% !important; }
+  .wy-side, .wy-main, .wy-right {
+    display: block; width: 100% !important; margin: 0 0 12px;
+  }
+  .wy-top .search-box { float: none; display: block; margin-top: 8px; }
+  .wy-top .search-box input { width: 60%; }
+
+  /* ---------- 相册 ---------- */
+  .album-page { width: 94% !important; padding: 12px 12px 18px; }
+  .gate { width: 94% !important; margin: 30px auto; padding: 24px 18px; }
+  .gate input#gate-pwd { font-size: 16px !important; height: 34px; }
+  .photo-table, .photo-table tbody, .photo-table tr { display: block; }
+  .photo-table td { display: block; width: 100% !important; }
+  .photo-frame img { max-width: 100%; }
+  .wrist-overlay { font-size: clamp(5px, 2.15cqw, 11px); }
+
+  /* ---------- 医院 ---------- */
+  .hosp-header { padding: 12px 14px; }
+  .hosp-header h1 { font-size: 21px; }
+  .hosp-nav { padding: 0 6px; white-space: nowrap; overflow-x: auto; }
+  .hosp-nav a { padding: 8px 12px; }
+  .hosp-body { width: 94% !important; padding: 14px 13px; }
+  .hosp-side { float: none !important; width: auto !important; margin: 0 0 14px; }
+
+  /* ---------- 千度首页 ---------- */
+  .logo-area { margin-top: 46px; }
+  .logo-text { font-size: 44px; }
+  .search-area, .hot-area, .disclaimer { width: 92% !important; }
+  .search-area input#kw { font-size: 16px !important; }
+
+  /* ---------- 千度结果页 ---------- */
+  .result-head { flex-wrap: wrap; gap: 8px; }
+  .head-form { flex: 1; margin-left: 0; min-width: 0; }
+  .head-form input { width: auto; flex: 1; min-width: 0; font-size: 16px !important; }
+
+  /* ---------- 404 ---------- */
+  .err-panel { margin: 36px auto; padding: 34px 18px; width: 92%; }
+  .err-code { font-size: 58px; }
+  .err-panel .btn { margin-bottom: 10px; }
+
+  /* ---------- 喇叭开关位置不遮挡内容 ---------- */
+  #speaker-btn { right: 12px; bottom: 12px; width: 46px; height: 46px; }
+}

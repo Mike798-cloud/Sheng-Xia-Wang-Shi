@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>千度搜索 - 结果</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #fff; }
+  .result-head { border-bottom: 1px solid #c9c9c9; padding: 12px 0 10px; }
+  .mini-logo { font-size: 26px; font-weight: bold; letter-spacing: 2px; text-decoration: none; }
+  .mini-logo .c1 { color: #2319dc; } .mini-logo .c2 { color: #e92322; }
+  .head-form { display: flex; margin-left: 24px; }
+  .head-form input { width: 480px; height: 28px; border: 1px solid #7f9db9; border-right: 0; padding: 2px 8px; font-size: 14px; }
+  .head-form .btn-go { height: 30px; padding: 0 18px; }
+  .meta { color: #999; font-size: 12px; margin: 10px 0 6px; }
+  .result-item { margin-bottom: 18px; }
+  .result-item .title { font-size: 17px; }
+  .result-item .title a { text-decoration: underline; }
+  .result-item .snippet { color: #333; font-size: 13px; margin-top: 2px; }
+  .result-item .url { color: #008000; font-size: 12px; margin-top: 1px; font-style: normal; }
+  .result-item .date { color: #999; font-size: 12px; }
+  .pager { margin: 26px 0 10px; font-size: 13px; }
+  .pager a, .pager .cur {
+    display: inline-block; padding: 3px 10px; margin-right: 5px;
+    border: 1px solid #c9c9c9; background: #f5f8fd; text-decoration: none; color: #0033cc;
+  }
+  .pager .cur { background: #2319dc; color: #fff; border-color: #2319dc; }
+  .related { margin-top: 26px; border-top: 1px dashed #ccc; padding-top: 12px; }
+  .related h4 { font-size: 14px; color: #333; margin-bottom: 8px; }
+  .related a {
+    display: inline-block; background: #f2f5fa; border: 1px solid #d4dce8;
+    padding: 3px 10px; margin: 0 8px 8px 0; font-size: 12px; text-decoration: none; color: #0033cc;
+  }
+  .related a:hover { background: #e6f0fc; }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '想找论坛？试试搜「花卷走丢」。';</script>
+<div id="iebar-box"></div>
+
+<div class="wrap">
+  <div class="result-head" style="display:flex; align-items:center;">
+    <a class="mini-logo" href="index.html"><span class="c1">千</span><span class="c2">度</span></a>
+    <form class="head-form" action="result.html" method="get">
+      <input id="kw" name="q">
+      <button class="btn btn-blue btn-go">千度一下</button>
+    </form>
+  </div>
+
+  <div class="meta" id="meta"></div>
+  <div id="results"></div>
+  <div class="pager" id="pager"></div>
+
+  <div class="related" id="related">
+    <h4>相关搜索：</h4>
+    <div id="related-list"></div>
+  </div>
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+<script src="../js/search-data.js"></script>
+<script>
+(function () {
+  var per = 8;
+  var params = new URLSearchParams(location.search);
+  var q = (params.get('q') || '').trim();
+  var p = parseInt(params.get('p'), 10) || 1;
+  if (!q) { location.replace('index.html'); return; }
+
+  document.getElementById('kw').value = q;
+
+  var m = SearchDB.match(q);
+  var list = [];
+  if (m.result) list.push(m.result);
+  list = list.concat(SearchDB.GENERIC);
+  /* 沈知栀单搜：第2页开头插入无效死快照 */
+  if (m.special && m.special.snapshot) list.splice(8, 0, SearchDB.RESULTS.SNAPSHOT);
+
+  var pages = Math.ceil(list.length / per);
+  if (p < 1) p = 1;
+  if (p > pages) p = pages;
+  var start = (p - 1) * per;
+  var slice = list.slice(start, start + per);
+
+  document.getElementById('meta').textContent =
+    '千度为您找到相关结果约 ' + list.length + ' 个（用时 0.' + (100 + list.length * 7 % 800) + ' 秒），关键词：' + q;
+
+  var box = document.getElementById('results');
+  slice.forEach(function (item, idx) {
+    var div = document.createElement('div');
+    div.className = 'result-item';
+    var titleHref = item.href || 'javascript:void(0)';
+    var titleCls = item.dead ? ' class="dead"' : '';
+    var date = '2012-' + String(1 + (start + idx) % 7).padStart(2, '0') + '-' + String(1 + (start + idx) % 27).padStart(2, '0');
+    div.innerHTML =
+      '<div class="title"><a' + titleCls + ' href="' + titleHref + '">' + item.t + '</a></div>' +
+      '<div class="snippet">' + item.s + '</div>' +
+      '<div><cite class="url">' + item.u + '</cite>　<span class="date">' + date + '</span></div>';
+    box.appendChild(div);
+  });
+
+  /* 分页 */
+  function pageLink(n, label) {
+    return '<a href="result.html?q=' + encodeURIComponent(q) + '&p=' + n + '">' + label + '</a>';
+  }
+  var pg = document.getElementById('pager');
+  var html = '';
+  if (p > 1) html += pageLink(p - 1, '上一页');
+  for (var i = 1; i <= pages; i++) {
+    html += (i === p) ? '<span class="cur">' + i + '</span>' : pageLink(i, i);
+  }
+  if (p < pages) html += pageLink(p + 1, '下一页');
+  pg.innerHTML = html;
+
+  /* 相关搜索 */
+  var rels = (m.special && m.special.snapshot)
+    ? SearchDB.RELATED_SPECIAL.concat(SearchDB.RELATED_GENERIC.slice(0, 3))
+    : SearchDB.RELATED_GENERIC;
+  var rl = document.getElementById('related-list');
+  rels.forEach(function (word) {
+    var a = document.createElement('a');
+    a.href = 'result.html?q=' + encodeURIComponent(word);
+    a.textContent = word;
+    rl.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

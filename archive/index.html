@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>存档说明</title>
+<style>
+  body {
+    background: #fff;
+    color: #111;
+    font-family: "宋体", SimSun, "Songti SC", "STSong", serif;
+    font-size: 15px;
+    line-height: 2.1;
+    margin: 0;
+    padding: 60px 20px 80px;
+  }
+  .note-page { max-width: 640px; margin: 0 auto; }
+  .date-top { font-size: 12px; color: #999; margin-bottom: 30px; }
+  .note-page p { margin: 0 0 1.4em; }
+  .sea-pic { margin: 36px 0 10px; }
+  .sea-pic img { width: 280px; border: 1px solid #ccc; display: block; }
+  .sea-cap { font-size: 11px; color: #999; margin-top: 4px; }
+  .back-link { margin-top: 40px; font-size: 12px; }
+  .back-link a { color: #0033cc; }
+  .back-link a:hover { color: #c00; }
+</style>
+</head>
+<body>
+<script>
+  window.DEPTH = 1;
+  window.ENABLE_POPUP = false;
+</script>
+
+<div class="note-page">
+  <div class="date-top">2013.08.17 爸爸留</div>
+
+  <p>你好，不知道你是怎么找到这里的。</p>
+  <p>这些是我照着我女儿以前上过的网站、发过的帖子，一点点拼起来的镜像。她走了以后，原来的论坛要关了，账号要注销了，帖子慢慢就沉底找不到了。</p>
+  <p>我怕她的东西就这么没了，就把当年的网页都爬了下来，把她的痕迹都嵌了进去。</p>
+  <p>她叫沈知栀，小名叫栀栀，今年十岁，最喜欢画猫，最想去看海。</p>
+  <p>谢谢你看完她的夏天。</p>
+
+  <div class="sea-pic">
+    <img src="../images/drawings/d16_sea_completed.jpg" alt="补完的海边画">
+    <div class="sea-cap">（这张是后来补完的）</div>
+  </div>
+
+  <div class="back-link">
+    <a href="../index.html" id="back-home">返回首页</a>
+  </div>
+</div>
+
+<script src="../js/common.js"></script>
+<script>
+(function () {
+  /* 通关：写入存档后再跳回档案馆首页 */
+  document.getElementById('back-home').addEventListener('click', function (e) {
+    e.preventDefault();
+    GameState.finish();
+    location.href = '../index.html';
+  });
+  /* 停留30秒标签标题变化；关闭/切走闪“下次再来啊” */
+  ArchiveTitle.start();
+})();
+</script>
+</body>
+</html>

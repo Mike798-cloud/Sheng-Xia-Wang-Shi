@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>滨城晚报 · 2012年6月18日</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #cfc8b4; }
+  .paper { background: #fdfbf3; border: 1px solid #a99f7e; box-shadow: 3px 3px 12px rgba(0,0,0,.3); }
+  /* ===== 报头 ===== */
+  .mast-top { background: #f4ecd8; border-bottom: 1px solid #c9bd97; padding: 5px 16px; font-size: 12px; color: #5a5340; }
+  .mast-top .right { float: right; }
+  .mast-head { text-align: center; padding: 18px 10px 10px; background: #fdfbf3; }
+  .mast-head h1 {
+    font-family: "SimSun","宋体",serif; font-size: 52px; font-weight: bold; color: #a31515;
+    letter-spacing: 14px; text-indent: 14px;
+  }
+  .mast-head .slogan { color: #8a7a55; font-size: 12px; margin-top: 2px; letter-spacing: 4px; }
+  .mast-nav {
+    background: #a31515; color: #fff; padding: 6px 16px; font-size: 14px;
+  }
+  .mast-nav a { color: #fff; text-decoration: none; margin-right: 18px; font-family: "Microsoft YaHei",sans-serif; }
+  .mast-nav a:hover { color: #ffe08a; }
+  .mast-nav .mini-search { float: right; margin-top: -2px; }
+  .mast-nav .mini-search input { font-size: 12px; padding: 2px 4px; }
+  /* ===== 版面 ===== */
+  .section { padding: 16px 20px; }
+  .sec-title {
+    border-bottom: 3px double #a31515; color: #a31515; font-size: 18px; font-weight: bold;
+    padding-bottom: 4px; margin-bottom: 12px; font-family: "Microsoft YaHei",sans-serif;
+  }
+  .news-main h3 { font-size: 19px; line-height: 1.5; margin-bottom: 6px; }
+  .news-main p { text-indent: 2em; margin-bottom: 6px; }
+  .news-img { border: 1px solid #999; padding: 3px; background: #fff; margin: 6px 0; }
+  .news-img img { width: 280px; height: 190px; object-fit: cover; display: block; }
+  .img-cap { font-size: 11px; color: #888; text-align: center; margin-top: 2px; }
+  .side-news { font-size: 13px; }
+  .side-news li { margin-bottom: 8px; list-style: none; }
+  .side-news .d { color: #a31515; font-weight: bold; margin-right: 4px; }
+  /* ===== 中缝 ===== */
+  .middle-seam { border-left: 2px dotted #999; border-right: 2px dotted #999; padding: 10px 12px; font-size: 12px; background: #f7f2e2; }
+  .middle-seam h4 { font-size: 13px; color: #a31515; margin: 8px 0 4px; }
+  .seam-ad { border: 1px dashed #999; padding: 6px; margin-bottom: 8px; background: #fff; }
+  .seam-ad .lost-cat { color: #c00; font-weight: bold; }
+  /* ===== 校园作文 ===== */
+  .essay { border: 1px solid #c9bd97; background: #fffdf6; padding: 14px 18px; position: relative; }
+  .essay h3 { text-align: center; font-size: 17px; margin-bottom: 10px; }
+  .essay p { text-indent: 2em; margin-bottom: 6px; }
+  .essay .sign { text-align: right; color: #555; }
+  .annotation {
+    display: none;
+    position: absolute; top: 10px; right: -8px; width: 170px;
+    color: #6b3a1a; font-style: italic; font-size: 13px; line-height: 1.8;
+    transform: rotate(2deg);
+  }
+  .annotation .seal {
+    display: inline-block; background: #c00; color: #fff; font-style: normal;
+    font-size: 10px; padding: 1px 4px; margin-left: 4px; vertical-align: middle;
+    font-family: "SimSun",serif;
+  }
+  body.y2013 .annotation { display: block; }
+  /* ===== 分类广告 ===== */
+  table.ad-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.ad-table td { border: 1px solid #b9ad8a; padding: 6px 8px; vertical-align: top; background: #fff; }
+  table.ad-table .ad-cat { background: #efe6c8; font-weight: bold; width: 90px; text-align: center; font-family: "Microsoft YaHei"; }
+  /* ===== 工具条/友链 ===== */
+  .friend-links { font-size: 12px; padding: 8px 20px; border-top: 1px solid #ccc; background: #f4f0e2; }
+  .friend-links a { margin-right: 12px; }
+  .dead-features { font-size: 12px; padding: 4px 20px; text-align: right; }
+  .counter-area { font-size: 12px; color: #555; padding: 0 20px 10px; }
+  .y2013only { display: none; }
+  body.y2013 .y2013only { display: block; }
+  body.y2013 .y2012only { display: none; }
+  tr#ad-webrow { display: table-row; }
+  tr#ad-petrow { display: none; }
+  body.y2013 tr#ad-webrow { display: none; }
+  body.y2013 tr#ad-petrow { display: table-row; }
+  @media (max-width: 1024px) {
+    .mast-head h1 { font-size: 38px; }
+    .news-img img { width: 100%; height: auto; }
+  }
+  @keyframes seamBlink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0.3; } }
+  .seam-blink { animation: seamBlink 1.2s steps(1) infinite; }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '找不到线索？试试页面底部的友情链接。';</script>
+<div id="iebar-box"></div>
+
+<div class="paper wrap" id="top">
+  <!-- 报头 -->
+  <div class="mast-top">
+    <span class="right" id="mast-weather">今日天气：多云转晴 26～34℃　空气质量良</span>
+    <span id="mast-date">2012年6月18日 星期一　农历壬辰年四月三十　第8731期</span>
+  </div>
+  <div class="mast-head">
+    <h1>滨城晚报</h1>
+    <div class="slogan">— 立足滨城 服务百姓 —</div>
+  </div>
+  <div class="mast-nav">
+    <a href="#top">要闻</a><a href="#minsheng">民生</a><a href="#campus">校园小记者</a><a href="#ad">分类广告</a>
+    <form class="mini-search" action="../search/result.html" method="get">
+      <input class="txt" name="q" size="12" placeholder="站内搜索">
+      <button class="btn btn-sm">搜索</button>
+    </form>
+  </div>
+
+  <!-- ============ 要闻版 ============ -->
+  <div class="section" id="news">
+    <div class="sec-title">要闻版</div>
+
+    <!-- 2012 头版 -->
+    <div class="y2012only" id="news2012">
+      <table style="width:100%;" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:64%; vertical-align:top; padding-right:16px;" class="news-main">
+            <h3>老小区改造让居民住得舒心</h3>
+            <div class="news-img" style="float:left; margin:0 10px 6px 0;">
+              <img src="../images/photos/n01_renovation.jpg" alt="老旧小区改造工地">
+              <div class="img-cap">工人师傅正在粉刷居民楼外墙</div>
+            </div>
+            <p>本报讯　江洲路一带的老小区改造工程自今年三月开工以来，进展顺利。记者昨日在现场看到，几栋居民楼外搭着脚手架，墙面重新粉刷，下水管道也一并更换。家住3栋的王阿姨告诉记者："以前一下雨就积水，现在好了，夜里睡得都踏实。"</p>
+            <p>据改造办负责人介绍，本次改造涵盖外墙翻新、雨污分流、楼道照明更换等八项内容，预计九月底全部完工。施工期间给居民出行带来不便，敬请谅解。</p>
+
+            <h3 style="margin-top:14px;">菜市场猪肉价格本周小幅回落</h3>
+            <div class="news-img" style="float:right; margin:0 0 6px 10px;">
+              <img src="../images/photos/n02_market.jpg" alt="菜市场猪肉摊位">
+              <div class="img-cap">惠民桥菜市场猪肉摊位前顾客络绎不绝</div>
+            </div>
+            <p>本报讯　记者从惠民桥菜市场了解到，本周五花肉零售价为每斤13块5，较上周回落了8毛钱。摊主老李说："天热了，进货的多，价钱自然就下来了。"</p>
+            <p style="clear:both;">另据市商务局监测，本周我市蔬菜供应充足，黄瓜、西红柿价格平稳。</p>
+          </td>
+          <td style="width:36%; vertical-align:top;" class="side-news">
+            <ul>
+              <li><span class="d">通知</span><a href="javascript:void(0)" class="plain dead">暑期防溺水安全通知：家长务必看管好未成年人，严禁私自下河游泳。</a></li>
+              <li><span class="d">出行</span><a href="javascript:void(0)" class="plain dead">2路公交车今起改道绕行，临时停靠市一中站，预计工期三个月。</a></li>
+              <li><span class="d">城建</span><a href="javascript:void(0)" class="plain dead">滨江湿地公园今日正式开园，首期免费向市民开放。</a></li>
+              <li><span class="d">民生</span><a href="javascript:void(0)" class="plain dead">六月份城乡居民养老金今日起统一发放，请注意查收。</a></li>
+              <li><span class="d">文体</span><a href="javascript:void(0)" class="plain dead">市图书馆暑期少儿阅览延时开放至晚上八点。</a></li>
+              <li><span class="d">用电</span><a href="javascript:void(0)" class="plain dead">迎峰度夏，供电公司提醒居民合理用电、人走断电。</a></li>
+              <li><span class="d">消费</span><a href="javascript:void(0)" class="plain dead">工商部门开展夏季冷饮市场抽检，提醒购买正规厂家产品。</a></li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 2013 头版 -->
+    <div class="y2013only" id="news2013">
+      <table style="width:100%;" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="width:64%; vertical-align:top; padding-right:16px;" class="news-main">
+            <h3>秋季开学报名工作本周末启动</h3>
+            <p>本报讯　我市2013年秋季中小学新生报名将于本周六、周日两天集中办理。教育局提醒家长，报名时请携带户口本、预防接种证及房产证明原件。实验小学咨询电话：0519-86223345。</p>
+            <p>另悉，今年我市初中阶段共招收新生1.2万人，市一中初中部继续面向全市摇号招生，中签结果8月25日公布。</p>
+            <h3 style="margin-top:14px;">台风外围影响我市 周末有阵雨</h3>
+            <p>本报讯　据市气象台预报，受今年第十号台风外围云系影响，本周六起我市转阴有阵雨，局部雨量中等，风力逐渐增大到四到五级。气象部门提醒市民妥善安置阳台物品，出行注意安全。</p>
+          </td>
+          <td style="width:36%; vertical-align:top;" class="side-news">
+            <ul>
+              <li><span class="d">高考</span><a href="javascript:void(0)" class="plain dead">我市2013年高考录取工作圆满结束，本科上线人数再创新高。</a></li>
+              <li><span class="d">城建</span><a href="javascript:void(0)" class="plain dead">滨江湿地公园二期工程通过竣工验收，国庆前对外开放。</a></li>
+              <li><span class="d">出行</span><a href="javascript:void(0)" class="plain dead">暑期铁路客流高峰已过，各趟列车车票相对宽松。</a></li>
+              <li><span class="d">民生</span><a href="javascript:void(0)" class="plain dead">市自来水公司提醒：长假前请检查家中水表，发现漏水及时报修。</a></li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <hr class="dashed">
+
+  <!-- ============ 民生版 ============ -->
+  <div class="section" id="minsheng">
+    <div class="sec-title">民生版</div>
+    <table style="width:100%;" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:66%; vertical-align:top; padding-right:16px;" class="side-news">
+          <ul>
+            <li><span class="d">公示</span>
+              <span class="y2012only-inline" style="display:inline;">我市2012年度先天性心脏病患儿救助名单公示，详见<a href="../hospital/index.html">市儿童医院官网</a>。</span>
+              <span class="y2013only-inline" style="display:none;">2013年度社区老年人免费体检工作已启动，体检名单（节选）见右栏。</span>
+            </li>
+            <li><span class="d">水价</span><a href="javascript:void(0)" class="plain dead">我市居民生活用水价格调整听证方案公布，拟每吨上调两毛钱。</a></li>
+            <li><span class="d">义诊</span><a href="javascript:void(0)" class="plain dead">本周六市人民医院在江滨社区开展免费测血压血糖义诊。</a></li>
+            <li><span class="d">社保</span><a href="javascript:void(0)" class="plain dead">灵活就业人员社保补贴申请8月底截止，请带齐材料到街道办理。</a></li>
+            <li><span class="d">公交</span><a href="javascript:void(0)" class="plain dead">市民卡公交充值网点增至十二个，便利店也可充值。</a></li>
+            <li><span class="d">天气</span><a href="javascript:void(0)" class="plain dead">本周持续高温，民政部门向独居老人发放防暑降温物品。</a></li>
+          </ul>
+        </td>
+        <td style="width:34%; vertical-align:top;">
+          <div class="y2012only" style="font-size:11px; color:#999;">
+            （救助名单公示期为7个工作日，接受社会监督。）
+          </div>
+          <div class="y2013only" style="border:1px solid #b9ad8a; padding:8px; font-size:12px; background:#fff;">
+            <b>2013年度社区老年人免费体检名单（节选）</b>
+            <table class="grid" style="margin-top:6px;">
+              <tr><th>姓名</th><th>性别</th><th>年龄</th><th>所属社区</th></tr>
+              <tr><td>陈桂英</td><td>女</td><td>63岁</td><td>江滨社区</td></tr>
+              <tr><td>王秀兰</td><td>女</td><td>70岁</td><td>江滨社区</td></tr>
+              <tr><td>李建国</td><td>男</td><td>68岁</td><td>江洲社区</td></tr>
+              <tr><td>张美凤</td><td>女</td><td>65岁</td><td>江洲社区</td></tr>
+            </table>
+            <div class="tiny">体检时间：8月20日—8月31日，凭身份证到社区卫生服务中心。</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <hr class="dashed">
+
+  <!-- ============ 校园小记者版 ============ -->
+  <div class="section" id="campus">
+    <div class="sec-title">校园小记者版 · 春季作文比赛选登</div>
+    <table style="width:100%;" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width:62%; vertical-align:top; padding-right:14px;">
+          <div class="essay">
+            <div class="annotation">
+              爸爸替你拿了全国一等奖。
+              <span class="seal">奖</span>
+            </div>
+            <h3>我的小猫花卷</h3>
+            <p>我家有一只黄白花的小猫，名字叫花卷。妈妈说它刚来我家的时候，只有我的书包那么大，现在已经胖得像一个花卷了，所以才叫这个名字。</p>
+            <p>花卷最喜欢趴在我写作业的桌子旁边睡觉。我一写作业，它就打呼噜，像个小马达。有一次我把铅笔盒碰到地上，它也不醒，只是甩一下尾巴。</p>
+            <p>我最喜欢给它喂小鱼干。它吃鱼干的时候会用两只前爪抱着，嚼得咔哧咔哧响，好像怕我抢它的一样。</p>
+            <p>我最羡慕大家能跑接力赛，我只能坐在台阶上数影子。要是我能跑，肯定比耗子还快！到时候我要抱着花卷一起跑，让它当我们班的拉拉队。</p>
+            <p>老师说我的作文写得有感情，还贴在了教室后面的墙上。花卷，你可要快点长大呀，我要把奖状拿给你看。</p>
+            <p class="sign">滨城实验小学　沈知栀（四年级三班）</p>
+          </div>
+        </td>
+        <td style="width:38%; vertical-align:top;">
+          <!-- 中缝 -->
+          <div class="middle-seam">
+            <b style="color:#a31515;">中缝启事</b>
+            <div class="seam-ad" style="background:#fff3b0; border:1px solid #c9a83a;">
+              <span class="seam-blink" style="color:#c00; font-weight:bold;">高价回收旧家电、报纸、废铜烂铁</span><br>
+              电话：0519-86110472　上门拉货
+            </div>
+            <div class="seam-ad">配钥匙　|　修鞋　|　修伞<br>老巷口便民摊　价格实惠</div>
+            <div class="seam-ad">搬家　|　开锁　|　疏通下水道<br>电话：0519-86331245　随叫随到</div>
+            <div class="seam-ad">电脑维修　|　装系统　|　数据恢复<br>上门服务，电话：0519-86557821</div>
+            <div class="seam-ad">空调加氟　|　热水器维修　|　回收旧家电<br>电话：0519-86229076</div>
+            <div class="seam-ad">
+              <span class="lost-cat">【寻猫启事】</span><br>
+              2012年7月23日，于江滨小区附近丢失黄白花小猫一只，名"花卷"，脖子上有红项圈。捡到请联系 13XXXXXX817，重谢！
+            </div>
+            <div class="seam-ad y2012only" id="seam-webad">
+              专业静态网页制作、网站维护，<br>联系人：沈先生　电话：13XXXXXX817
+            </div>
+            <div class="seam-ad y2013only">
+              上门喂猫、宠物寄养，<br>联系人：沈先生　电话：13XXXXXX817
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- 2013 新增二等奖作文 -->
+    <div class="y2013only" style="margin-top:14px;">
+      <div class="essay">
+        <h3 style="text-align:center; font-size:15px; color:#555;">【2013年度二等奖作文】</h3>
+        <h3>接力赛</h3>
+        <p>运动会的接力赛，我们班拿到了第二名。</p>
+        <p>去年这个时候，栀栀还跟我在操场上数影子。她说她最想跑接力，说跑起来风从耳朵旁边过去，一定特别凉快。我们说好，今年两个人一起报名，她跑最后一棒，我把接力棒稳稳地交到她手里。</p>
+        <p>可是后来她住院了，就没能来。今天跑最后一棒的是我。接棒的时候我觉得手里的棒子很重，好像装着两个人的力气。</p>
+        <p>我们班差一点就是第一了。要是栀栀在，说不定真能拿到呢。</p>
+        <p class="sign">滨城实验小学　周子浩（五年级二班）</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="dashed">
+
+  <!-- ============ 分类广告 ============ -->
+  <div class="section" id="ad">
+    <div class="sec-title">分类广告</div>
+    <table class="ad-table">
+      <tr><td class="ad-cat">二手房</td><td>江滨小区两室一厅，68平，简装，急售42万。电话：13XXXXXX221</td></tr>
+      <tr><td class="ad-cat">转让</td><td>九成新捷安特自行车一辆，带车锁，180元出。滨江公园自提。</td></tr>
+      <tr><td class="ad-cat">招聘</td><td>快餐店招收银员一名，女，18-35岁，月薪1800元，包一顿工作餐。</td></tr>
+      <tr><td class="ad-cat">培训</td><td>剑桥英语暑期班：外教小班，报名送电子词典。电话：0519-86001234。</td></tr>
+      <tr id="ad-webrow" class="y2012only"><td class="ad-cat">服务</td><td>专业静态网页制作、网站维护，价格公道，先看样站再付款。联系人：沈先生　电话：13XXXXXX817</td></tr>
+      <tr id="ad-petrow" class="y2013only"><td class="ad-cat">服务</td><td>上门喂猫、宠物寄养，出差旅行不用愁。联系人：沈先生　电话：13XXXXXX817</td></tr>
+      <tr><td class="ad-cat">家政</td><td>钟点工阿姨：做饭、打扫卫生，白班半天。周女士　13XXXXXX903</td></tr>
+      <tr><td class="ad-cat">求租</td><td>为孩子上学，求租实验小学附近两室，长租，中介勿扰。</td></tr>
+      <tr><td class="ad-cat">维修</td><td>专修电视机、洗衣机、电风扇，老师傅上门，收费公道。</td></tr>
+    </table>
+  </div>
+
+  <!-- 底部工具条 -->
+  <div class="dead-features">
+    <a href="javascript:void(0)" data-dead-feature="设为首页">设为首页</a>　
+    <a href="javascript:void(0)" data-dead-feature="加入收藏">加入收藏</a>　
+    <a href="javascript:void(0)" data-dead-feature="打印本页">打印本页</a>
+  </div>
+
+  <!-- 友情链接 -->
+  <div class="friend-links">
+    <b>友情链接：</b>
+    <a href="../search/index.html">千度搜索</a>
+    <a class="dead" href="javascript:void(0)">滨城新闻网</a>
+    <a class="dead" href="javascript:void(0)">滨江论坛</a>
+    <a class="dead" href="javascript:void(0)">市教育局</a>
+    <a class="dead" href="javascript:void(0)">滨城气象网</a>
+    <a class="dead" href="javascript:void(0)">滨城影院</a>
+    <a class="dead" href="javascript:void(0)">同城信息港</a>
+    <a class="dead" href="javascript:void(0)">滨城公交查询</a>
+    <a class="dead" href="javascript:void(0)">滨城人才网</a>
+    <a class="dead" href="javascript:void(0)">市一院挂号</a>
+    <a class="dead" href="javascript:void(0)">滨城房产网</a>
+  </div>
+
+  <div class="counter-area">
+    您是第 <span id="counter-box"></span> 位访客　
+  </div>
+</div>
+
+<!-- 右侧浮动广告 -->
+<div class="float-ad">
+  <div class="fa-head">招生</div>
+  <div class="fa-body">
+    <div class="pic" style="background:linear-gradient(#ffe9b0,#f0b73e);"></div>
+    剑桥英语暑期班<br>外教小班　报名送礼<br>0519-86001234
+  </div>
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+<script>
+(function () {
+  if (GameState.is2013()) {
+    document.body.className += ' y2013';
+    // 报头日期 / 天气切换
+    document.getElementById('mast-date').textContent = '2013年8月17日 星期六　农历癸巳年七月十一　第9022期';
+    document.getElementById('mast-weather').textContent = '今日天气：晴 28～36℃　午后局部有雷阵雨';
+    // 民生版：2012 公示行 → 2013 体检行
+    var oldLine = document.querySelector('#minsheng .y2012only-inline');
+    var newLine = document.querySelector('#minsheng .y2013only-inline');
+    if (oldLine) oldLine.style.display = 'none';
+    if (newLine) newLine.style.display = 'inline';
+  }
+})();
+</script>
+</body>
+</html>

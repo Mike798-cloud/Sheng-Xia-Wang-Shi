@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>千度搜索 - 让搜索更简单</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #fff; }
+  .home-top { text-align: right; padding: 10px 16px; font-size: 12px; }
+  .home-top a { margin-left: 14px; }
+  .logo-area { text-align: center; margin-top: 90px; }
+  .logo-text { font-size: 58px; font-weight: bold; letter-spacing: 6px; font-family: "Microsoft YaHei", sans-serif; }
+  .logo-text .c1 { color: #2319dc; }
+  .logo-text .c2 { color: #e92322; }
+  .logo-sub { color: #999; font-size: 12px; margin-top: 2px; }
+  .search-area { width: 560px; margin: 22px auto 0; position: relative; }
+  .search-area form { display: flex; }
+  .search-area input#kw {
+    flex: 1; height: 30px; border: 1px solid #7f9db9; border-right: 0;
+    padding: 2px 8px; font-size: 14px;
+  }
+  .search-area .btn-go {
+    height: 32px; padding: 0 22px; font-size: 15px;
+  }
+  #suggest-box {
+    position: absolute; top: 32px; left: 0; width: 100%;
+    background: #fff; border: 1px solid #99a; display: none; z-index: 10;
+    box-shadow: 2px 2px 6px rgba(0,0,0,.2); text-align: left;
+  }
+  #suggest-box .item { padding: 5px 10px; font-size: 13px; cursor: pointer; }
+  #suggest-box .item:hover, #suggest-box .item.on { background: #e6f0fc; }
+  .hot-area { width: 560px; margin: 40px auto 0; font-size: 13px; }
+  .hot-area h4 { font-size: 14px; color: #a31515; margin-bottom: 8px; }
+  .hot-area a { margin-right: 16px; line-height: 2.2; }
+  .disclaimer {
+    width: 560px; margin: 50px auto 0; font-size: 11px; color: #999; line-height: 2;
+    border-top: 1px solid #eee; padding-top: 14px;
+  }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '想找论坛？试试搜「花卷走丢」。';</script>
+<div id="iebar-box"></div>
+
+<div class="home-top">
+  <a class="dead" href="javascript:void(0)">设为首页</a>
+  <a class="dead" href="javascript:void(0)">登录</a>
+  <a class="dead" href="javascript:void(0)">注册</a>
+  <a href="result.html?q=花卷走丢">手气不错</a>
+</div>
+
+<div class="logo-area">
+  <div class="logo-text"><span class="c1">千</span><span class="c2">度</span></div>
+  <div class="logo-sub">QianDu · 2012 最好用的中文搜索</div>
+</div>
+
+<div class="search-area">
+  <form action="result.html" method="get" id="search-form">
+    <input id="kw" name="q" autocomplete="off">
+    <button class="btn btn-blue btn-go">千度一下</button>
+  </form>
+  <div id="suggest-box"></div>
+</div>
+
+<div class="hot-area">
+  <h4>┌ 千度热搜榜 ┐</h4>
+  <a href="result.html?q=滨城天气">滨城天气</a>
+  <a href="result.html?q=花卷走丢">花卷走丢</a>
+  <a class="dead" href="javascript:void(0)">2012高考分数线</a>
+  <a href="result.html?q=沈知栀">沈知栀</a>
+  <a class="dead" href="javascript:void(0)">QQ2012下载</a>
+  <a href="result.html?q=先天性心脏病救助">先天性心脏病救助</a>
+  <a class="dead" href="javascript:void(0)">滨城二手房</a>
+  <a href="result.html?q=老沈猫">老沈猫</a>
+</div>
+
+<div class="disclaimer">
+  千度搜索提供的搜索结果系根据网页自动抓取与链接生成，与千度搜索页面立场无关。<br>
+  欢迎与千度搜索合作：bingdu@qiandu-example.cn　©2012 千度科技
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+<script>
+(function () {
+  /* 简单相关推荐词库 */
+  var LEXICON = [
+    '花卷走丢', '花卷 走丢', '找猫 花卷', '白猫 花卷', '花卷后来', '花卷近况', '老沈猫',
+    '沈知栀', '沈知栀 获奖', '沈知栀 作文', '沈知栀 海边', '沈知栀 画画比赛', '沈知栀 20120817',
+    '我的小猫花卷', '滨城实验小学', '滨城实验小学 沈知栀',
+    '心内二科', '滨城儿童医院', '先天性心脏病 救助', '先心病 滨城',
+    '小猫', '作文获奖', '滨城天气', '滨城二手房', '广场舞教学', '定胜糕做法'
+  ];
+  var kw = document.getElementById('kw');
+  var box = document.getElementById('suggest-box');
+
+  function render(list) {
+    if (!list.length) { box.style.display = 'none'; return; }
+    box.innerHTML = '';
+    list.forEach(function (word) {
+      var div = document.createElement('div');
+      div.className = 'item';
+      div.textContent = word;
+      div.onmousedown = function () { kw.value = word; box.style.display = 'none'; document.getElementById('search-form').submit(); };
+      box.appendChild(div);
+    });
+    box.style.display = 'block';
+  }
+  kw.oninput = function () {
+    var v = kw.value.trim();
+    if (!v) { box.style.display = 'none'; return; }
+    var low = v.toLowerCase();
+    var hits = LEXICON.filter(function (w) {
+      return w.replace(/\s+/g, '').indexOf(low.replace(/\s+/g, '')) >= 0;
+    }).slice(0, 8);
+    render(hits);
+  };
+  kw.onblur = function () { setTimeout(function () { box.style.display = 'none'; }, 200); };
+  kw.onfocus = function () { if (kw.value.trim()) kw.oninput(); };
+})();
+</script>
+</body>
+</html>

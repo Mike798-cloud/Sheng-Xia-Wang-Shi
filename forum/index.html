@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>向日葵论坛 - 滨城中学生自己的社区</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #e8efe0; }
+  /* 贴吧绿色页头 */
+  .tb-header {
+    background: linear-gradient(#8cc63f, #5aa327);
+    border-bottom: 3px solid #3d7a15;
+    padding: 14px 0 10px;
+  }
+  .tb-header .wrap { display: table; }
+  .tb-logo {
+    font-family: "Microsoft YaHei", sans-serif;
+    font-size: 30px; font-weight: bold; color: #fff;
+    text-shadow: 1px 1px 2px #2d5c0e;
+    display: inline-block;
+  }
+  .tb-sub { color: #eaf6dc; font-size: 12px; margin-left: 10px; }
+  .tb-topbar {
+    float: right; margin-top: 8px;
+  }
+  .tb-topbar .btn { margin-left: 6px; }
+  .tb-nav {
+    background: #f4f9ec; border-bottom: 1px solid #c6dcb0;
+    font-size: 13px;
+  }
+  .tb-nav a { margin-right: 18px; }
+  /* 板块表格 */
+  .board-table {
+    width: 100%; border-collapse: collapse;
+    background: #fff; margin-top: 14px;
+    border: 1px solid #b9d1a0;
+  }
+  .board-table th {
+    background: #dcefc6; border: 1px solid #b9d1a0;
+    padding: 7px 10px; text-align: left; font-size: 13px;
+    color: #33551a;
+  }
+  .board-table td {
+    border: 1px solid #d8e6c8; padding: 9px 10px;
+    vertical-align: middle;
+  }
+  .board-row:hover td { background: #f4faec; }
+  .board-name {
+    font-size: 16px; font-weight: bold;
+    font-family: "Microsoft YaHei", sans-serif;
+  }
+  .board-desc { color: #7a8a6a; font-size: 12px; margin-top: 2px; }
+  .board-icon {
+    display: inline-block; width: 34px; height: 34px;
+    background: #e3f0d2; border: 1px solid #b9d1a0;
+    text-align: center; line-height: 32px; font-size: 18px;
+    margin-right: 8px; vertical-align: middle;
+  }
+  .stat-num { font-family: "Courier New", monospace; }
+  .last-topic { font-size: 12px; color: #666; }
+  .hot-badge {
+    background: #d9463a; color: #fff; font-size: 10px;
+    padding: 0 4px; margin-left: 5px; border-radius: 2px;
+    font-family: "Microsoft YaHei", sans-serif;
+  }
+  .announce {
+    background: #fffbe6; border: 1px solid #e6d98a;
+    padding: 8px 12px; font-size: 12px; color: #7a6a20;
+    margin-top: 14px;
+  }
+  .tb-footer-tech {
+    text-align: center; color: #aab99a; font-size: 11px;
+    padding: 8px 0 14px;
+  }
+  /* 老网杂讯：闪烁小广告条 */
+  .mini-ads { margin: 12px 0 2px; line-height: 2.4; }
+  .mini-ad {
+    display: inline-block; border: 1px solid #6d7d58;
+    padding: 2px 10px; margin-right: 8px; font-size: 12px;
+    font-weight: bold; text-decoration: none;
+  }
+  .mini-ad.ad1 { background: #fff3b0; color: #c81010; }
+  .mini-ad.ad2 { background: #bfe3ff; color: #1155aa; }
+  .mini-ad.ad3 { background: #ffe0d0; color: #a83300; }
+  @keyframes adBlink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0.3; } }
+  .ad-blink { animation: adBlink 1.1s steps(1) infinite; }
+  .online-stats {
+    background: #f4f9ec; border: 1px solid #c6dcb0; padding: 6px 12px;
+    font-size: 12px; color: #5a6a4a; margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '签名档里，也许有别的入口。';</script>
+
+<div id="iebar-box"></div>
+
+<div class="tb-header">
+  <div class="wrap">
+    <span class="tb-logo">向日葵论坛</span>
+    <span class="tb-sub">滨城中学生自己的社区 · 成立于2009年</span>
+    <span class="tb-topbar">
+      <button class="btn btn-green" onclick="alert('论坛已关闭，仅支持浏览。')">注册</button>
+      <button class="btn btn-green" onclick="alert('论坛已关闭，仅支持浏览。')">登录</button>
+    </span>
+  </div>
+</div>
+<div class="tb-nav">
+  <div class="wrap" style="padding:5px 0;">
+    <a class="dead" href="javascript:void(0)">论坛首页</a>
+    <a class="dead" href="javascript:void(0)">今日话题</a>
+    <a class="dead" href="javascript:void(0)">签到打卡</a>
+    <a class="dead" href="javascript:void(0)">灌水闲聊</a>
+    <a class="dead" href="javascript:void(0)">版务公告</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="announce">
+    【公告】本站自2013年8月起停止注册与发帖，转为历史快照存档浏览。由此给您带来不便，敬请谅解。&nbsp;&nbsp;<span class="gray">——向日葵管理组</span>
+  </div>
+
+  <div class="table-scroll">
+  <table class="board-table">
+    <tr>
+      <th style="width:34%;">板块</th>
+      <th style="width:12%;">帖子</th>
+      <th style="width:12%;">主题</th>
+      <th>最后回复</th>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">动</span>
+        <a class="board-name plain dead" href="javascript:void(0)">动漫区</a>
+        <div class="board-desc">新番讨论 · 同人图楼 · 高达模型晒单</div>
+      </td>
+      <td class="stat-num">1,204</td>
+      <td class="stat-num">186</td>
+      <td class="last-topic">
+        <a class="dead" href="javascript:void(0)">【讨论】这个季度最好看的新番是……</a><br>
+        <span class="gray">2013-07-30 由 假面骑士控 回复</span>
+      </td>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">画</span>
+        <a class="board-name plain" href="thread.html">画画区</a>
+        <div class="board-desc">涂鸦交流 · 蜡笔素描 · 打卡互相催更</div>
+      </td>
+      <td class="stat-num">873</td>
+      <td class="stat-num">142</td>
+      <td class="last-topic">
+        <a href="thread.html">我的画画打卡！每天更一张～</a><span class="hot-badge">精</span><br>
+        <span class="gray">2013-09-19 由 117.86.*.* 回复</span>
+      </td>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">聊</span>
+        <a class="board-name plain dead" href="javascript:void(0)">闲聊区</a>
+        <div class="board-desc">灌水吐槽 · 考试抱怨 · 食堂测评</div>
+      </td>
+      <td class="stat-num">3,556</td>
+      <td class="stat-num">602</td>
+      <td class="last-topic">
+        <a class="dead" href="javascript:void(0)">【闲聊】昨天食堂的糖醋排骨吃出头发了</a><br>
+        <span class="gray">2013-08-02 由 放学不回家 回复</span>
+      </td>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">考</span>
+        <a class="board-name plain dead" href="javascript:void(0)">升学考试</a>
+        <div class="board-desc">中考交流 · 补习班吐槽 · 志愿讨论</div>
+      </td>
+      <td class="stat-num">640</td>
+      <td class="stat-num">98</td>
+      <td class="last-topic">
+        <a class="dead" href="javascript:void(0)">【2013中考】一中分数线预测帖</a><br>
+        <span class="gray">2013-06-26 由 学长党 回复</span>
+      </td>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">灌</span>
+        <a class="board-name plain dead" href="javascript:void(0)">灌水贴图</a>
+        <div class="board-desc">搞笑图片 · 表情合集 · 签到盖楼</div>
+      </td>
+      <td class="stat-num">2,108</td>
+      <td class="stat-num">417</td>
+      <td class="last-topic">
+        <a class="dead" href="javascript:void(0)">【盖楼】每天签到，不许断！</a><br>
+        <span class="gray">2013-07-18 由 打酱油的 回复</span>
+      </td>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">友</span>
+        <a class="board-name plain dead" href="javascript:void(0)">校友录</a>
+        <div class="board-desc">找同学 · 毕业相册 · 班级主页</div>
+      </td>
+      <td class="stat-num">532</td>
+      <td class="stat-num">96</td>
+      <td class="last-topic">
+        <a class="dead" href="javascript:void(0)">【找人】08届三班的都在哪呢</a><br>
+        <span class="gray">2013-05-22 由 老班长 回复</span>
+      </td>
+    </tr>
+    <tr class="board-row">
+      <td>
+        <span class="board-icon">游</span>
+        <a class="board-name plain dead" href="javascript:void(0)">游戏区</a>
+        <div class="board-desc">单机攻略 · 小游戏 · 红白机怀旧</div>
+      </td>
+      <td class="stat-num">1,865</td>
+      <td class="stat-num">304</td>
+      <td class="last-topic">
+        <a class="dead" href="javascript:void(0)">【攻略】植物大战僵尸无尽版阵型</a><br>
+        <span class="gray">2013-07-02 由 金币不够花 回复</span>
+      </td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="mini-ads">
+    <a class="mini-ad ad1 ad-blink dead" href="javascript:void(0)">★ 暑期数理化冲刺班 报名中 ★</a>
+    <a class="mini-ad ad2 dead" href="javascript:void(0)">电脑城装机 优惠 学生凭证9折</a>
+    <a class="mini-ad ad3 dead" href="javascript:void(0)">网校名师 在线辅导</a>
+  </div>
+
+  <div class="online-stats">
+    今日发帖 <span class="stat-num">87</span> · 新注册 <span class="stat-num">3</span> · 最高在线 <span class="stat-num">412</span> 人（2012-07-15）· 欢迎新会员：
+    <a class="dead" href="javascript:void(0)">学习使我快乐</a>、
+    <a class="dead" href="javascript:void(0)">追风少年</a>
+  </div>
+
+  <div class="announce mt16">
+    热门帖子：
+    <a href="thread.html">《我的画画打卡！每天更一张～》</a>｜
+    <a class="dead" href="javascript:void(0)">《大家暑假都补什么课》</a>｜
+    <a class="dead" href="javascript:void(0)">《本校校花校草投票》</a>｜
+    <a class="dead" href="javascript:void(0)">《盘点那些年我们追过的动画片》</a>｜
+    <a class="dead" href="javascript:void(0)">《网吧游戏排行榜，你玩过几个》</a>｜
+    <a class="dead" href="javascript:void(0)">《课间十分钟能玩什么》</a>｜
+    <a class="dead" href="javascript:void(0)">《校门口小卖部什么最好吃》</a>
+  </div>
+
+  <div class="tb-footer-tech">技术支持：沈</div>
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+</body>
+</html>

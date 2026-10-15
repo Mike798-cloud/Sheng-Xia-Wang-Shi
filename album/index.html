@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的相册屋</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #f6d9e4; }
+  .album-page {
+    width: 980px; margin: 0 auto;
+    background: #fff5f9;
+    border: 3px solid #e8a8c4;
+    padding: 14px 20px 22px;
+  }
+  .album-header {
+    background: linear-gradient(#ffd6e7, #ffc0d9);
+    border: 1px solid #e8a8c4;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+  }
+  .album-header h1 { font-size: 20px; color: #a03560; }
+  .album-header .sub { font-size: 12px; color: #b96a8c; }
+
+  /* 密码墙 */
+  .gate {
+    width: 420px; margin: 60px auto;
+    background: #fff; border: 2px solid #e8a8c4;
+    padding: 30px 34px; text-align: center;
+  }
+  .gate h2 { font-size: 17px; color: #a03560; margin-bottom: 14px; }
+  .gate input.txt { width: 180px; text-align: center; letter-spacing: 3px; }
+  .gate .err { color: #c00; font-size: 13px; height: 20px; margin-top: 10px; font-family: "Microsoft YaHei", sans-serif; }
+  .gate .tip { font-size: 12px; color: #999; margin-top: 14px; }
+
+  /* 照片表格 */
+  .photo-table { width: 100%; border-collapse: collapse; }
+  .photo-table td {
+    border: 1px solid #f0c6d8;
+    padding: 10px; vertical-align: top;
+    width: 50%;
+    background: #fff;
+  }
+  .photo-frame { position: relative; text-align: center; background: #fdf0f5; padding: 6px; border: 1px dashed #e8a8c4; }
+  .photo-frame img { width: 100%; max-width: 420px; display: block; margin: 0 auto; }
+  /* 腕带图：用贴紧图片的容器，使叠印百分比始终映射到图片，不受分辨率影响 */
+  .photo-frame .img-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 420px;
+    container-type: inline-size;
+  }
+  .photo-frame .img-wrap img { width: 100%; max-width: none; display: block; }
+  .photo-cap { font-size: 13px; color: #5a3a4a; padding: 6px 2px 2px; }
+  .photo-time { font-size: 11px; color: #b08aa0; font-family: "Courier New", monospace; }
+
+  /* 腕带叠印文字：等宽、深灰偏蓝、贴合腕带印刷标签区；字号随容器(cqw)缩放，始终落在标签盒内 */
+  .wrist-overlay {
+    position: absolute;
+    left: 42.5%; top: 45.3%;
+    font-family: "Courier New", "宋体", monospace;
+    font-size: 2.15cqw;
+    letter-spacing: 0;
+    color: #2f3d55;
+    background: rgba(255,255,255,0.25);
+    padding: 0 2px;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  /* 海边画悬停彩蛋 */
+  .sea-hint {
+    position: absolute;
+    right: 10px; bottom: 14px;
+    font-size: 10px;
+    color: #8a6a7a;
+    background: rgba(255,255,255,0.8);
+    padding: 1px 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .photo-frame:hover .sea-hint,
+  .photo-frame.tapped .sea-hint { opacity: 1; }
+
+  .archive-no {
+    margin-top: 18px; text-align: right;
+    font-size: 11px; color: #b08aa0;
+    font-family: "Courier New", monospace;
+  }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '妈妈说过，密码是生日。';</script>
+
+<div id="iebar-box"></div>
+
+<div class="album-page">
+  <div class="album-header">
+    <h1>我的相册屋</h1>
+    <div class="sub">栀栀的小相册 · 仅好友可见 · 相册数：1 · 照片数：10</div>
+  </div>
+
+  <!-- 未解锁：密码墙 -->
+  <div id="gate" class="gate">
+    <h2>该相册已设访问密码</h2>
+    <form id="gate-form">
+      <div style="font-size:13px; margin-bottom:8px;">请输入访问密码（4位数字）</div>
+      <input type="text" id="gate-pwd" class="txt" maxlength="10" autocomplete="off">
+      <input type="submit" class="btn btn-sm" value="进入相册">
+      <div class="err" id="gate-err"></div>
+    </form>
+    <div class="tip">（妈妈说过，密码不就是你生日嘛，笨囡囡）</div>
+  </div>
+
+  <!-- 解锁后：照片列表 -->
+  <div id="gallery" style="display:none;">
+    <table class="photo-table">
+      <tr>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p01_spring_class.jpg" alt="春游班级合影">
+          </div>
+          <div class="photo-cap">春游合影（2012-04-08，公园牌坊前）</div>
+          <div class="photo-time">上传于 2012-04-08 16:20</div>
+        </td>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p02_girl_cat.jpg" alt="和花卷合照">
+          </div>
+          <div class="photo-cap">和花卷合照</div>
+          <div class="photo-time">上传于 2012-05-02 19:41</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p03_cakes.jpg" alt="奶奶做的点心">
+          </div>
+          <div class="photo-cap">奶奶做的点心（定胜糕和青团）</div>
+          <div class="photo-time">上传于 2012-05-20 11:05</div>
+        </td>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p04_drawing.jpg" alt="栀栀画画">
+          </div>
+          <div class="photo-cap">栀栀画画（台灯下的小书桌）</div>
+          <div class="photo-time">上传于 2012-06-15 21:30</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p07_tree_window.jpg" alt="窗外梧桐树">
+          </div>
+          <div class="photo-cap">窗外的梧桐树（2012年夏天）</div>
+          <div class="photo-time">上传于 2012-07-31 09:12</div>
+        </td>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p05_hospital_corridor.jpg" alt="医院走廊">
+          </div>
+          <div class="photo-cap">医院走廊（妈妈陪我来复查）</div>
+          <div class="photo-time">上传于 2012-08-02 10:48</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p06_nurse_mask.jpg" alt="戴口罩的护士">
+          </div>
+          <div class="photo-cap">戴口罩的护士（心内二科）</div>
+          <div class="photo-time">上传于 2012-08-05 15:22</div>
+        </td>
+        <td>
+          <div class="photo-frame">
+            <div class="img-wrap">
+              <img src="../images/photos/p09_wristband.jpg" alt="腕带特写">
+              <span class="wrist-overlay">心内二科 2012.08.10</span>
+            </div>
+          </div>
+          <div class="photo-cap">腕带特写（住院那天）</div>
+          <div class="photo-time">上传于 2012-08-10 08:30</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="photo-frame">
+            <img src="../images/photos/p08_dad_bedside.jpg" alt="爸爸趴床边">
+          </div>
+          <div class="photo-cap">爸爸在床边睡着了（晚上拍的）</div>
+          <div class="photo-time">上传于 2012-08-14 23:55</div>
+        </td>
+        <td>
+          <div class="photo-frame" id="sea-frame">
+            <img src="../images/photos/p10_half_sea.jpg" alt="半张没画完的海边画">
+            <span class="sea-hint">爸爸帮你画完了海，下次带你去。</span>
+          </div>
+          <div class="photo-cap">等出院了画完</div>
+          <div class="photo-time">上传于 2012-08-17 07:10</div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="archive-no">文件归档号：20120817_001</div>
+  </div>
+</div>
+
+<div id="footer-box"></div>
+
+<script src="../js/common.js"></script>
+<script>
+(function () {
+  var GALLERY_KEY = 'shengxia_album_unlocked';
+  var PASSWORDS = ['0612', '612', '20120612'];
+
+  function showGallery() {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('gallery').style.display = 'block';
+  }
+
+  /* 进入页面：已解锁则直接展示 */
+  try {
+    if (sessionStorage.getItem(GALLERY_KEY) === '1') showGallery();
+  } catch (e) {}
+
+  /* 密码校验 */
+  document.getElementById('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = document.getElementById('gate-pwd').value.replace(/\s/g, '');
+    var errEl = document.getElementById('gate-err');
+    if (PASSWORDS.indexOf(v) >= 0) {
+      try { sessionStorage.setItem(GALLERY_KEY, '1'); } catch (e) {}
+      errEl.textContent = '';
+      showGallery();
+      try { if (window.AudioEngine) AudioEngine.playStinger('musicbox_motif.mp3', 0.3); } catch (e) {}
+    } else {
+      errEl.textContent = '密码不正确，再想想？';
+      document.getElementById('gate-pwd').value = '';
+      document.getElementById('gate-pwd').focus();
+    }
+  });
+
+  /* 触屏点击也可触发海边画小字 */
+  var seaFrame = document.getElementById('sea-frame');
+  if (seaFrame) {
+    seaFrame.addEventListener('click', function () {
+      if (seaFrame.className.indexOf('tapped') >= 0) {
+        seaFrame.className = seaFrame.className.replace(' tapped', '');
+      } else {
+        seaFrame.className += ' tapped';
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

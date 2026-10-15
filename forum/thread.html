@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的画画打卡！每天更一张～ - 向日葵论坛</title>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+  body { background: #e8efe0; }
+  .tb-header {
+    background: linear-gradient(#8cc63f, #5aa327);
+    border-bottom: 3px solid #3d7a15;
+    padding: 12px 0 8px;
+  }
+  .tb-logo { font-family: "Microsoft YaHei", sans-serif; font-size: 24px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #2d5c0e; }
+  .crumb { background: #f4f9ec; border-bottom: 1px solid #c6dcb0; font-size: 12px; padding: 5px 0; color: #555; }
+  /* 标题栏 */
+  .thread-title {
+    background: #fff; border: 1px solid #b9d1a0; border-bottom: none;
+    padding: 10px 14px; margin-top: 12px;
+  }
+  .thread-title h1 { font-size: 18px; display: inline; }
+  .thread-title .badge-tie {
+    background: #d9463a; color: #fff; font-size: 11px; padding: 1px 6px;
+    margin-right: 8px; font-family: "Microsoft YaHei", sans-serif;
+  }
+  .thread-meta { font-size: 12px; color: #888; margin-top: 6px; }
+  /* 楼层 */
+  .floor {
+    background: #fff; border: 1px solid #b9d1a0; border-top: none;
+    display: table; width: 100%; table-layout: fixed;
+  }
+  .floor .u-col {
+    width: 130px; background: #f6faf0; border-right: 1px solid #d8e6c8;
+    padding: 10px 8px; text-align: center; vertical-align: top;
+  }
+  .floor .c-col { padding: 10px 14px; vertical-align: top; }
+  .avatar {
+    width: 60px; height: 60px; margin: 0 auto 6px;
+    border: 1px solid #9ab87a; background: #fff8d8;
+    font-size: 26px; line-height: 58px; color: #a8761a;
+    font-family: "Microsoft YaHei", sans-serif;
+  }
+  .avatar.haozi { background: #ececec; border-color: #aaa; color: #666; }
+  .avatar.anon { background: #f0f0f0; border-color: #bbb; color: #999; font-size: 12px; line-height: 16px; padding-top: 22px; }
+  .u-name { font-weight: bold; font-size: 13px; font-family: "Microsoft YaHei", sans-serif; }
+  .u-level { font-size: 11px; color: #8a6d20; }
+  .u-stat { font-size: 11px; color: #999; margin-top: 2px; }
+  .sig {
+    margin-top: 8px; border-top: 1px dashed #b9d1a0; padding-top: 6px;
+    font-size: 11px; color: #777; line-height: 1.9;
+  }
+  .floor-head {
+    text-align: right; font-size: 12px; color: #999; margin-bottom: 6px;
+  }
+  .floor-no {
+    float: left; font-size: 12px; color: #888;
+    background: #eef5e4; border: 1px solid #cfe0b8; padding: 0 8px;
+  }
+  .lz-badge {
+    background: #f39800; color: #fff; font-size: 10px; padding: 0 4px;
+    margin-left: 6px; font-family: "Microsoft YaHei", sans-serif;
+  }
+  .post-body { margin: 8px 0; line-height: 2; }
+  .post-body img.draw {
+    border: 1px solid #999; background: #fff;
+    max-width: 420px; width: 100%; display: block; margin: 8px 0;
+  }
+  .post-body .cap { color: #333; }
+  .anon-post { color: #555; }
+  /* 分页 */
+  .pager {
+    background: #fff; border: 1px solid #b9d1a0; border-top: none;
+    padding: 10px 14px; font-size: 13px; text-align: center;
+  }
+  .pager a, .pager span.cur {
+    display: inline-block; padding: 2px 10px; margin: 0 2px;
+    border: 1px solid #b9d1a0; background: #f6faf0; text-decoration: none;
+  }
+  .pager span.cur { background: #5aa327; color: #fff; border-color: #3d7a15; }
+  .pager a:hover { background: #e3f0d2; }
+</style>
+</head>
+<body>
+<script>window.DEPTH = 1; window.SOFT_HINT_TEXT = '签名档里，也许有别的入口。';</script>
+
+<div id="iebar-box"></div>
+
+<div class="tb-header">
+  <div class="wrap">
+    <span class="tb-logo">向日葵论坛</span>
+  </div>
+</div>
+<div class="crumb">
+  <div class="wrap">
+    您的位置：<a href="index.html">向日葵论坛</a> &gt; <a href="index.html">画画区</a> &gt; 我的画画打卡！每天更一张～
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="thread-title">
+    <span class="badge-tie">精品</span><h1>我的画画打卡！每天更一张～</h1>
+    <div class="thread-meta">
+      楼主：栀栀爱画猫 ｜ 浏览：<span class="stat-num">8,417</span> ｜ 回复：<span class="stat-num">31</span> ｜ 发表于 2012-03-02
+      <span style="float:right;">
+        <button class="btn btn-green btn-sm" onclick="alert('论坛已关闭，仅支持浏览。')">我也要发帖</button>
+        <button class="btn btn-green btn-sm" onclick="alert('论坛已关闭，不能回复。')">回复</button>
+      </span>
+    </div>
+  </div>
+
+  <!-- ============ 第1页：楼1-7 ============ -->
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">1楼</span>2012-03-02 19:42</div>
+      <div class="post-body">
+        <span class="cap">从今天开始！！每天画一张！目标是把我家的花卷画遍哈哈哈哈<br>今天先画它睡觉，它一天要睡二十个小时，跟我奶奶似的。</span>
+        <img class="draw" src="../images/drawings/d01_cat_sleep.jpg" alt="花卷睡觉">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">2楼</span>2012-03-02 20:15</div>
+      <div class="post-body"><span class="cap">画得一般，猫眼睛都涂歪了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">3楼</span>2012-03-06 18:57</div>
+      <div class="post-body">
+        <span class="cap">今天画我们学校！四层楼，国旗是我爸帮我涂的颜色，他涂得比我涂得还好，气死我了。</span>
+        <img class="draw" src="../images/drawings/d02_school.jpg" alt="小学校园">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">4楼</span>2012-03-06 19:30</div>
+      <div class="post-body"><span class="cap">教学楼画得跟豆腐块一样。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">5楼</span>2012-03-10 20:03</div>
+      <div class="post-body">
+        <span class="cap">今天画我家厨房！我妈在灶台前面炒菜，她不知道我在画她，嘿嘿。</span>
+        <img class="draw" src="../images/drawings/d03_home.jpg" alt="家里厨房">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">6楼</span>2012-03-11 12:40</div>
+      <div class="post-body"><span class="cap">你妈围裙颜色涂出界了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="1">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">7楼</span>2012-03-15 19:22</div>
+      <div class="post-body">
+        <span class="cap">花卷昨天追一只蝴蝶，从沙发靠背上摔下去了，蠢死了哈哈哈哈。我把它画下来了。</span>
+        <img class="draw" src="../images/drawings/d04_cat_butterfly.jpg" alt="猫追蝴蝶">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 第2页：楼8-14 ============ -->
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">8楼</span>2012-03-16 07:55</div>
+      <div class="post-body"><span class="cap">蝴蝶翅膀画反了吧。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">9楼</span>2012-04-08 21:10</div>
+      <div class="post-body">
+        <span class="cap">今天春游！！风好大，我们班风筝挂树上了，老师爬上去拿的哈哈哈哈。</span>
+        <img class="draw" src="../images/drawings/d05_spring_outing.jpg" alt="春游放风筝">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">10楼</span>2012-04-09 18:02</div>
+      <div class="post-body"><span class="cap">人都画得一个样，分不出谁是谁。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">11楼</span>2012-05-20 19:48</div>
+      <div class="post-body">
+        <span class="cap">奶奶送的定胜糕！我一边画一边偷吃了一块，嘿嘿，我妈没发现。</span>
+        <img class="draw" src="../images/drawings/d06_cake.jpg" alt="定胜糕和青团">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">12楼</span>2012-05-21 12:11</div>
+      <div class="post-body"><span class="cap">盘子都画歪了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">13楼</span>2012-06-01 20:36</div>
+      <div class="post-body">
+        <span class="cap">自画像！我妈说我辫子画得像两根油条，哼，一点都不像。</span>
+        <img class="draw" src="../images/drawings/d07_selfportrait.jpg" alt="自画像">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="2">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">14楼</span>2012-06-01 21:00</div>
+      <div class="post-body"><span class="cap">……确实像。</span></div>
+    </div>
+  </div>
+
+  <!-- ============ 第3页：楼15-21 ============ -->
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">15楼</span>2012-06-12 19:05</div>
+      <div class="post-body">
+        <span class="cap">今天我十岁啦！！！蛋糕是我妈买的，上面十根蜡烛。我的愿望就是——去看海！！！</span>
+        <img class="draw" src="../images/drawings/d08_birthday.jpg" alt="十岁生日蛋糕">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">16楼</span>2012-06-12 19:44</div>
+      <div class="post-body"><span class="cap">生日快乐。……蛋糕蜡烛画歪了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">17楼</span>2012-06-25 20:18</div>
+      <div class="post-body">
+        <span class="cap">画了我想象中的海边！大太阳、蓝海水，沙滩上有我和花卷。我妈说等我病好了就带我去青岛。</span>
+        <img class="draw" src="../images/drawings/d09_sea_dream.jpg" alt="想象中的海边">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">18楼</span>2012-06-26 07:40</div>
+      <div class="post-body"><span class="cap">海水颜色太蓝了，假。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">19楼</span>2012-07-08 19:59</div>
+      <div class="post-body">
+        <span class="cap">花卷蹲鱼缸前面看金鱼，看了一上午，口水都要流下来了，蠢猫。</span>
+        <img class="draw" src="../images/drawings/d10_cat_fish.jpg" alt="猫看鱼缸">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">20楼</span>2012-07-09 18:21</div>
+      <div class="post-body"><span class="cap">这猫又胖了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="3">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">21楼</span>2012-07-20 17:44</div>
+      <div class="post-body">
+        <span class="cap">今天太阳好大。花卷在阳台趴了一天，我也趴了一天，什么都不干，舒服。</span>
+        <img class="draw" src="../images/drawings/d11_cat_sun.jpg" alt="阳台晒太阳的猫">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 第4页：楼22-28 ============ -->
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">22楼</span>2012-07-21 09:12</div>
+      <div class="post-body"><span class="cap">太阳都涂出框了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">23楼</span>2012-07-23 20:00</div>
+      <div class="post-body"><span class="cap">今天怎么没更？？猫被你画跑了？出来冒个泡。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">24楼</span>2012-07-28 21:37</div>
+      <div class="post-body">
+        <span class="cap">花卷找到了，但是我有点累。今天先画到这。</span>
+        <img class="draw" src="../images/drawings/d12_found_tired.jpg" alt="缩在角落的猫">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">25楼</span>2012-07-29 08:15</div>
+      <div class="post-body"><span class="cap">……找到就好。画得比以前难看了。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">26楼</span>2012-08-05 20:52</div>
+      <div class="post-body">
+        <span class="cap">今天外面在下雨。</span>
+        <img class="draw" src="../images/drawings/d13_dark_window.jpg" alt="一扇窗">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">27楼</span>2012-08-06 07:30</div>
+      <div class="post-body"><span class="cap">就画一扇窗？偷懒。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="4">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">28楼</span>2012-08-11 19:26</div>
+      <div class="post-body">
+        <span class="cap">……今天楼下有人在吵架。</span>
+        <img class="draw" src="../images/drawings/d14_hospital_corridor.jpg" alt="走廊">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 第5页：楼29-32 ============ -->
+  <div class="floor" data-page="5">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">29楼</span>2012-08-12 08:03</div>
+      <div class="post-body"><span class="cap">医院走廊？你去医院干嘛了？</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="5">
+    <div class="u-col">
+      <div class="avatar">栀</div>
+      <div class="u-name">栀栀爱画猫<span class="lz-badge">楼主</span></div>
+      <div class="u-level">Lv.3 画画小学徒</div>
+      <div class="u-stat">发帖：47<br>回帖：203</div>
+      <div class="sig">
+        —— 签名档 ——<br>
+        <a href="../album/index.html">我的相册屋→</a><br>
+        讯聊号：<a href="../chat/index.html">87xxxx612 加我请说花卷</a>
+      </div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">30楼</span>2012-08-17 21:08</div>
+      <div class="post-body">
+        <span class="cap">今天没力气，明天画完。</span>
+        <img class="draw" src="../images/drawings/d15_half_window.jpg" alt="半幅的窗">
+      </div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="5">
+    <div class="u-col">
+      <div class="avatar haozi">耗</div>
+      <div class="u-name">耗子不会飞</div>
+      <div class="u-level">Lv.5 水王</div>
+      <div class="u-stat">发帖：312<br>回帖：1,876</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">31楼</span>2012-08-20 19:47</div>
+      <div class="post-body"><span class="cap">你怎么还不更啊？？画了一半就跑了？出来说句话。</span></div>
+    </div>
+  </div>
+
+  <div class="floor" data-page="5">
+    <div class="u-col">
+      <div class="avatar anon">游客</div>
+      <div class="u-name">117.86.*.*</div>
+      <div class="u-level">未登录游客</div>
+      <div class="u-stat">—</div>
+    </div>
+    <div class="c-col">
+      <div class="floor-head"><span class="floor-no">32楼</span>2013-09-19 06:31</div>
+      <div class="post-body"><span class="anon-post">囡囡，奶奶给你送了定胜糕，放你书桌上了。</span></div>
+    </div>
+  </div>
+
+  <div class="pager" id="pager"></div>
+</div>
+
+<div id="footer-box"></div>
+<script src="../js/common.js"></script>
+<script>
+(function () {
+  var TOTAL = 5;
+  var m = location.search.match(/p=(\d+)/);
+  var p = m ? parseInt(m[1], 10) : 1;
+  if (isNaN(p) || p < 1) p = 1;
+  if (p > TOTAL) p = TOTAL;
+
+  var floors = document.querySelectorAll('.floor');
+  for (var i = 0; i < floors.length; i++) {
+    floors[i].style.display = (floors[i].getAttribute('data-page') === String(p)) ? 'table' : 'none';
+  }
+
+  var html = '';
+  if (p > 1) html += '<a href="thread.html?p=' + (p - 1) + '">&lt;上一页</a>';
+  for (var n = 1; n <= TOTAL; n++) {
+    html += (n === p) ? '<span class="cur">' + n + '</span>'
+                      : '<a href="thread.html?p=' + n + '">' + n + '</a>';
+  }
+  if (p < TOTAL) html += '<a href="thread.html?p=' + (p + 1) + '">下一页&gt;</a>';
+  document.getElementById('pager').innerHTML = html;
+})();
+</script>
+</body>
+</html>
