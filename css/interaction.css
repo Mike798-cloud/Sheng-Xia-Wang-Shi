@@ -1,0 +1,18 @@
+/* Optional controls and dialogs float above the original pages. */
+html.runtime-quiet .seam-blink,html.runtime-quiet .ad-blink { animation:none!important;opacity:1!important; }
+@media(prefers-reduced-motion:reduce){.seam-blink,.ad-blink{animation:none!important;opacity:1!important}.soft-hint,.sea-hint{transition:none!important}}
+.runtime-tool{position:fixed;bottom:14px;z-index:9000;min-height:36px;padding:5px 10px;border:1px solid #8a8f80;border-radius:3px;background:#f4f4eb;color:#384536;font:13px/1.6 sans-serif;cursor:pointer;box-shadow:1px 1px 3px #0002}
+#runtime-settings{right:66px}#soft-hint-box.runtime-hint{left:14px;max-width:45%;opacity:1;pointer-events:auto;color:#384536}
+.runtime-tool:focus-visible,[role=button]:focus-visible,[role=option]:focus-visible,.runtime-dialog button:focus-visible{outline:3px solid #215ca5;outline-offset:2px}
+.runtime-shade{position:fixed;inset:0;z-index:10000;background:#0009;display:flex;align-items:center;justify-content:center;padding:16px}
+.runtime-dialog{box-sizing:border-box;background:#f8f8f2;color:#222;border:1px solid #8a8f80;box-shadow:3px 3px 18px #0007;padding:18px;width:480px;max-width:100%;max-height:85vh;max-height:85dvh;overflow:auto;font:14px/1.85 sans-serif}
+.runtime-dialog h2{font-size:17px;margin:0 0 12px}.runtime-dialog p{margin:10px 0}.runtime-dialog button,.runtime-dialog select{font:inherit;margin:6px 8px 3px 0;padding:4px 10px;min-height:36px;cursor:pointer}.runtime-dialog label{display:block;margin:10px 0}.runtime-dialog input{margin-right:8px}.runtime-dialog .runtime-close{float:right;margin:0 0 8px 12px}.runtime-dialog img{display:block;max-width:100%;max-height:65vh;object-fit:contain;margin:auto}
+.runtime-dialog.runtime-photo{width:1000px}.runtime-photo p{text-align:center}.runtime-status{font-size:12px;color:#666}.runtime-dialog .runtime-focus{outline:none}
+@media(max-width:480px){.runtime-tool{bottom:12px;font-size:12px;padding:4px 8px}#soft-hint-box.runtime-hint{left:10px;max-width:43%}.runtime-dialog{padding:14px}.runtime-shade{padding:10px}}
+/* Keep the existing search row inside narrow screens. */
+.search-area input#kw{min-width:0}
+.runtime-image-viewport{max-height:60vh;max-height:60dvh;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;border:1px solid #ddd;background:#eee}
+.runtime-image-viewport img{height:auto;user-select:none;-webkit-user-drag:none}
+.runtime-zoom-controls{clear:both;margin-bottom:8px}.runtime-zoom-controls button{padding:3px 9px;margin:2px 6px 3px 0}.runtime-zoom-controls .runtime-status{white-space:nowrap}
+
+.runtime-dialog .runtime-close{position:sticky;top:0;z-index:1}

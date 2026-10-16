@@ -73,7 +73,8 @@
 
   var m = SearchDB.match(q);
   var list = [];
-  if (m.result) list.push(m.result);
+  if (m.results) list = m.results.slice();
+  else if (m.result) list.push(m.result);
   list = list.concat(SearchDB.GENERIC);
   /* 沈知栀单搜：第2页开头插入无效死快照 */
   if (m.special && m.special.snapshot) list.splice(8, 0, SearchDB.RESULTS.SNAPSHOT);
@@ -84,16 +85,17 @@
   var start = (p - 1) * per;
   var slice = list.slice(start, start + per);
 
-  document.getElementById('meta').textContent =
-    '千度为您找到相关结果约 ' + list.length + ' 个（用时 0.' + (100 + list.length * 7 % 800) + ' 秒），关键词：' + q;
+  document.getElementById('meta').textContent = m.result
+    ? '千度为您找到相关结果约 ' + list.length + ' 个，关键词：' + q
+    : (m.error === 'archive_number' ? '没有找到这个归档号，请核对照片页末尾的原始编号。' : '没有找到直接匹配的可读快照，下方列出同批归档页面。') + ' 关键词：' + q;
 
   var box = document.getElementById('results');
   slice.forEach(function (item, idx) {
     var div = document.createElement('div');
     div.className = 'result-item';
     var titleHref = item.href || 'javascript:void(0)';
-    var titleCls = item.dead ? ' class="dead"' : '';
-    var date = '2012-' + String(1 + (start + idx) % 7).padStart(2, '0') + '-' + String(1 + (start + idx) % 27).padStart(2, '0');
+    var titleCls = (item.dead || !item.href) ? ' class="dead"' : '';
+    var date = item.date || '旧网快照';
     div.innerHTML =
       '<div class="title"><a' + titleCls + ' href="' + titleHref + '">' + item.t + '</a></div>' +
       '<div class="snippet">' + item.s + '</div>' +
@@ -115,9 +117,7 @@
   pg.innerHTML = html;
 
   /* 相关搜索 */
-  var rels = (m.special && m.special.snapshot)
-    ? SearchDB.RELATED_SPECIAL.concat(SearchDB.RELATED_GENERIC.slice(0, 3))
-    : SearchDB.RELATED_GENERIC;
+  var rels = SearchDB.related(q);
   var rl = document.getElementById('related-list');
   rels.forEach(function (word) {
     var a = document.createElement('a');

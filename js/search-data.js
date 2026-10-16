@@ -20,14 +20,14 @@ var SearchDB = {
   RESULTS: {
     LOST: {
       t: '我的画画打卡！每天更一张～_向日葵论坛',
-      s: '【楼主：栀栀爱画猫】今天又画了一只花卷！……7月23日，我家花卷走丢了，黄白花的小猫，脖子上有红项圈。各位叔叔阿姨有在江滨小区看到的，请回帖告诉我，重谢！',
+      s: '【楼主：栀栀爱画猫】今天又画了一只花卷！……7月23日，我家花卷走丢了，白色的小猫，戴着项圈。各位叔叔阿姨有在江滨小区看到的，请回帖告诉我，重谢！',
       u: 'bincheng.go.cn > 向日葵论坛 > 画画区',
       href: '../forum/thread.html',
       dead: false
     },
     SCHOOL: {
       t: '滨城实验小学2012春季作文比赛获奖公示（转载）',
-      s: '2012年春季学期作文比赛获奖名单公示：一等奖《我的小猫花卷》，四年级三班 沈知栀……现把获奖作文全文转载如下，供各位家长参考。',
+      s: '2012年春季学期作文比赛获奖名单公示：一等奖《我的小猫花卷》，五年级三班 沈知栀……现把获奖作文全文转载如下，供各位家长参考。',
       u: 'news.bincheng.com > 校园频道 > 转载',
       href: '../newspaper/index.html#campus',
       dead: false
@@ -110,18 +110,21 @@ var SearchDB = {
 
   /* ---------- 匹配主入口 ----------
      返回 { result: 置顶结果对象|null, special: {snapshot:bool, related:[...]}|null } */
-  match: function (rawQuery) {
-    var q = this.normalize(rawQuery);
-    var out = { result: null, special: null };
-    if (!q) return out;
-    for (var i = 0; i < this.GROUPS.length; i++) {
-      var g = this.GROUPS[i];
-      for (var j = 0; j < g.triggers.length; j++) {
-        if (q.indexOf(this.normalize(g.triggers[j])) >= 0) {
-          if (g.resultKey) out.result = this.RESULTS[g.resultKey];
-          if (g.special) out.special = g.special;
-          return out;
-        }
+  match: function(rawQuery) {
+    var q=this.normalize(rawQuery),out={result:null,special:null};if(!q)return out;
+    var numbers=q.match(/\d+/g)||[],archiveIntent=/归档|存档/.test(q)||numbers.some(function(n){return n.indexOf('20120817')>=0;});
+    var invalid=archiveIntent&&numbers.some(function(n){return n.length>=8&&n!=='20120817'&&n!=='20120817001';});
+    if(invalid){out.error='archive_number';return out;}
+    if(numbers.some(function(n){return n==='20120817'||n==='20120817001';})){out.result=this.RESULTS.ARCHIVE;return out;}
+    var name=/沈知栀|栀栀/.test(q);
+    if(name&&/相册|照片|海边|看海|青岛/.test(q)){out.result=this.RESULTS.SEASIDE;return out;}
+    if(name&&/画画|绘画|打卡/.test(q)){out.result=this.RESULTS.DRAWINGS;return out;}
+    if(/心内|心脏|先心/.test(q)&&/医院|二科|救助|公示/.test(q)){out.result=this.RESULTS.HOSPITAL;return out;}
+    if((/花卷/.test(q)&&/后来|近况|近来|现在|怎么样|还好/.test(q))||(/老沈/.test(q)&&/猫|花卷/.test(q))){out.result=this.RESULTS.PET;return out;}
+    for(var i=0;i<this.GROUPS.length;i++){
+      var g=this.GROUPS[i];
+      for(var j=0;j<g.triggers.length;j++){
+        if(q.indexOf(this.normalize(g.triggers[j]))>=0){if(g.resultKey)out.result=this.RESULTS[g.resultKey];if(g.special)out.special=g.special;return out;}
       }
     }
     return out;
@@ -171,3 +174,38 @@ var SearchDB = {
     { t: '老台式机升级：加内存还是换显卡？', s: '08年的机子，平时就看看网页打打小游戏。大家说再加根2G内存划算，还是凑钱换个新主机？', u: 'bbs.zol.com.cn > 硬件' }
   ]
 };
+
+/* The suggestions and results use the same normalization and aliases. */
+SearchDB.normalize = function (q) {
+  return String(q || '').toLowerCase().replace(/[！-～]/g, function (c) {
+    return String.fromCharCode(c.charCodeAt(0) - 65248);
+  }).replace(/[\s_\-—·.，,。:：/\\()（）【】\[\]"'“”]/g, '');
+};
+SearchDB.RESULTS.SEASIDE = {t:'栀栀的小相册 · 等出院了画完', s:'栀栀的小相册中留着夏天的照片，还有一张没有画完的海边画。相册仅好友可见，访问需要密码。',u:'album.house.cn > 栀栀的小相册',href:'../album/index.html',date:'2012-08-17'};
+SearchDB.RESULTS.DRAWINGS = {t:'栀栀爱画猫 · 我的画画打卡！每天更一张～',s:'画猫、画学校，也画过想象中的海边。楼主在帖子中陆续贴出了自己的画。',u:'bincheng.go.cn > 向日葵论坛 > 画画区',href:'../forum/thread.html',date:'2012-03-02'};
+SearchDB.RESULTS.MOM = {t:'晚琴的小日子 - 微语',s:'一个普通妈妈的碎碎念，记录栀栀和家里的日常。',u:'weiyu.com > 晚琴的小日子',href:'../weiyu/index.html',date:'2012-08-16'};
+SearchDB.RESULTS.LOST.date='2012-07-28'; SearchDB.RESULTS.SCHOOL.date='2012-06-18';
+SearchDB.RESULTS.HOSPITAL.date='2012-08-10'; SearchDB.RESULTS.PET.date='2013-08-17';
+SearchDB.RESULTS.ARCHIVE.date='2013-08-17'; SearchDB.RESULTS.SNAPSHOT.date='2012-08-17';
+SearchDB.RESULTS.HOSPITAL.s='2012年度第二批先天性心脏病患儿救助名单公示，公示期为2012年8月10日至16日。咨询：心内二科。';
+SearchDB.GROUPS = [
+ {triggers:['沈知栀归档','沈知栀个人存档','沈知栀存档'],resultKey:'ARCHIVE'},
+ {triggers:['沈知栀海边','沈知栀看海','栀栀海边','等出院了画完','我的相册屋'],resultKey:'SEASIDE'},
+ {triggers:['沈知栀画画比赛','沈知栀画画','栀栀爱画猫','我的画画打卡','向日葵论坛'],resultKey:'DRAWINGS'},
+ {triggers:['晚琴','苏晚琴','栀栀妈妈'],resultKey:'MOM'},
+ {triggers:['滨城实验小学沈知栀','沈知栀获奖','沈知栀作文','我的小猫花卷','作文获奖','滨城实验小学'],resultKey:'SCHOOL'},
+ {triggers:['滨城儿童医院','儿童医院','先天性心脏病','先心病','心内二科','儿童心脏病','救助名单','救助公示'],resultKey:'HOSPITAL'},
+ {triggers:['花卷后来','花卷近况','老沈猫','家里的猫一切都好','花卷还好吗'],resultKey:'PET'},
+ {triggers:['花卷走丢','花卷丢了','花卷猫滨城','找猫花卷','白猫花卷','寻猫启事','寻猫','花卷'],resultKey:'LOST'},
+ {triggers:['小猫'],resultKey:'SCHOOL'},
+ {triggers:['沈知栀','栀栀'],resultKey:'SCHOOL',special:{snapshot:true}}
+];
+SearchDB.related = function (raw) {
+  var q=this.normalize(raw), m=this.match(q);
+  if (m.result === this.RESULTS.ARCHIVE) return ['沈知栀','花卷后来','沈知栀 海边'];
+  if (m.result === this.RESULTS.HOSPITAL) return ['沈知栀','沈知栀 海边','晚琴的小日子'];
+  if (m.result === this.RESULTS.LOST || m.result === this.RESULTS.PET) return ['花卷走丢','花卷后来','沈知栀 作文'];
+  if (m.result || (m.special && m.special.snapshot)) return ['沈知栀 海边','沈知栀 画画比赛','沈知栀 作文','花卷后来'];
+  return ['花卷走丢','沈知栀','滨城儿童医院'].concat(this.RELATED_GENERIC.slice(0,3));
+};
+SearchDB.SUGGESTIONS=['花卷走丢','花卷后来','花卷近况','老沈猫','沈知栀','沈知栀 获奖','沈知栀 作文','沈知栀 海边','沈知栀 画画比赛','我的小猫花卷','滨城实验小学','滨城儿童医院','先天性心脏病 救助','心内二科','晚琴的小日子'];

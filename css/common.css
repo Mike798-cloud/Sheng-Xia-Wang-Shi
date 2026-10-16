@@ -379,3 +379,16 @@ table.grid th { background: #e8edf5; }
   /* ---------- 喇叭开关位置不遮挡内容 ---------- */
   #speaker-btn { right: 12px; bottom: 12px; width: 46px; height: 46px; }
 }
+
+/* No flashing before preferences have loaded; dimensions and layout stay intact. */
+html:not(.runtime-motion) .seam-blink,
+html:not(.runtime-motion) .ad-blink { animation:none!important;opacity:1!important; }
+
+/* Restore the original desktop columns; narrow screens retain their stacked layout. */
+@media(min-width:769px){
+  .floor > .u-col,.floor > .c-col{display:table-cell}
+  .wy-layout{display:grid!important;max-width:96%;grid-template-columns:200px minmax(0,1fr) 200px;gap:10px}
+  .wy-layout > .wy-main{width:auto;margin:0;min-width:0}
+  .wy-layout > .wy-side,.wy-layout > .wy-right{width:auto;min-width:0}
+}
+.post-body img.draw,.photo-frame img{height:auto}

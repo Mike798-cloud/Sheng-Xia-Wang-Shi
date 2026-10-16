@@ -37,7 +37,7 @@
   <p>你好，不知道你是怎么找到这里的。</p>
   <p>这些是我照着我女儿以前上过的网站、发过的帖子，一点点拼起来的镜像。她走了以后，原来的论坛要关了，账号要注销了，帖子慢慢就沉底找不到了。</p>
   <p>我怕她的东西就这么没了，就把当年的网页都爬了下来，把她的痕迹都嵌了进去。</p>
-  <p>她叫沈知栀，小名叫栀栀，今年十岁，最喜欢画猫，最想去看海。</p>
+  <p>她叫沈知栀，小名叫栀栀，那年十岁，最喜欢画猫，最想去看海。</p>
   <p>谢谢你看完她的夏天。</p>
 
   <div class="sea-pic">
@@ -53,7 +53,8 @@
 <script src="../js/common.js"></script>
 <script>
 (function () {
-  /* 通关：写入存档后再跳回档案馆首页 */
+  GameState.finish();
+  /* 返回镜像目录 */
   document.getElementById('back-home').addEventListener('click', function (e) {
     e.preventDefault();
     GameState.finish();

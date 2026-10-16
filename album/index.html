@@ -107,9 +107,9 @@
     <h2>该相册已设访问密码</h2>
     <form id="gate-form">
       <div style="font-size:13px; margin-bottom:8px;">请输入访问密码（4位数字）</div>
-      <input type="text" id="gate-pwd" class="txt" maxlength="10" autocomplete="off">
+      <input type="text" id="gate-pwd" class="txt" maxlength="12" autocomplete="off" inputmode="numeric" aria-label="相册访问密码" aria-describedby="gate-err">
       <input type="submit" class="btn btn-sm" value="进入相册">
-      <div class="err" id="gate-err"></div>
+      <div class="err" id="gate-err" role="status" aria-live="polite"></div>
     </form>
     <div class="tip">（妈妈说过，密码不就是你生日嘛，笨囡囡）</div>
   </div>
@@ -120,14 +120,14 @@
       <tr>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p01_spring_class.jpg" alt="春游班级合影">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p01_spring_class.jpg" alt="春游班级合影">
           </div>
           <div class="photo-cap">春游合影（2012-04-08，公园牌坊前）</div>
           <div class="photo-time">上传于 2012-04-08 16:20</div>
         </td>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p02_girl_cat.jpg" alt="和花卷合照">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p02_girl_cat.jpg" alt="和花卷合照">
           </div>
           <div class="photo-cap">和花卷合照</div>
           <div class="photo-time">上传于 2012-05-02 19:41</div>
@@ -136,14 +136,14 @@
       <tr>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p03_cakes.jpg" alt="奶奶做的点心">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p03_cakes.jpg" alt="奶奶做的点心">
           </div>
           <div class="photo-cap">奶奶做的点心（定胜糕和青团）</div>
           <div class="photo-time">上传于 2012-05-20 11:05</div>
         </td>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p04_drawing.jpg" alt="栀栀画画">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p04_drawing.jpg" alt="栀栀画画">
           </div>
           <div class="photo-cap">栀栀画画（台灯下的小书桌）</div>
           <div class="photo-time">上传于 2012-06-15 21:30</div>
@@ -152,14 +152,14 @@
       <tr>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p07_tree_window.jpg" alt="窗外梧桐树">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p07_tree_window.jpg" alt="窗外梧桐树">
           </div>
           <div class="photo-cap">窗外的梧桐树（2012年夏天）</div>
           <div class="photo-time">上传于 2012-07-31 09:12</div>
         </td>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p05_hospital_corridor.jpg" alt="医院走廊">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p05_hospital_corridor.jpg" alt="医院走廊">
           </div>
           <div class="photo-cap">医院走廊（妈妈陪我来复查）</div>
           <div class="photo-time">上传于 2012-08-02 10:48</div>
@@ -168,7 +168,7 @@
       <tr>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p06_nurse_mask.jpg" alt="戴口罩的护士">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p06_nurse_mask.jpg" alt="戴口罩的护士">
           </div>
           <div class="photo-cap">戴口罩的护士（心内二科）</div>
           <div class="photo-time">上传于 2012-08-05 15:22</div>
@@ -176,7 +176,7 @@
         <td>
           <div class="photo-frame">
             <div class="img-wrap">
-              <img src="../images/photos/p09_wristband.jpg" alt="腕带特写">
+              <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p09_wristband.jpg" alt="腕带特写">
               <span class="wrist-overlay">心内二科 2012.08.10</span>
             </div>
           </div>
@@ -187,14 +187,14 @@
       <tr>
         <td>
           <div class="photo-frame">
-            <img src="../images/photos/p08_dad_bedside.jpg" alt="爸爸趴床边">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p08_dad_bedside.jpg" alt="爸爸趴床边">
           </div>
           <div class="photo-cap">爸爸在床边睡着了（晚上拍的）</div>
           <div class="photo-time">上传于 2012-08-14 23:55</div>
         </td>
         <td>
           <div class="photo-frame" id="sea-frame">
-            <img src="../images/photos/p10_half_sea.jpg" alt="半张没画完的海边画">
+            <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p10_half_sea.jpg" alt="半张没画完的海边画">
             <span class="sea-hint">爸爸帮你画完了海，下次带你去。</span>
           </div>
           <div class="photo-cap">等出院了画完</div>
@@ -213,30 +213,31 @@
 <script>
 (function () {
   var GALLERY_KEY = 'shengxia_album_unlocked';
-  var PASSWORDS = ['0612', '612', '20120612'];
+  var PASSWORDS = ['0612', '612', '20020612', '20120612'];
 
   function showGallery() {
     document.getElementById('gate').style.display = 'none';
     document.getElementById('gallery').style.display = 'block';
+    RuntimeImages.activate(document.getElementById('gallery'));
   }
 
   /* 进入页面：已解锁则直接展示 */
-  try {
-    if (sessionStorage.getItem(GALLERY_KEY) === '1') showGallery();
-  } catch (e) {}
+  if (GameStorage.get(GALLERY_KEY,'0') === '1') showGallery();
 
   /* 密码校验 */
   document.getElementById('gate-form').addEventListener('submit', function (e) {
     e.preventDefault();
-    var v = document.getElementById('gate-pwd').value.replace(/\s/g, '');
+    var v = document.getElementById('gate-pwd').value.replace(/[０-９]/g, function(c){ return String.fromCharCode(c.charCodeAt(0)-65248); }).replace(/[\s年/月日.\-]/g, '');
     var errEl = document.getElementById('gate-err');
     if (PASSWORDS.indexOf(v) >= 0) {
-      try { sessionStorage.setItem(GALLERY_KEY, '1'); } catch (e) {}
+      GameStorage.set(GALLERY_KEY,'1');
       errEl.textContent = '';
+      document.getElementById('gate-pwd').setAttribute('aria-invalid','false');
       showGallery();
       try { if (window.AudioEngine) AudioEngine.playStinger('musicbox_motif.mp3', 0.3); } catch (e) {}
     } else {
       errEl.textContent = '密码不正确，再想想？';
+      document.getElementById('gate-pwd').setAttribute('aria-invalid','true');
       document.getElementById('gate-pwd').value = '';
       document.getElementById('gate-pwd').focus();
     }

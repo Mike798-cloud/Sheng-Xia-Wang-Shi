@@ -82,41 +82,54 @@
 
 <div id="footer-box"></div>
 <script src="../js/common.js"></script>
+<script src="../js/search-data.js"></script>
 <script>
 (function () {
   /* 简单相关推荐词库 */
-  var LEXICON = [
-    '花卷走丢', '花卷 走丢', '找猫 花卷', '白猫 花卷', '花卷后来', '花卷近况', '老沈猫',
-    '沈知栀', '沈知栀 获奖', '沈知栀 作文', '沈知栀 海边', '沈知栀 画画比赛', '沈知栀 20120817',
-    '我的小猫花卷', '滨城实验小学', '滨城实验小学 沈知栀',
-    '心内二科', '滨城儿童医院', '先天性心脏病 救助', '先心病 滨城',
-    '小猫', '作文获奖', '滨城天气', '滨城二手房', '广场舞教学', '定胜糕做法'
-  ];
+  var LEXICON = SearchDB.SUGGESTIONS;
   var kw = document.getElementById('kw');
   var box = document.getElementById('suggest-box');
+  var composing = false;
 
+  function hide(){box.style.display='none';kw.setAttribute('aria-expanded','false');}
   function render(list) {
-    if (!list.length) { box.style.display = 'none'; return; }
+    if (!list.length) { hide(); return; }
     box.innerHTML = '';
     list.forEach(function (word) {
       var div = document.createElement('div');
       div.className = 'item';
       div.textContent = word;
-      div.onmousedown = function () { kw.value = word; box.style.display = 'none'; document.getElementById('search-form').submit(); };
+      div.setAttribute('role','option'); div.tabIndex = 0;
+      function choose() { kw.value = word; hide(); document.getElementById('search-form').submit(); }
+      div.onclick = choose; div.onmousedown = function(e) { e.preventDefault(); };
+      div.onkeydown = function(e) {
+        if(e.isComposing||e.keyCode===229)return;
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}
+        else if(e.key==='ArrowDown'){e.preventDefault();(div.nextElementSibling||box.firstElementChild).focus();}
+        else if(e.key==='ArrowUp'){e.preventDefault();(div.previousElementSibling||kw).focus();}
+        else if(e.key==='Escape'){e.preventDefault();kw.focus();hide();}
+      };
       box.appendChild(div);
     });
-    box.style.display = 'block';
+    box.style.display = 'block';kw.setAttribute('aria-expanded','true');
   }
-  kw.oninput = function () {
+  kw.setAttribute('aria-label','搜索旧网页');
+  kw.setAttribute('role','combobox');kw.setAttribute('aria-expanded','false');kw.setAttribute('aria-autocomplete','list');kw.setAttribute('aria-controls','suggest-box'); box.setAttribute('role','listbox');
+  kw.onkeydown = function(e) { if(composing||e.isComposing||e.keyCode===229)return; if(e.key === 'ArrowDown' && box.firstElementChild && box.style.display !== 'none'){ e.preventDefault(); box.firstElementChild.focus(); } if(e.key === 'Escape') hide(); };
+  kw.addEventListener('compositionstart',function(){composing=true;hide();});
+  kw.addEventListener('compositionend',function(){composing=false;kw.oninput();});
+  kw.oninput = function (e) {
+    if(composing||(e&&e.isComposing)){hide();return;}
     var v = kw.value.trim();
-    if (!v) { box.style.display = 'none'; return; }
-    var low = v.toLowerCase();
+    if (!v) { hide(); return; }
+    var low = SearchDB.normalize(v);
     var hits = LEXICON.filter(function (w) {
-      return w.replace(/\s+/g, '').indexOf(low.replace(/\s+/g, '')) >= 0;
+      return SearchDB.normalize(w).indexOf(low) >= 0;
     }).slice(0, 8);
     render(hits);
   };
-  kw.onblur = function () { setTimeout(function () { box.style.display = 'none'; }, 200); };
+  kw.onblur = function () { setTimeout(function () { if (!box.contains(document.activeElement)) hide(); }, 200); };
+  box.addEventListener('focusout',function(){setTimeout(function(){if(!box.contains(document.activeElement)&&document.activeElement!==kw)hide();},0);});
   kw.onfocus = function () { if (kw.value.trim()) kw.oninput(); };
 })();
 </script>
