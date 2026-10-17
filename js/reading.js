@@ -67,11 +67,11 @@
  function hospital(){
   var head=add(heading,n('header',undefined,'hosp-header'));add(head,n('h1','滨城儿童医院'));add(head,n('div','儿 童 至 上 · 服 务 至 上 ｜ 急诊电话：0519-88226617','slogan'));var nav=add(heading,n('nav',undefined,'hosp-nav'));hospitalNav.forEach(function(x){var el=add(nav,a(x[0],x[1]));var current=params.get('section')==='contact'?x[0]==='联系我们':record?x[1]===record.path&&x[0]!=='预约挂号':x[0]==='医院首页';if(current){el.className='cur';el.setAttribute('aria-current','page');}});
   root.classList.add('hosp-body');
-  var side=add(root,n('aside',undefined,'hosp-side'));add(side,n('h3','院内信息'));hospitalNav.slice(1,5).forEach(function(x){var p=add(side,n('p'));add(p,a(x[0],x[1]));});add(side,n('h3','网页留存说明'));add(side,n('p','本页不连接挂号及院内查询系统。通知和公示仍可查阅。'));
+  var side=add(root,n('aside',undefined,'hosp-side'));add(side,n('h3','院内信息'));hospitalNav.slice(1,5).forEach(function(x){var p=add(side,n('p'));add(p,a(x[0],x[1]));});add(side,n('h3','网页留存说明'));add(side,n('p','仅供查阅当年页面。'));
   var body=add(root,n('article',undefined,'hospital-copy'));
   if(params.get('section')==='contact'){
    document.title='联系我们 - 滨城儿童医院';add(body,n('h2','联系我们'));add(body,n('p','来源：院办公室　｜　2012-08-10','reading-meta'));
-   paras(body,['原站联系电话：0519-88226617。','此号码作为当年页面资料保留。静态副本未接入医院咨询、挂号或患者留言系统。']);links(body,[['就医服务留存说明','hospital/reading.html?post=hospital-service']]);
+   paras(body,['原站联系电话：0519-88226617。此号码仅作为当年资料保留。','挂号与咨询系统的留存范围，见下方说明。']);links(body,[['就医服务留存说明','hospital/reading.html?post=hospital-service']]);
   }else if(record){
    add(body,n('div','医院首页 > '+(record.id==='department'?'科室介绍':record.id==='aid'?'通知公告':'院内信息'),'reading-meta'));add(body,n('h2',record.title));add(body,n('p','发布时间：'+record.date+'　发布部门：'+record.author,'reading-meta'));paras(body,record.paras);links(body,record.links);
   }else{

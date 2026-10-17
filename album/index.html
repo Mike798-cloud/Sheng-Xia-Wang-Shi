@@ -215,25 +215,30 @@
   var GALLERY_KEY = 'shengxia_album_unlocked';
   var PASSWORDS = ['0612', '612', '20020612', '20120612'];
 
-  function showGallery() {
+  function showGallery(moveFocus) {
     document.getElementById('gate').style.display = 'none';
     document.getElementById('gallery').style.display = 'block';
     RuntimeImages.activate(document.getElementById('gallery'));
+    if (moveFocus) document.querySelector('#gallery .photo-frame').focus({preventScroll:true});
   }
 
   /* 进入页面：已解锁则直接展示 */
   if (GameStorage.get(GALLERY_KEY,'0') === '1') showGallery();
 
   /* 密码校验 */
+  var composing = false;
+  document.getElementById('gate-pwd').addEventListener('compositionstart', function () { composing = true; });
+  document.getElementById('gate-pwd').addEventListener('compositionend', function () { composing = false; });
   document.getElementById('gate-form').addEventListener('submit', function (e) {
     e.preventDefault();
+    if (composing) return;
     var v = document.getElementById('gate-pwd').value.replace(/[０-９]/g, function(c){ return String.fromCharCode(c.charCodeAt(0)-65248); }).replace(/[\s年/月日.\-]/g, '');
     var errEl = document.getElementById('gate-err');
     if (PASSWORDS.indexOf(v) >= 0) {
       GameStorage.set(GALLERY_KEY,'1');
       errEl.textContent = '';
       document.getElementById('gate-pwd').setAttribute('aria-invalid','false');
-      showGallery();
+      showGallery(true);
       try { if (window.AudioEngine) AudioEngine.playStinger('musicbox_motif.mp3', 0.3); } catch (e) {}
     } else {
       errEl.textContent = '密码不正确，再想想？';

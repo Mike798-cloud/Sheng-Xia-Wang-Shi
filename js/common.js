@@ -787,7 +787,8 @@ var RuntimeUI = {
     var heading=document.createElement('h2');heading.id='runtime-title';heading.textContent=title;
     box.appendChild(close);box.appendChild(heading);shade.appendChild(box);document.body.appendChild(shade);
     var self=this;
-    shade.close=function(){shade.cleanups.forEach(function(fn){fn();});shade.remove();frozen.forEach(function(x){x.el.inert=x.inert;if(x.hidden===null)x.el.removeAttribute('aria-hidden');else x.el.setAttribute('aria-hidden',x.hidden);});document.documentElement.style.overflow=oldOverflow;if(self.shade===shade)self.shade=null;document.removeEventListener('focusin',containFocus,true);if(previous&&previous.isConnected&&!previous.disabled)previous.focus({preventScroll:true});};
+    var closed=false;
+    shade.close=function(){if(closed)return;closed=true;shade.cleanups.forEach(function(fn){fn();});shade.remove();frozen.forEach(function(x){x.el.inert=x.inert;if(x.hidden===null)x.el.removeAttribute('aria-hidden');else x.el.setAttribute('aria-hidden',x.hidden);});document.documentElement.style.overflow=oldOverflow;if(self.shade===shade)self.shade=null;document.removeEventListener('focusin',containFocus,true);if(previous&&previous.isConnected&&!previous.disabled)previous.focus({preventScroll:true});};
     function containFocus(e){if(!box.contains(e.target))close.focus({preventScroll:true});}
     document.addEventListener('focusin',containFocus,true);
     close.onclick=shade.close;shade.onclick=function(e){if(e.target===shade)shade.close();};

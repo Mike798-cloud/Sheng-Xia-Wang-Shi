@@ -68,7 +68,9 @@
   var per = 8;
   var params = new URLSearchParams(location.search);
   var q = (params.get('q') || '').trim();
-  var p = parseInt(params.get('p'), 10) || 1;
+  var p = Number(params.get('p')) || 1;
+  if (!Number.isFinite(p)) p = 1;
+  p = Math.floor(p);
   if (!q) { location.replace('index.html'); return; }
 
   document.getElementById('kw').value = q;
@@ -89,9 +91,10 @@
   var start = (p - 1) * per;
   var slice = list.slice(start, start + per);
 
+  document.title = q + ' - 千度搜索';
   document.getElementById('meta').textContent = m.result
     ? '千度为您找到相关结果约 ' + list.length + ' 个，关键词：' + q
-    : (m.summaryOnly ? '找到匹配摘要，原文未收录。' : m.error === 'archive_number' ? '归档号不匹配，请核对完整文件名。' : '没有找到直接匹配的可读快照，下方列出同批归档页面。') + ' 关键词：' + q;
+    : (m.summaryOnly ? '找到匹配摘要，原文未收录。' : m.error === 'archive_number' ? '归档号不匹配，请核对完整文件名。' : '没有找到直接匹配的快照。可换一个名字或词语搜索，下方是同批收录的页面。') + ' 关键词：' + q;
 
   var box = document.getElementById('results');
   slice.forEach(function (item, idx) {

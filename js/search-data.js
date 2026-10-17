@@ -112,7 +112,7 @@ var SearchDB = {
      返回 { result: 置顶结果对象|null, special: {snapshot:bool, related:[...]}|null } */
   match: function(rawQuery) {
     var q=this.normalize(rawQuery),out={result:null,special:null};if(!q)return out;
-    var numbers=q.match(/\d+/g)||[],archiveIntent=/归档|存档/.test(q)||numbers.some(function(n){return n.indexOf('20120817')>=0;});
+    var numbers=q.match(/\d+/g)||[],archiveIntent=/归档|存档/.test(q)||numbers.some(function(n){return n.indexOf('20120817')>=0||/^(?:19|20)\d{7,}$/.test(n);});
     var invalid=archiveIntent&&numbers.some(function(n){return n.length>=8&&n!=='20120817'&&n!=='20120817001';});
     if(invalid){out.error='archive_number';return out;}
     if(numbers.some(function(n){return n==='20120817'||n==='20120817001';})){out.result=this.RESULTS.ARCHIVE;return out;}
@@ -179,7 +179,7 @@ var SearchDB = {
 SearchDB.normalize = function (q) {
   return String(q || '').toLowerCase().replace(/[！-～]/g, function (c) {
     return String.fromCharCode(c.charCodeAt(0) - 65248);
-  }).replace(/[\s_\-—·.，,。:：/\\()（）【】\[\]"'“”]/g, '');
+  }).replace(/[\s_\-—·.，,。:：/\\()（）【】\[\]"'“”?!、；;‘’]/g, '');
 };
 SearchDB.RESULTS.SEASIDE = {t:'栀栀的小相册 · 等出院了画完', s:'栀栀的小相册中留着夏天的照片，还有一张没有画完的海边画。相册仅好友可见，访问需要密码。',u:'album.house.cn > 栀栀的小相册',href:'../album/index.html',date:'2012-08-17'};
 SearchDB.RESULTS.DRAWINGS = {t:'栀栀爱画猫 · 我的画画打卡！每天更一张～',s:'画猫、画学校，也画过想象中的海边。楼主在帖子中陆续贴出了自己的画。',u:'bincheng.go.cn > 向日葵论坛 > 画画区',href:'../forum/thread.html',date:'2012-03-02'};
@@ -213,14 +213,27 @@ SearchDB.SUGGESTIONS=['花卷走丢','花卷后来','花卷近况','老沈猫','
 /* Search only opens readable preserved pages; snippets remain visibly snippets. */
 (function(){
   var original=SearchDB.match;
+  SearchDB.RESULTS.CHAT={t:'讯聊网页记录 · 栀栀的联系人',s:'妈妈和同学发来的消息按日期保留，可以切换联系人查阅。',u:'讯聊 > 网页记录',href:'../chat/index.html',date:'2012-08-14'};
   function result(r){return {t:r.title,s:r.paras[0],u:({forum:'向日葵论坛',news:'滨城晚报',hospital:'滨城儿童医院',catalog:'镜像目录'})[r.kind]+' > 留存正文',href:'../'+r.path,date:r.date};}
   SearchDB.readingResult=result;
   SearchDB.match=function(raw){
     var out=original.call(this,raw),q=this.normalize(raw);if(!q||out.error)return out;
     var complete=(q.match(/\d+/g)||[]).some(function(n){return n==='20120817001';});
     if(out.result===this.RESULTS.ARCHIVE&&!complete)return {result:this.RESULTS.SNAPSHOT,special:{snapshot:true}};
+    if(out.result===this.RESULTS.ARCHIVE)return out;
+    function pack(items){return {result:items[0],results:items};}
+    var birthday=SummerReading.records.find(function(r){return r.id==='birthday';});
+    if(/生日|六月十二|6月12|十岁/.test(q))return pack([result(birthday),this.RESULTS.MOM]);
+    if(/密码|口令/.test(q)&&/相册|相簿|栀栀|知栀|忘|多少|什么/.test(q))return pack([this.RESULTS.CHAT,this.RESULTS.SEASIDE]);
+    if(/讯聊|聊天|qq|87xxxx612|耗子不会飞/.test(q)&&!/下载|皮肤/.test(q))return pack([this.RESULTS.CHAT,this.RESULTS.DRAWINGS]);
+    if(/相册|相簿/.test(q))return pack([this.RESULTS.SEASIDE,this.RESULTS.DRAWINGS]);
+    if(/住院|复查/.test(q)&&/栀栀|知栀/.test(q))return pack([this.RESULTS.HOSPITAL,this.RESULTS.MOM]);
+    if(/周子浩|小浩/.test(q)){
+      var relay=SummerReading.records.find(function(r){return r.id==='relay';});
+      return pack([result(relay),this.RESULTS.CHAT]);
+    }
     if(/^(沈知栀|栀栀)$/.test(q))return {result:this.RESULTS.SCHOOL,results:[this.RESULTS.SCHOOL,this.RESULTS.DRAWINGS,this.RESULTS.MOM],special:{snapshot:true}};
-    function score(r){return r.tags.reduce(function(n,tag){var t=SearchDB.normalize(tag);return q.indexOf(t)>=0?Math.max(n,t.length+(q===t?100:0)):n;},0);}
+    function score(r){return r.tags.concat([r.title]).reduce(function(n,tag){var t=SearchDB.normalize(tag);return q.indexOf(t)>=0||q.length>=2&&t.indexOf(q)>=0?Math.max(n,Math.min(t.length,q.length)+(q===t?100:0)):n;},0);}
     var matches=SummerReading.records.filter(function(r){return r.kind!=='catalog'&&score(r)>0;}).sort(function(a,b){return score(b)-score(a);});
     if(matches.length){var list=matches.map(result);if(out.result&&!list.some(function(r){return r.href===out.result.href;}))list.push(out.result);return {result:list[0],results:list,special:out.special};}
     var aliases={'2012高考分数线':1,'qq2012下载':2,'滨城二手房':3};
@@ -228,7 +241,7 @@ SearchDB.SUGGESTIONS=['花卷走丢','花卷后来','花卷近况','老沈猫','
     if(!out.result&&generic.length)return {result:null,results:generic,special:null,summaryOnly:true};
     return out;
   };
-  ['蓝色蜡笔','借物','课间十分钟','广播站','寻猫纸','签到','技术支持','沈先生','静态网页','接力赛'].forEach(function(q){if(SearchDB.SUGGESTIONS.indexOf(q)<0)SearchDB.SUGGESTIONS.push(q);});
+  ['蓝色蜡笔','借物','课间十分钟','广播站','寻猫纸','签到','技术支持','沈先生','静态网页','接力赛','生日','相册密码','讯聊记录'].forEach(function(q){if(SearchDB.SUGGESTIONS.indexOf(q)<0)SearchDB.SUGGESTIONS.push(q);});
   var related=SearchDB.related;
-  SearchDB.related=function(raw){var q=this.normalize(raw);if(/蜡笔|借物|生日礼物/.test(q))return ['生日礼物','课间十分钟','广播站'];if(/沈先生|静态网页|技术支持/.test(q))return ['技术支持','花卷后来','沈知栀'];if(/广播|接力/.test(q))return ['接力赛','周子浩','蓝色蜡笔'];return related.call(this,raw);};
+  SearchDB.related=function(raw){var q=this.normalize(raw);if(/密码|口令|生日/.test(q))return ['生日礼物','晚琴的小日子','讯聊记录'];if(/蜡笔|借物/.test(q))return ['生日礼物','课间十分钟','广播站'];if(/沈先生|静态网页|技术支持/.test(q))return ['技术支持','花卷后来','沈知栀'];if(/广播|接力/.test(q))return ['接力赛','周子浩','蓝色蜡笔'];return related.call(this,raw);};
 })();
