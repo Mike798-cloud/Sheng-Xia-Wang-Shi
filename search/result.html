@@ -42,7 +42,7 @@
 
 <div class="wrap">
   <div class="result-head" style="display:flex; align-items:center;">
-    <a class="mini-logo" href="index.html"><span class="c1">千</span><span class="c2">度</span></a>
+    <a class="mini-logo" href="index.html" target="_self"><span class="c1">千</span><span class="c2">度</span></a>
     <form class="head-form" action="result.html" method="get">
       <input id="kw" name="q">
       <button class="btn btn-blue btn-go">千度一下</button>
@@ -113,7 +113,7 @@
 
   /* 分页 */
   function pageLink(n, label) {
-    return '<a href="result.html?q=' + encodeURIComponent(q) + '&p=' + n + '">' + label + '</a>';
+    return '<a href="result.html?q=' + encodeURIComponent(q) + '&p=' + n + '" target="_self">' + label + '</a>';
   }
   var pg = document.getElementById('pager');
   var html = '';

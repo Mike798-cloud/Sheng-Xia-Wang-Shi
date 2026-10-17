@@ -145,7 +145,7 @@
           <div class="photo-frame">
             <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p04_drawing.jpg" alt="栀栀画画">
           </div>
-          <div class="photo-cap">栀栀画画（台灯下的小书桌）</div>
+          <div class="photo-cap">爸爸拍的，我在画画</div>
           <div class="photo-time">上传于 2012-06-15 21:30</div>
         </td>
       </tr>
@@ -170,7 +170,7 @@
           <div class="photo-frame">
             <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p06_nurse_mask.jpg" alt="戴口罩的护士">
           </div>
-          <div class="photo-cap">戴口罩的护士（心内二科）</div>
+          <div class="photo-cap">心内二科的护士姐姐</div>
           <div class="photo-time">上传于 2012-08-05 15:22</div>
         </td>
         <td>
@@ -180,7 +180,7 @@
               <span class="wrist-overlay">心内二科 2012.08.10</span>
             </div>
           </div>
-          <div class="photo-cap">腕带特写（住院那天）</div>
+          <div class="photo-cap">住院那天戴的腕带</div>
           <div class="photo-time">上传于 2012-08-10 08:30</div>
         </td>
       </tr>
@@ -189,13 +189,13 @@
           <div class="photo-frame">
             <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p08_dad_bedside.jpg" alt="爸爸趴床边">
           </div>
-          <div class="photo-cap">爸爸在床边睡着了（晚上拍的）</div>
+          <div class="photo-cap">爸爸睡着了，拍照都没醒</div>
           <div class="photo-time">上传于 2012-08-14 23:55</div>
         </td>
         <td>
           <div class="photo-frame" id="sea-frame">
             <img width="2364" height="1773" loading="lazy" decoding="async" data-src="../images/photos/p10_half_sea.jpg" alt="半张没画完的海边画">
-            <span class="sea-hint">这张没动。后来那张是爸爸另外画的。</span>
+            <span class="sea-hint">原图照存，未补色。</span>
           </div>
           <div class="photo-cap">等出院了画完。右边还没涂，先别替我动。</div>
           <div class="photo-time">上传于 2012-08-17 07:10</div>
@@ -224,6 +224,11 @@
 
   /* 进入页面：已解锁则直接展示 */
   if (GameStorage.get(GALLERY_KEY,'0') === '1') showGallery();
+
+  function syncGallery(){if(GameStorage.get(GALLERY_KEY,'0')==='1')showGallery(false);}
+  window.addEventListener('storage',function(e){if(e.key===GALLERY_KEY)syncGallery();});
+  window.addEventListener('pageshow',syncGallery);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)syncGallery();});
 
   /* 密码校验 */
   var composing = false;

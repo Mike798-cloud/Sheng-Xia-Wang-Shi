@@ -38,8 +38,8 @@
   <p>你好，我是栀栀的爸爸。</p>
   <p>花卷还在，吃饭的碗也还是那只。小浩前些天来，把蓝色蜡笔拿起来看了看，又放了回去。他说别换位置，她找不到会着急。</p>
   <p>我以前替论坛做过维护。她不在以后，论坛说要停了，我就一页一页存，怕哪天点开，只剩下一个打不开的地址。后来收到的留言也补进来了，日期没有改。</p>
-  <p>有的回帖看着不好听，我也没删。她那时候会顶嘴，会生气，买一根冰棍还要分半根给别人。都留着，别只剩下别人夸她乖。</p>
-  <p>相册里那半张海没有动。下面这张是我另外画的，我想把她和花卷都画进去，画完才发现，连太阳都跟她画得不一样。</p>
+  <p>他们在帖子里拌嘴的那些话，我也留着了。有时看见小浩又挑她的毛病，就想起她坐在电脑前，一边生气一边敲键盘，叫吃饭也不肯来。</p>
+  <p>相册里那半张海没有动。下面这张是我后来另外画的，照着她以前画过的样子，把她和花卷也画上了。我画得不好，就放在这里吧。</p>
   <p>她叫沈知栀，小名叫栀栀，十岁。谢谢你看完她的夏天。</p>
 
   <div class="sea-pic">
@@ -48,8 +48,8 @@
   </div>
 
   <div class="back-link">
-    <a href="../thanks.html" id="read-thanks">游玩结束 · 作者的话 →</a><br>
-    <a href="../index.html" id="back-home">返回首页</a>
+    <a href="../thanks.html" id="read-thanks" target="_self">游玩结束 · 作者的话 →</a><br>
+    <a href="../index.html" id="back-home" target="_blank" rel="noopener">返回档案馆目录</a>
   </div>
 </div>
 
@@ -57,12 +57,6 @@
 <script>
 (function () {
   GameState.finish();
-  /* 返回镜像目录 */
-  document.getElementById('back-home').addEventListener('click', function (e) {
-    e.preventDefault();
-    GameState.finish();
-    location.href = '../index.html';
-  });
   /* 停留30秒标签标题变化；关闭/切走闪“下次再来啊” */
   ArchiveTitle.start();
 })();

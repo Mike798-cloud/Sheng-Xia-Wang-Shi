@@ -5,9 +5,23 @@
 
 /* Session fallback keeps progress usable when persistent storage is unavailable. */
 var GameStorage = {
-  memory: {}, persistent: true, session: true,
+  memory: {}, persistent: true, session: true, cookies: false,
+  cookieGet: function(key) {
+    if(location.protocol==='file:')return null;
+    try {
+      var prefix=encodeURIComponent(key)+'=',parts=document.cookie.split(';');
+      for(var i=0;i<parts.length;i++){var part=parts[i].trim();if(part.indexOf(prefix)===0){this.cookies=true;return decodeURIComponent(part.slice(prefix.length));}}
+    }catch(e){}
+    return null;
+  },
+  cookieSet: function(key,value) {
+    if(location.protocol==='file:')return false;
+    try{var path=new URL(rootPrefix()||'./',location.href).pathname;document.cookie=encodeURIComponent(key)+'='+encodeURIComponent(value)+';max-age=31536000;path='+path+';SameSite=Lax';return this.cookieGet(key)===value;}catch(e){return false;}
+  },
   get: function(key, fallback) {
     var v=null;
+    // Cookies also reach a new tab when localStorage is unavailable.
+    v=this.cookieGet(key);if(v!==null)return v;
     try { v=sessionStorage.getItem('shengxia_override_'+key); if(v!==null)return v; } catch(e) {this.session=false;}
     try { v=localStorage.getItem(key); if(v!==null)return v; } catch(e) {this.persistent=false;}
     try { v=sessionStorage.getItem(key); if(v!==null)return v; } catch(e) {this.session=false;}
@@ -16,6 +30,7 @@ var GameStorage = {
   set: function(key,value) {
     value=String(value);this.memory[key]=value;var saved=false;
     try {localStorage.setItem(key,value);saved=true;this.persistent=true;}catch(e){this.persistent=false;}
+    if(this.cookieSet(key,value))saved=true;
     try {sessionStorage.setItem(key,value);if(saved)sessionStorage.removeItem('shengxia_override_'+key);else sessionStorage.setItem('shengxia_override_'+key,value);this.session=true;}catch(e){this.session=false;}
     return saved;
   },
@@ -589,6 +604,7 @@ var AudioEngine = {
     if (!link) return;
     var self = this;
     link.addEventListener('click', function (e) {
+      if(link.target==='_blank'||e.defaultPrevented||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.button>0)return;
       e.preventDefault();
       if (self._connecting) return;
       self._connecting = true;
@@ -709,9 +725,10 @@ function bindAudio() {
     var a = e.target;
     while (a && a.tagName !== 'A') a = a.parentNode;
     if (!a || !a.closest) return;
+    if(typeof SiteLinks!=='undefined')SiteLinks.apply(a);
     var pager = a.closest('.pager');
     var href = a.getAttribute('href');
-    if (pager && href && href.indexOf('javascript') !== 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && e.button === 0) {
+    if (pager && href && a.target!=='_blank' && !e.defaultPrevented && href.indexOf('javascript') !== 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && e.button === 0) {
       e.preventDefault();
       AudioEngine.ui('page');
       setTimeout(function () { location.href = href; }, 230);
@@ -840,10 +857,10 @@ var RuntimeUI = {
     function check(text,on,change,key){var label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=on;input.dataset.runtimeOption=key;input.onchange=function(){change(input.checked);};label.appendChild(input);label.appendChild(document.createTextNode(text));box.appendChild(label);}
     check('关闭广告闪烁',document.documentElement.classList.contains('runtime-quiet'),function(on){self.applyQuiet(on,true);},'quiet');
     check('播放声音',AudioEngine.enabled,function(on){if(AudioEngine.enabled!==on)AudioEngine.toggle();},'audio');
-    var note=document.createElement('p');note.className='runtime-status';note.textContent=(GameStorage.persistent?'选项会保存在当前浏览器。':GameStorage.session?'当前仅能保存本次会话的进度。':'当前浏览器无法保存进度，关闭页面后需要重新探索。')+'图片可点开缩放，按 Esc 关闭。';box.appendChild(note);
+    var note=document.createElement('p');note.className='runtime-status';note.textContent=(GameStorage.persistent||GameStorage.cookies?'选项会保存在当前浏览器。':GameStorage.session?'当前仅能保存本次会话的进度。':'当前浏览器无法保存进度，关闭页面后需要重新探索。')+'图片可点开缩放，按 Esc 关闭。';box.appendChild(note);
     if(this.read(GameState.KEY,'0')==='1'){
-      var year=document.createElement('button');year.type='button';year.textContent=GameState.is2013()?'回看2012年报纸':'查看2013年报纸';
-      year.onclick=function(){GameStorage.tabSet('shengxia_view_year_v2',GameState.is2013()?'2012':'2013');location.href=rootPrefix()+'newspaper/index.html';};box.appendChild(year);
+      var year=document.createElement('a');year.textContent=GameState.is2013()?'回看2012年报纸':'查看2013年报纸';
+      year.href=rootPrefix()+'newspaper/index.html?year='+(GameState.is2013()?'2012':'2013');year.className='btn';box.appendChild(year);SiteLinks.apply(year);
     }
   },
   refresh:function(resume){
@@ -1048,8 +1065,8 @@ var SummerSupport = {
     image.onerror=function(){error.hidden=false;retry.hidden=false;};image.onload=function(){error.hidden=true;retry.hidden=true;};code.appendChild(error);code.appendChild(retry);
     var copy=document.createElement('div');copy.className='support-copy';
     ['你好，我是 abc，《盛夏往事》的作者。谢谢你翻到这里。',
-     '做这部作品时，我很在意那些看上去没什么用的闲聊。几个孩子说着说着就跑了题，过两天又接着闹，我希望读起来能像你以前逛过的论坛。',
-     '如果你喜欢这些画和回帖，也愿意留一块钱支持我继续做下去，我会很开心。'].forEach(function(text){var p=document.createElement('p');p.textContent=text;copy.appendChild(p);});
+     '这部作品做了挺久，能有人来翻这些旧帖子，我很开心。玩完有什么想说的，也欢迎来小红书找我聊聊。',
+     '如果玩得喜欢，也愿意留一块钱支持下一部作品，可以扫旁边的码。谢谢你。'].forEach(function(text){var p=document.createElement('p');p.textContent=text;copy.appendChild(p);});
     body.appendChild(code);body.appendChild(copy);box.appendChild(body);
     var choice=document.createElement('p');choice.className='support-choice';choice.textContent='这是给作者的自愿打赏。关闭后可以继续完整游玩，后面的内容都能看到。';box.appendChild(choice);
     var actions=document.createElement('div');actions.className='support-actions';var done=document.createElement('button'),later=document.createElement('button');done.type=later.type='button';done.className='support-confirm';done.textContent=this.read(this.SUPPORTED_KEY)?'已标记支持':'我已支持';done.disabled=this.read(this.SUPPORTED_KEY);later.textContent='继续浏览';
@@ -1069,3 +1086,52 @@ var SummerSupport = {
   }
 };
 document.addEventListener('DOMContentLoaded',function(){SummerSupport.init();});
+
+/* Fictional sites share a download folder, not a browser tab. */
+var SiteLinks = {
+  root:function(){return new URL(rootPrefix()||'./',location.href);},
+  site:function(url,depth){
+    var root=this.root();
+    if(url.protocol!==root.protocol||url.host!==root.host||url.pathname.indexOf(root.pathname)!==0)return null;
+    var p=decodeURIComponent(url.pathname.slice(root.pathname.length));
+    if(p==='404.html'){
+      if(depth)return 'catalog';
+      var from=url.searchParams.get('from');
+      if(from){try{return this.site(new URL(from,url.href),true)||'catalog';}catch(e){}}
+      return 'catalog';
+    }
+    if(p==='forum/pet-post.html'||p==='forum/reading.html'&&url.searchParams.get('board')==='pet'&&!url.searchParams.get('post'))return 'pet';
+    if(p.indexOf('forum/')===0)return 'forum';
+    if(p.indexOf('newspaper/')===0)return 'news';
+    if(p.indexOf('search/')===0)return 'search';
+    if(p.indexOf('chat/')===0)return 'chat';
+    if(p.indexOf('weiyu/')===0)return 'weiyu';
+    if(p.indexOf('album/')===0)return 'album';
+    if(p.indexOf('hospital/')===0)return 'hospital';
+    if(p.indexOf('archive/')===0||p==='thanks.html')return 'ending';
+    if(p==='index.html'||p==='catalog.html'||p==='')return 'catalog';
+    return null;
+  },
+  apply:function(a){
+    var raw=a.getAttribute('href');
+    if(!raw||raw.charAt(0)==='#'||/^(?:javascript|mailto|tel|data):/i.test(raw)||a.hasAttribute('download')||a.classList.contains('archive-unavailable'))return;
+    var url;try{url=new URL(raw,location.href);}catch(e){return;}
+    var here=this.site(new URL(location.href)),there=this.site(url);
+    // Image links keep their original full-image behavior.
+    if(!there)return;
+    var cross=here!==there;
+    a.target=cross?'_blank':'_self';
+    if(cross){
+      var rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(rel.indexOf('noopener')<0)rel.push('noopener');a.setAttribute('rel',rel.join(' '));
+      var label=a.getAttribute('aria-label')||a.textContent.trim();if(label&&label.indexOf('新标签页')<0)a.setAttribute('aria-label',label+'（新标签页）');
+    }
+  },
+  refresh:function(container){var self=this;(container||document).querySelectorAll('a[href]').forEach(function(a){self.apply(a);});},
+  init:function(){
+    this.refresh();var self=this;
+    // Also cover newly generated controls and a changed 404 return link.
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a)self.apply(a);},true);
+    document.addEventListener('contextmenu',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a)self.apply(a);},true);
+  }
+};
+document.addEventListener('DOMContentLoaded',function(){SiteLinks.init();});
