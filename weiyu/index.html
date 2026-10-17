@@ -65,7 +65,7 @@
   <div class="wrap">
     <span class="wy-logo">微语</span>
     <span class="search-box">
-      <input class="txt" size="20" placeholder="搜索微语"> <button class="btn btn-sm dead" onclick="alert('搜索服务已关闭。')">搜索</button>
+      <form id="weiyu-search" role="search"><input id="weiyu-query" class="txt" size="20" placeholder="搜索微语" aria-label="搜索本主页微博"><button class="btn btn-sm">搜索</button><button class="btn btn-sm" type="button" id="weiyu-reset" hidden>全部</button><span id="weiyu-count" role="status"></span></form>
     </span>
   </div>
 </div>
@@ -90,66 +90,66 @@
       <div class="body">今天油价又涨了，上下班开车都心疼。</div>
       <div class="time">2011-12-05 18:22</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
-        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">0</span></a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">2</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">2</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>隔壁小陈：骑车吧，我已经把车停楼下了。</p><p>晚琴的小日子：她爸说下雨再开，结果天天看看天又拿钥匙。</p></div>
     </div>
 
     <div class="post">
-      <div class="body">栀栀今天画了只猫，歪歪扭扭的，已经贴冰箱上了。</div>
+      <div class="body">栀栀今天画了只猫，歪歪扭扭的，已经贴冰箱上了。她不让她爸补，说胡子长短不一样才像花卷。</div>
       <div class="time">2012-02-14 20:41</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
         <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">3</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">5</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>栀栀爱画猫：别给别人看！！它还没画完。</p><p>晚琴的小日子：贴门里面了，你爸拉开门能看见。</p><p>栀栀爱画猫：那也不许给他加胡子。</p></div>
     </div>
 
     <div class="post">
       <div class="body">奶奶送的青团，甜得齁，小丫头倒吃了俩。</div>
       <div class="time">2012-03-28 19:15</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
         <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">1</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">3</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>梅雨季：你妈做的那个我记得，豆沙一点都不省。</p></div>
     </div>
 
     <div class="post">
       <div class="body">又发烧了，半夜跑急诊。什么时候能安安稳稳睡一晚上。</div>
       <div class="time">2012-04-15 03:47</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
-        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">4</span></a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">2</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">6</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>隔壁小陈：看到了给我回个话，明早我帮你去拿早点。</p><p>晚琴的小日子：回来了，别跑了。她醒了要吃粥。</p></div>
     </div>
 
     <div class="post">
-      <div class="body">今天医生说的话，听得我心揪。出来在楼梯间坐了半小时。</div>
+      <div class="body">今天在外面耽搁了，回去饭已经凉了。她爸把鸡蛋又热了一遍，问我下午有没有吃，我说吃过了。</div>
       <div class="time">2012-05-09 11:30</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
         <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">2</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">4</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>梅雨季：家里有人吗，我下班过去把饭放下。</p><p>晚琴的小日子：有，她爸在。别告诉我妈，她昨天才睡好。</p></div>
     </div>
 
     <div class="post">
       <div class="body">六月十二，栀栀满十周岁了。小丫头许愿要去看海。</div>
       <div class="time">2012-06-12 19:58</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
-        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">8</span></a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">3</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">12</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>耗子不会飞：生日快乐。</p><p>晚琴的小日子：礼物收到了，她说这个蓝色不一样。</p><p>栀栀爱画猫：妈你别替我回！！</p></div>
     </div>
 
     <div class="post">
@@ -159,28 +159,28 @@
       </div>
       <div class="time">2012-07-22 21:06</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
-        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">5</span></a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
+        <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">1</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">9</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>晚琴的小日子：材料交过了，等公示。谢谢大家，不用再替我们转电话号码。</p></div>
     </div>
 
     <div class="post">
-      <div class="body">等你醒过来，我们就去青岛看海。</div>
+      <div class="body">你说要带花卷那只碗，说它换个碗就不肯吃。碗洗好了，跟你的东西放在一起，等你醒过来再收拾。</div>
       <div class="time">2012-08-16 02:11</div>
       <div class="acts">
-        <a class="dead" href="javascript:void(0)">转发</a>
+        <a role="button" class="archive-unavailable" href="#archive-service">转发</a>
         <a href="javascript:void(0)" onclick="toggleComment(this);return false;">评论 <span class="like-count">0</span></a>
         <a href="javascript:void(0)" onclick="toggleLike(this);return false;">赞 <span class="like-count">0</span></a>
       </div>
-      <div class="comment-box">存档页面，评论功能已关闭。</div>
+      <div class="comment-box"><p>本次留存没有保存这条微博下的评论。</p></div>
 
       <!-- 彩蛋6：匿名"好"字转发 -->
       <div class="repost-chain">
         <div class="rc-head">
           <span class="rc-avatar">***</span>
-          <a class="dead" href="javascript:void(0)">***</a> 转发了「晚琴的小日子」的微博
+          <a role="button" class="archive-unavailable" href="#archive-service">***</a> 转发了「晚琴的小日子」的微博
           <div class="tiny">该用户注册时间：2013年8月 · 转发时间：2013-08-20 23:41</div>
         </div>
         <div class="rc-body">好</div>
@@ -194,18 +194,18 @@
     <div class="box">
       <h3>热门话题</h3>
       <ul>
-        <li><a class="dead" href="javascript:void(0)">#滨城明起降温#</a></li>
-        <li><a class="dead" href="javascript:void(0)">#暑假作业你写完了吗#</a></li>
-        <li><a class="dead" href="javascript:void(0)">#老小区改造#</a></li>
-        <li><a class="dead" href="javascript:void(0)">#中考分数线预测#</a></li>
+        <li><a role="button" class="archive-unavailable" href="#archive-service">#滨城明起降温#</a></li>
+        <li><a role="button" class="archive-unavailable" href="#archive-service">#暑假作业你写完了吗#</a></li>
+        <li><a role="button" class="archive-unavailable" href="#archive-service">#老小区改造#</a></li>
+        <li><a role="button" class="archive-unavailable" href="#archive-service">#中考分数线预测#</a></li>
       </ul>
     </div>
     <div class="box">
       <h3>推荐关注</h3>
       <ul>
-        <li><a class="dead" href="javascript:void(0)">滨城晚报</a></li>
-        <li><a class="dead" href="javascript:void(0)">向日葵论坛</a></li>
-        <li><a class="dead" href="javascript:void(0)">市儿童医院</a></li>
+        <li><a class="" href="../newspaper/index.html">滨城晚报</a></li>
+        <li><a class="" href="../forum/index.html">向日葵论坛</a></li>
+        <li><a class="" href="../hospital/index.html">市儿童医院</a></li>
       </ul>
     </div>
   </div>
@@ -228,6 +228,17 @@ function toggleComment(el) {
   var box = el.parentNode.parentNode.querySelector('.comment-box');
   box.style.display = (box.style.display === 'block') ? 'none' : 'block';
 }
+
+(function(){
+ var form=document.getElementById('weiyu-search'),input=document.getElementById('weiyu-query'),reset=document.getElementById('weiyu-reset'),status=document.getElementById('weiyu-count'),posts=document.querySelectorAll('.wy-main > .post'),before=null,composing=false;
+ function filter(){var q=input.value.trim().replace(/\s+/g,'').toLowerCase(),count=0;
+  if(q&&!before)before=Array.prototype.map.call(posts,function(post){return post.querySelector('.comment-box').style.display;});
+  posts.forEach(function(post,i){var ok=!q||post.textContent.replace(/\s+/g,'').toLowerCase().indexOf(q)>=0,box=post.querySelector('.comment-box');post.hidden=!ok;if(ok)count++;if(!q&&before)box.style.display=before[i];else if(q&&ok&&box.textContent.replace(/\s+/g,'').toLowerCase().indexOf(q)>=0)box.style.display='block';});
+  if(!q)before=null;reset.hidden=!q;status.textContent=q?'找到 '+count+' 条':'';
+ }
+ input.addEventListener('compositionstart',function(){composing=true;});input.addEventListener('compositionend',function(){composing=false;});
+ form.addEventListener('submit',function(e){e.preventDefault();if(!composing)filter();});reset.onclick=function(){input.value='';filter();input.focus();};
+})();
 </script>
 </body>
 </html>

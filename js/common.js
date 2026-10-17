@@ -80,9 +80,9 @@ function buildFooter() {
   box.className = 'site-footer';
   box.innerHTML =
     (window.SITE_EXTRA_FOOTER || '') +
-    '<div>本页面为旧网存档快照，版权归原网站所有 · 存档内容时间：' + year + '年</div>' +
+    '<div>本页面为旧网存档快照，版权归原网站所有 · 各页日期按原记录保留</div>' +
     '<div>地址：滨城市江洲路47号　订阅电话：0519-88226617　<a href="' + pre + 'newspaper/index.html">滨城晚报</a> ｜ ' +
-    '<a class="dead" href="javascript:void(0)">联系站长</a> ｜ <a class="dead" href="javascript:void(0)">网站地图</a></div>' +
+    '<a href="'+pre+'catalog.html?post=contact">联系站长</a> ｜ <a href="'+pre+'catalog.html">网站地图</a></div>' +
     '<div class="tech-mail">技术维护邮箱：shenjianjun@163.com</div>';
 }
 
@@ -783,7 +783,7 @@ var RuntimeUI = {
     if(/\/weiyu\//.test(p)) return ['妈妈在这里记下了栀栀的生日。','六月十二日那条记录，和相册的密码有关。','回到论坛签名档中的相册，试试四位生日数字。'];
     if(/\/forum\/thread/.test(p)) return ['画画帖共有五页，末页的留言和前面不太一样。','楼主的签名档里有相册和讯聊入口。','聊天中的妈妈主页能找到生日，相册需要这个日期。'];
     if(/\/forum\/pet-post/.test(p)) return ['这张帖子记录的是花卷后来的生活。','它是补充记录，读完后可以回到之前的网页继续找栀栀的痕迹。','如果还没找到存档说明，可以看看相册末尾的归档号。'];
-    if(/\/forum\//.test(p)) return ['画画区有一张持续更新的打卡帖。','留意“栀栀爱画猫”的帖子。','打开《我的画画打卡！每天更一张～》，签名档也有其他入口。'];
+    if(/\/forum\//.test(p)) return ['画画帖之外，还保存着借物、签到和课间闲聊。','同一个网名在不同帖子里说过的话，可以放在一起看。','画画区的打卡帖签名档里有相册和聊天入口。'];
     if(/\/search\//.test(p)){
       var kw=document.getElementById('kw'),q=kw?kw.value:'';
       if(/20120817|归档|存档/.test(q)) return ['归档号可以直接搜索，空格和下划线不会影响匹配。','找到“存档说明”这一条，不是已失效的个人快照。','如果还没记下编号，相册最下方保留着完整归档号。'];
@@ -791,6 +791,10 @@ var RuntimeUI = {
     }
     if(/\/newspaper\//.test(p)) return ['报纸中缝有寻猫启事，校园版也留着一个名字。','页面下方的“千度搜索”可以查这些内容。','可以试试“花卷走丢”或作文作者的姓名。'];
     return ['目录里有一个标记为异常的夏季镜像。','它在目录最下方，可以打开。','打开“2012_summer”就能进入滨城晚报。'];
+  },
+  unavailable:function(a){
+    var title=(a.textContent||'存档功能').trim(),box=this.dialog(title),text=document.createElement('p');
+    text.textContent=a.getAttribute('data-unavailable')||(title==='转发'?'这是只读存档，不能向原网站提交转发。原文和已留存的评论仍可浏览。':title==='***'?'这位用户没有留下公开昵称，镜像只存有这一条转发，没有个人主页。':'这项在线服务或个人主页没有收入镜像。这里不接受登录、报名、付款或资料提交；关闭此窗口即可继续浏览原页。');box.appendChild(text);
   },
   showHint:function(){
     var box=this.dialog('一点提示'), text=document.createElement('p'), more=document.createElement('button'),self=this;
@@ -857,7 +861,7 @@ var RuntimeUI = {
       var root=new URL(rootPrefix()||'./',location.href),url=new URL(raw,location.href);
       if(url.protocol!==root.protocol||url.host!==root.host||url.pathname.indexOf(root.pathname)!==0)return null;
       var relative=url.pathname.slice(root.pathname.length);
-      var allowed=['index.html','newspaper/index.html','search/index.html','search/result.html','forum/index.html','forum/thread.html','forum/pet-post.html','chat/index.html','weiyu/index.html','album/index.html','hospital/index.html','archive/index.html'];
+      var allowed=['index.html','newspaper/index.html','search/index.html','search/result.html','forum/index.html','forum/thread.html','forum/pet-post.html','chat/index.html','weiyu/index.html','album/index.html','hospital/index.html','archive/index.html','catalog.html','forum/reading.html','newspaper/reading.html','hospital/reading.html'];
       return allowed.indexOf(relative)>=0?relative+url.search+url.hash:null;
     }catch(e){return null;}
   },
@@ -929,6 +933,7 @@ var RuntimeUI = {
       source.href=path||'index.html';
       source.addEventListener('click',function(){var state=self.returnState();if(state&&state.path===path){state.returning=true;GameStorage.tabSet('shengxia_return_v3',JSON.stringify(state));}});
     }
+    document.querySelectorAll('a.archive-unavailable').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();self.unavailable(a);});a.addEventListener('keydown',function(e){if(e.key===' '){e.preventDefault();a.click();}});});
     this.restoreReturn();
     document.addEventListener('click',function(e){var win=e.target.closest&&e.target.closest('.popup-win');if(win){var x=win.querySelector('.x');if(x){x.tabIndex=0;x.setAttribute('role','button');x.setAttribute('aria-label','关闭广告');}}});
     document.addEventListener('keydown',function(e){var win=document.querySelector('.popup-win');if(win&&e.key==='Escape'){e.preventDefault();win.querySelector('button').click();}});

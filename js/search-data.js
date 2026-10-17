@@ -56,7 +56,7 @@ var SearchDB = {
     /* 沈知栀单搜第2页死快照 */
     SNAPSHOT: {
       t: '沈知栀_个人存档_20120817',
-      s: '很抱歉，该页面已删除。　百度快照',
+      s: '很抱歉，该页面已删除。　千度快照',
       u: 'web.archive.org / 沈知栀_个人存档_20120817（已失效）',
       href: 'javascript:void(0)',
       dead: true
@@ -209,3 +209,26 @@ SearchDB.related = function (raw) {
   return ['花卷走丢','沈知栀','滨城儿童医院'].concat(this.RELATED_GENERIC.slice(0,3));
 };
 SearchDB.SUGGESTIONS=['花卷走丢','花卷后来','花卷近况','老沈猫','沈知栀','沈知栀 获奖','沈知栀 作文','沈知栀 海边','沈知栀 画画比赛','我的小猫花卷','滨城实验小学','滨城儿童医院','先天性心脏病 救助','心内二科','晚琴的小日子'];
+
+/* Search only opens readable preserved pages; snippets remain visibly snippets. */
+(function(){
+  var original=SearchDB.match;
+  function result(r){return {t:r.title,s:r.paras[0],u:({forum:'向日葵论坛',news:'滨城晚报',hospital:'滨城儿童医院',catalog:'镜像目录'})[r.kind]+' > 留存正文',href:'../'+r.path,date:r.date};}
+  SearchDB.readingResult=result;
+  SearchDB.match=function(raw){
+    var out=original.call(this,raw),q=this.normalize(raw);if(!q||out.error)return out;
+    var complete=(q.match(/\d+/g)||[]).some(function(n){return n==='20120817001';});
+    if(out.result===this.RESULTS.ARCHIVE&&!complete)return {result:this.RESULTS.SNAPSHOT,special:{snapshot:true}};
+    if(/^(沈知栀|栀栀)$/.test(q))return {result:this.RESULTS.SCHOOL,results:[this.RESULTS.SCHOOL,this.RESULTS.DRAWINGS,this.RESULTS.MOM],special:{snapshot:true}};
+    function score(r){return r.tags.reduce(function(n,tag){var t=SearchDB.normalize(tag);return q.indexOf(t)>=0?Math.max(n,t.length+(q===t?100:0)):n;},0);}
+    var matches=SummerReading.records.filter(function(r){return r.kind!=='catalog'&&score(r)>0;}).sort(function(a,b){return score(b)-score(a);});
+    if(matches.length){var list=matches.map(result);if(out.result&&!list.some(function(r){return r.href===out.result.href;}))list.push(out.result);return {result:list[0],results:list,special:out.special};}
+    var aliases={'2012高考分数线':1,'qq2012下载':2,'滨城二手房':3};
+    var generic=Object.prototype.hasOwnProperty.call(aliases,q)?[this.GENERIC[aliases[q]]]:this.GENERIC.filter(function(r){var title=SearchDB.normalize(r.t);return title.indexOf(q)>=0||q.indexOf(title)>=0;});
+    if(!out.result&&generic.length)return {result:null,results:generic,special:null,summaryOnly:true};
+    return out;
+  };
+  ['蓝色蜡笔','借物','课间十分钟','广播站','寻猫纸','签到','技术支持','沈先生','静态网页','接力赛'].forEach(function(q){if(SearchDB.SUGGESTIONS.indexOf(q)<0)SearchDB.SUGGESTIONS.push(q);});
+  var related=SearchDB.related;
+  SearchDB.related=function(raw){var q=this.normalize(raw);if(/蜡笔|借物|生日礼物/.test(q))return ['生日礼物','课间十分钟','广播站'];if(/沈先生|静态网页|技术支持/.test(q))return ['技术支持','花卷后来','沈知栀'];if(/广播|接力/.test(q))return ['接力赛','周子浩','蓝色蜡笔'];return related.call(this,raw);};
+})();

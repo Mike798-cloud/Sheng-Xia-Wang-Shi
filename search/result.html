@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>千度搜索 - 结果</title>
 <link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/reading.css">
 <style>
   body { background: #fff; }
   .result-head { border-bottom: 1px solid #c9c9c9; padding: 12px 0 10px; }
@@ -61,6 +62,7 @@
 <div id="footer-box"></div>
 <script src="../js/common.js"></script>
 <script src="../js/search-data.js"></script>
+<script src="../js/reading-data.js"></script>
 <script>
 (function () {
   var per = 8;
@@ -75,11 +77,13 @@
   var list = [];
   if (m.results) list = m.results.slice();
   else if (m.result) list.push(m.result);
-  list = list.concat(SearchDB.GENERIC);
+  var extras = [];
+  list = list.concat(extras);
+  if(!list.length&&!m.error)list=[SearchDB.RESULTS.LOST,SearchDB.RESULTS.SCHOOL,SearchDB.RESULTS.HOSPITAL];
   /* 沈知栀单搜：第2页开头插入无效死快照 */
-  if (m.special && m.special.snapshot) list.splice(8, 0, SearchDB.RESULTS.SNAPSHOT);
+  if (m.special && m.special.snapshot && list.indexOf(SearchDB.RESULTS.SNAPSHOT)<0) list.push(SearchDB.RESULTS.SNAPSHOT);
 
-  var pages = Math.ceil(list.length / per);
+  var pages = Math.max(1, Math.ceil(list.length / per));
   if (p < 1) p = 1;
   if (p > pages) p = pages;
   var start = (p - 1) * per;
@@ -87,19 +91,20 @@
 
   document.getElementById('meta').textContent = m.result
     ? '千度为您找到相关结果约 ' + list.length + ' 个，关键词：' + q
-    : (m.error === 'archive_number' ? '没有找到这个归档号，请核对照片页末尾的原始编号。' : '没有找到直接匹配的可读快照，下方列出同批归档页面。') + ' 关键词：' + q;
+    : (m.summaryOnly ? '找到匹配摘要，原文未收录。' : m.error === 'archive_number' ? '没有找到这个归档号，请核对照片页末尾的原始编号。' : '没有找到直接匹配的可读快照，下方列出同批归档页面。') + ' 关键词：' + q;
 
   var box = document.getElementById('results');
   slice.forEach(function (item, idx) {
     var div = document.createElement('div');
     div.className = 'result-item';
-    var titleHref = item.href || 'javascript:void(0)';
-    var titleCls = (item.dead || !item.href) ? ' class="dead"' : '';
-    var date = item.date || '旧网快照';
-    div.innerHTML =
-      '<div class="title"><a' + titleCls + ' href="' + titleHref + '">' + item.t + '</a></div>' +
-      '<div class="snippet">' + item.s + '</div>' +
-      '<div><cite class="url">' + item.u + '</cite>　<span class="date">' + date + '</span></div>';
+    var title=document.createElement('div');title.className='title';
+    var heading=document.createElement(item.href?'a':'span');heading.textContent=item.t;
+    if(item.href){heading.href=item.href;if(item.dead)heading.className='dead';}else heading.className='summary-title';
+    title.appendChild(heading);div.appendChild(title);
+    var snippet=document.createElement('div');snippet.className='snippet';snippet.textContent=item.s;div.appendChild(snippet);
+    var meta=document.createElement('div'),url=document.createElement('cite');url.className='url';url.textContent=item.u;meta.appendChild(url);
+    var date=document.createElement('span');date.className='date';date.textContent='　'+(item.date||'旧网快照');meta.appendChild(date);div.appendChild(meta);
+    if(!item.href){var note=document.createElement('div');note.className='summary-only';note.textContent='仅保留检索摘要，未收录正文';div.appendChild(note);}
     box.appendChild(div);
   });
 
