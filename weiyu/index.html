@@ -85,6 +85,7 @@
 
   <!-- 中：时间线 -->
   <div class="wy-main">
+    <div class="wy-collection">保留 8 条微博（原站共 37 条） <label>排列：<select id="weiyu-sort"><option value="asc">最早在前</option><option value="desc">最新在前</option></select></label></div>
 
     <div class="post">
       <div class="body">今天油价又涨了，上下班开车都心疼。</div>
@@ -215,25 +216,22 @@
 <script src="../js/common.js"></script>
 <script>
 function toggleLike(el) {
-  var c = el.querySelector('.like-count');
-  var n = parseInt(c.textContent, 10) + 1;
-  c.textContent = n;
-  el.onclick = function () {
-    var m = parseInt(c.textContent, 10) - 1;
-    c.textContent = m;
-    el.onclick = toggleLike.bind(null, el);
-  };
+  SiteUI.message(el,'这是原帖留下的赞数。当前为留存页面，未提交新的点赞。');
 }
 function toggleComment(el) {
   var box = el.parentNode.parentNode.querySelector('.comment-box');
   box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+  el.setAttribute('aria-expanded',String(box.style.display==='block'));
 }
 
 (function(){
+ var sort=document.getElementById('weiyu-sort');
+ sort.onchange=function(){var main=document.querySelector('.wy-main'),items=Array.prototype.slice.call(main.querySelectorAll(':scope > .post'));items.sort(function(a,b){var x=a.querySelector('.time').textContent.trim(),y=b.querySelector('.time').textContent.trim();return (x<y?-1:x>y?1:0)*(sort.value==='desc'?-1:1);});items.forEach(function(el){main.appendChild(el);});};
  var form=document.getElementById('weiyu-search'),input=document.getElementById('weiyu-query'),reset=document.getElementById('weiyu-reset'),status=document.getElementById('weiyu-count'),posts=document.querySelectorAll('.wy-main > .post'),before=null,composing=false;
- function filter(){var q=input.value.trim().replace(/\s+/g,'').toLowerCase(),count=0;
+ function filter(){document.querySelectorAll('.wy-main .site-message').forEach(function(n){n.remove();});var q=input.value.trim().replace(/\s+/g,'').toLowerCase(),count=0;
   if(q&&!before)before=Array.prototype.map.call(posts,function(post){return post.querySelector('.comment-box').style.display;});
   posts.forEach(function(post,i){var ok=!q||post.textContent.replace(/\s+/g,'').toLowerCase().indexOf(q)>=0,box=post.querySelector('.comment-box');post.hidden=!ok;if(ok)count++;if(!q&&before)box.style.display=before[i];else if(q&&ok&&box.textContent.replace(/\s+/g,'').toLowerCase().indexOf(q)>=0)box.style.display='block';});
+  posts.forEach(function(post){var c=post.querySelector('.comment-box'),el=post.querySelector('.acts a:nth-child(2)');el.setAttribute('aria-expanded',String(c.style.display==='block'));});
   if(!q)before=null;reset.hidden=!q;status.textContent=q?'找到 '+count+' 条':'';
  }
  input.addEventListener('compositionstart',function(){composing=true;});input.addEventListener('compositionend',function(){composing=false;});

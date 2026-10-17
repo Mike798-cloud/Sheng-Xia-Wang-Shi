@@ -91,7 +91,7 @@
 
   document.getElementById('meta').textContent = m.result
     ? '千度为您找到相关结果约 ' + list.length + ' 个，关键词：' + q
-    : (m.summaryOnly ? '找到匹配摘要，原文未收录。' : m.error === 'archive_number' ? '没有找到这个归档号，请核对照片页末尾的原始编号。' : '没有找到直接匹配的可读快照，下方列出同批归档页面。') + ' 关键词：' + q;
+    : (m.summaryOnly ? '找到匹配摘要，原文未收录。' : m.error === 'archive_number' ? '归档号不匹配，请核对完整文件名。' : '没有找到直接匹配的可读快照，下方列出同批归档页面。') + ' 关键词：' + q;
 
   var box = document.getElementById('results');
   slice.forEach(function (item, idx) {
@@ -103,7 +103,7 @@
     title.appendChild(heading);div.appendChild(title);
     var snippet=document.createElement('div');snippet.className='snippet';snippet.textContent=item.s;div.appendChild(snippet);
     var meta=document.createElement('div'),url=document.createElement('cite');url.className='url';url.textContent=item.u;meta.appendChild(url);
-    var date=document.createElement('span');date.className='date';date.textContent='　'+(item.date||'旧网快照');meta.appendChild(date);div.appendChild(meta);
+    var date=document.createElement('span');date.className='date';date.textContent='　'+(item.date||'旧网快照')+'　['+(!item.href?'仅摘要':item.dead?'已失效':'正文快照')+']';meta.appendChild(date);div.appendChild(meta);
     if(!item.href){var note=document.createElement('div');note.className='summary-only';note.textContent='仅保留检索摘要，未收录正文';div.appendChild(note);}
     box.appendChild(div);
   });
@@ -119,7 +119,8 @@
     html += (i === p) ? '<span class="cur">' + i + '</span>' : pageLink(i, i);
   }
   if (p < pages) html += pageLink(p + 1, '下一页');
-  pg.innerHTML = html;
+  pg.innerHTML = pages>1?html:'';
+  pg.hidden=pages<=1;
 
   /* 相关搜索 */
   var rels = SearchDB.related(q);

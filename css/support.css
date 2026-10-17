@@ -1,0 +1,18 @@
+/* Creator's voluntary support sits outside the archived websites. */
+#summer-support-button{right:122px;min-width:78px;color:#74532d;background:#fbf5e5;border-color:#b4a184}
+#summer-support-button[data-supported="true"]{color:#4c6544;background:#f1f5ea}
+.creator-archive #summer-support-button,.creator-thanks #summer-support-button{display:none}
+.runtime-dialog.summer-support{width:680px;background:#fbf8ef;border:1px solid #a99f7e;color:#39362c;font-family:'SimSun','宋体',serif}
+.summer-support #runtime-title{font-size:22px;font-family:'SimSun','宋体',serif;margin:4px 0 6px;color:#57472f}
+.summer-support .support-byline{font-size:12px;color:#7c705c;border-bottom:1px solid #c9bea5;padding-bottom:12px;margin-bottom:16px}
+.support-body{display:grid;grid-template-columns:176px minmax(0,1fr);gap:22px;align-items:start}
+.support-code{margin:0;text-align:center;font-size:12px;color:#6d614f;line-height:1.7}
+.support-code img{display:block;width:176px;height:auto;max-height:none;margin:0 auto 8px;object-fit:contain;border:0;background:#fff}
+.support-code figcaption{font-size:12px}.support-code a{color:#594b33;font-size:12px}.support-copy p{font-size:14px;line-height:1.95;margin:0 0 14px}
+.support-choice{font-size:12px;color:#76684e;line-height:1.9;border-top:1px dashed #bdb095;padding-top:11px;margin-top:12px}
+.support-actions{display:flex;flex-wrap:wrap;gap:10px;border-top:1px solid #c9bea5;padding-top:12px;margin-top:16px}
+.support-actions button{flex:1;margin:0;min-height:40px;background:#f0eadb;color:#57472f;border:1px solid #aa9879;font:14px/1.5 'SimSun','宋体',serif}
+.support-actions .support-confirm{background:#59634b;border-color:#4c5940;color:#fff}.support-actions button:disabled{opacity:.65;cursor:default}
+.support-load-error{font-size:12px;color:#945225;line-height:1.8}.summer-support .support-retry{font-size:12px;min-height:32px;padding:2px 8px}
+.support-response{font-size:13px;line-height:1.9;color:#4d6541;border-top:1px dashed #c4cbb8;padding-top:10px}
+@media(max-width:480px){#summer-support-button{right:118px;min-width:72px;padding:5px 7px;font-size:12px}.runtime-dialog.summer-support{max-height:88vh;max-height:88dvh;padding:14px}.summer-support #runtime-title{font-size:19px}.support-body{display:flex;flex-direction:column;gap:12px}.support-copy{order:0}.support-code{order:1;align-self:center}.support-code img{width:164px}.support-copy p{font-size:13px;margin-bottom:9px}.support-choice{margin-top:8px;padding-top:8px}.support-actions{gap:8px}.support-actions button{font-size:13px;min-width:120px}}

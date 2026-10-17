@@ -58,7 +58,7 @@ document.addEventListener('click', function (e) {
    2. 停止服务的功能按钮（设为首页 / 加入收藏 / 打印本页等）
    ============================================================ */
 function deadFeature(name) {
-  alert('「' + name + '」该功能已停止服务。');
+  SiteUI.message(document.activeElement,'「'+name+'」未随网页保存，当前只能浏览留存内容。');
 }
 document.addEventListener('click', function (e) {
   var el = e.target;
@@ -72,18 +72,49 @@ document.addEventListener('click', function (e) {
 /* ============================================================
    3. 页脚 / 顶部 IE 条 / 工具条注入
    ============================================================ */
+var SiteUI = {
+  site:function(){
+    if(window.SITE_ID)return window.SITE_ID;
+    var p=location.pathname;
+    if(/pet-post/.test(p))return 'pet';
+    if(/forum/.test(p))return 'forum';
+    if(/newspaper/.test(p))return 'news';
+    if(/hospital/.test(p))return 'hospital';
+    if(/weiyu/.test(p))return 'weiyu';
+    if(/chat/.test(p))return 'chat';
+    if(/album/.test(p))return 'album';
+    if(/search/.test(p))return 'search';
+    if(/archive\//.test(p))return 'archive';
+    return 'catalog';
+  },
+  message:function(anchor,text){
+    var host=anchor&&anchor.closest('.post,.thread-title,.tb-header,.post-body,.dir-table,.qq-shell,.box,.dead-features,.friend-links,.mini-ads,.online-stats,.reading-actions,.wrap');
+    if(!host)host=document.querySelector('main,.panel,.paper,.wrap')||document.body;
+    if(host.tagName==='TABLE')host=host.parentNode;
+    var old=host.querySelector('.site-message');if(old)old.remove();
+    var box=document.createElement('div'),label=document.createElement('span'),close=document.createElement('button');
+    box.className='site-message site-message-'+this.site();box.setAttribute('role','status');label.textContent=text;
+    close.type='button';close.textContent='关闭';close.setAttribute('aria-label','关闭提示');close.onclick=function(){box.remove();if(anchor&&document.contains(anchor))anchor.focus();};
+    box.appendChild(label);box.appendChild(close);host.appendChild(box);box.scrollIntoView({block:'nearest'});
+  }
+};
 function buildFooter() {
-  var pre = rootPrefix();
-  var box = document.getElementById('footer-box');
-  if (!box) return;
-  var year = GameState.is2013() ? '2013' : '2012';
-  box.className = 'site-footer';
-  box.innerHTML =
-    (window.SITE_EXTRA_FOOTER || '') +
-    '<div>本页面为旧网存档快照，版权归原网站所有 · 各页日期按原记录保留</div>' +
-    '<div>地址：滨城市江洲路47号　订阅电话：0519-88226617　<a href="' + pre + 'newspaper/index.html">滨城晚报</a> ｜ ' +
-    '<a href="'+pre+'catalog.html?post=contact">联系站长</a> ｜ <a href="'+pre+'catalog.html">网站地图</a></div>' +
-    '<div class="tech-mail">技术维护邮箱：shenjianjun@163.com</div>';
+  var pre=rootPrefix(),box=document.getElementById('footer-box');if(!box)return;
+  var s=SiteUI.site(),entries={
+    forum:['向日葵论坛 · 青春、校园、生活','forum/index.html','论坛首页','forum/reading.html?post=maintenance','版务公告'],
+    pet:['滨城宠物之家 · 猫咪乐园','forum/reading.html?board=pet','宠物之家','forum/pet-post.html','猫咪近况'],
+    news:['滨城晚报社 · 滨城市江洲路47号','newspaper/index.html','电子报首页','newspaper/reading.html','版面目录'],
+    hospital:['滨城儿童医院 · 儿童至上 服务至上','hospital/reading.html','医院首页','hospital/reading.html?section=contact','联系医院'],
+    weiyu:['微语 · 发现身边的新鲜事','weiyu/index.html','晚琴的小日子','catalog.html?post=scope','保存范围'],
+    chat:['讯聊网页记录 · 联系人和消息按原记录保留','chat/index.html','讯聊记录','catalog.html?post=scope','保存范围'],
+    album:['我的相册屋 · 留住生活里的每一天','album/index.html','相册首页','forum/thread.html','返回画画帖'],
+    search:['千度 · 旧网检索','search/index.html','搜索首页','catalog.html?post=scope','收录范围'],
+    archive:['2012_summer · 家庭网页留存','newspaper/index.html','返回晚报','catalog.html?post=scope','保存范围'],
+    catalog:['中国旧网页档案馆 · 滨城地方网站目录','index.html','目录首页','catalog.html?post=contact','联系维护组']
+  },row=entries[s]||entries.catalog;
+  box.className='site-footer footer-'+s;
+  box.innerHTML=(window.SITE_EXTRA_FOOTER||'')+'<div>'+row[0]+'</div><div><a href="'+pre+row[1]+'">'+row[2]+'</a> ｜ <a href="'+pre+row[3]+'">'+row[4]+'</a> ｜ <a href="'+pre+'catalog.html">镜像目录</a></div><div class="footer-note">旧网页留存 · 页面日期按原记录保留</div>';
+  if(s==='forum')box.innerHTML+='<div class="tech-mail">技术维护邮箱：shenjianjun@163.com</div>';
 }
 
 function buildIEBar() {
@@ -515,6 +546,7 @@ var AudioEngine = {
   /* ================= 场景映射（按路径，克制低音量） ================= */
   sceneForPath: function () {
     var p = location.pathname;
+    if (/\/thanks\.html$/.test(p)) return { layers: [{ n: 'music', f: 'archive_piano.mp3', v: 0.08 }, { n: 'cicada', f: 'summer_cicadas.mp3', v: 0.025 }] };
     if (/\/archive\//.test(p))   return { layers: [{ n: 'music', f: 'archive_piano.mp3', v: 0.15 }, { n: 'cicada', f: 'summer_cicadas.mp3', v: 0.04 }], sea: true };
     if (/\/hospital\//.test(p))  return { layers: [{ n: 'amb', f: 'hospital_ambient.mp3', v: 0.11 }] };
     if (/\/newspaper\//.test(p)) return { layers: [{ n: 'amb', f: 'city_distant.mp3', v: 0.12 }, { n: 'detail', f: 'market_detail.mp3', v: 0.09 }] };
@@ -745,7 +777,7 @@ var RuntimeUI = {
   applyQuiet:function(on,persist){document.documentElement.classList.toggle('runtime-quiet',on);document.documentElement.classList.toggle('runtime-motion',!on);if(persist)this.write('shengxia_quiet_v2',on?'1':'0');},
   dialog:function(title){
     if(this.shade) this.shade.close();
-    var previous=document.activeElement, shade=document.createElement('div'), box=document.createElement('div');
+    var ad=document.querySelector('.popup-win'),previous=(ad&&ad.querySelector('button'))||document.activeElement, shade=document.createElement('div'), box=document.createElement('div');
     var oldOverflow=document.documentElement.style.overflow, frozen=[];
     Array.prototype.forEach.call(document.body.children,function(el){if(el.tagName==='SCRIPT')return;frozen.push({el:el,inert:el.inert,hidden:el.getAttribute('aria-hidden')});el.inert=true;el.setAttribute('aria-hidden','true');});
     document.documentElement.style.overflow='hidden';
@@ -793,8 +825,8 @@ var RuntimeUI = {
     return ['目录里有一个标记为异常的夏季镜像。','它在目录最下方，可以打开。','打开“2012_summer”就能进入滨城晚报。'];
   },
   unavailable:function(a){
-    var title=(a.textContent||'存档功能').trim(),box=this.dialog(title),text=document.createElement('p');
-    text.textContent=a.getAttribute('data-unavailable')||(title==='转发'?'这是只读存档，不能向原网站提交转发。原文和已留存的评论仍可浏览。':title==='***'?'这位用户没有留下公开昵称，镜像只存有这一条转发，没有个人主页。':'这项在线服务或个人主页没有收入镜像。这里不接受登录、报名、付款或资料提交；关闭此窗口即可继续浏览原页。');box.appendChild(text);
+    var title=(a.textContent||'存档功能').trim();
+    SiteUI.message(a,a.getAttribute('data-unavailable')||(title==='转发'?'当前为留存页面，转发未提交。原文与留存评论可以继续浏览。':title==='***'?'这个账号只留下了一条公开转发，个人主页没有保存。':'此项在线功能或个人主页未随网页保存。'));
   },
   showHint:function(){
     var box=this.dialog('一点提示'), text=document.createElement('p'), more=document.createElement('button'),self=this;
@@ -820,7 +852,7 @@ var RuntimeUI = {
     if(!document.hidden&&GameState.is2013()!==this.renderedYear)location.reload();
   },
   saveChat:function(){
-    var shell=document.querySelector('.qq-shell');if(!shell)return;
+    var shell=document.querySelector('.qq-shell');if(!shell||shell.hidden)return;
     var state=this.chatState||(this.chatState={scrolls:{},groups:{}}),panel=shell.querySelector('.chat-panel:not(.hidden-panel)');
     if(panel){state.panel=panel.id;var log=panel.querySelector('.chat-log');if(log)state.scrolls[panel.id]=log.scrollTop;}
     shell.querySelectorAll('.group').forEach(function(group){state.groups[group.id]=!group.classList.contains('collapsed');});
@@ -861,7 +893,7 @@ var RuntimeUI = {
       var root=new URL(rootPrefix()||'./',location.href),url=new URL(raw,location.href);
       if(url.protocol!==root.protocol||url.host!==root.host||url.pathname.indexOf(root.pathname)!==0)return null;
       var relative=url.pathname.slice(root.pathname.length);
-      var allowed=['index.html','newspaper/index.html','search/index.html','search/result.html','forum/index.html','forum/thread.html','forum/pet-post.html','chat/index.html','weiyu/index.html','album/index.html','hospital/index.html','archive/index.html','catalog.html','forum/reading.html','newspaper/reading.html','hospital/reading.html'];
+      var allowed=['index.html','newspaper/index.html','search/index.html','search/result.html','forum/index.html','forum/thread.html','forum/pet-post.html','chat/index.html','weiyu/index.html','album/index.html','hospital/index.html','archive/index.html','catalog.html','forum/reading.html','newspaper/reading.html','hospital/reading.html','thanks.html'];
       return allowed.indexOf(relative)>=0?relative+url.search+url.hash:null;
     }catch(e){return null;}
   },
@@ -888,18 +920,19 @@ var RuntimeUI = {
     var box=this.dialog(image.alt||'查看图片');box.classList.add('runtime-photo');
     var controls=document.createElement('div'),stage=document.createElement('div'),large=image.cloneNode();
     controls.className='runtime-zoom-controls';stage.className='runtime-image-viewport';stage.tabIndex=0;stage.setAttribute('aria-label','图片查看区域，可滚动查看放大的图片');large.removeAttribute('style');large.loading='eager';stage.appendChild(large);box.appendChild(controls);box.appendChild(stage);
-    var zoom=1,fit=0,status=document.createElement('span');status.className='runtime-status';status.setAttribute('aria-live','polite');
+    var zoom=1,fit=0,status=document.createElement('span');status.className='runtime-status';status.setAttribute('aria-live','polite');status.textContent='图片加载中…';
     function button(label,fn){var b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=fn;controls.appendChild(b);return b;}
     var less=button('缩小',function(){zoom=Math.max(1,zoom/1.5);render();});
     var more=button('放大',function(){zoom=Math.min(5,zoom*1.5);render();});
     button('适合窗口',function(){zoom=1;fit=0;render();stage.scrollTop=stage.scrollLeft=0;});controls.appendChild(status);
+    var retry=button('重新加载',function(){retry.hidden=true;status.textContent='图片加载中…';large.src=image.currentSrc||image.src;});retry.hidden=true;less.disabled=more.disabled=true;
     function render(){
-      if(!large.naturalWidth)return;
+      if(!large.naturalWidth)return;retry.hidden=true;
       if(!fit)fit=Math.min(stage.clientWidth,large.naturalWidth,innerHeight*0.57*large.naturalWidth/large.naturalHeight);
       large.style.width=Math.round(fit*zoom)+'px';large.style.maxWidth='none';large.style.maxHeight='none';
       status.textContent=Math.round(zoom*100)+'%';less.disabled=zoom<=1;more.disabled=zoom>=5;
     }
-    large.onload=render;if(large.complete)render();
+    large.onload=render;large.onerror=function(){status.textContent='图片未能加载，请重试。';less.disabled=more.disabled=true;retry.hidden=false;};if(large.complete){if(large.naturalWidth)render();else large.onerror();}
     function resized(){fit=0;render();}
     window.addEventListener('resize',resized);this.shade.cleanups.push(function(){window.removeEventListener('resize',resized);});
     stage.addEventListener('keydown',function(e){if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.key==='+'||e.key==='='){e.preventDefault();more.click();}else if(e.key==='-'){e.preventDefault();less.click();}else if(e.key==='0'){e.preventDefault();zoom=1;render();}});
@@ -954,3 +987,84 @@ var RuntimeUI = {
   }
 };
 document.addEventListener('DOMContentLoaded',function(){RuntimeUI.boot();});
+
+/* Voluntary support follows xu-yuan's 1-yuan QR flow. The story never checks it.
+   The local flag records the player's acknowledgement; it is not a payment receipt. */
+var SummerSupport = {
+  SEEN_KEY:'shengxia_support_auto_seen_v1', SUPPORTED_KEY:'shengxia_support_marked_v1',
+  timer:null, activeMs:0, lastTick:0,
+  cookieGet:function(key){
+    try{var prefix=key+'=',items=document.cookie.split(';');for(var i=0;i<items.length;i++){var v=items[i].trim();if(v.indexOf(prefix)===0)return v.slice(prefix.length);}}catch(e){}
+    return '';
+  },
+  cookieSet:function(key){
+    try{if(location.protocol==='file:')return;var path=new URL(rootPrefix()||'./',location.href).pathname;document.cookie=key+'=1;max-age=31536000;path='+path+';SameSite=Lax';}catch(e){}
+  },
+  read:function(key){return GameStorage.get(key,'0')==='1'||this.cookieGet(key)==='1';},
+  remember:function(key){
+    GameStorage.set(key,'1');this.cookieSet(key);
+    try{if(localStorage.getItem(key)==='1')return true;}catch(e){}
+    try{if(sessionStorage.getItem(key)==='1')return true;}catch(e){}
+    return this.cookieGet(key)==='1';
+  },
+  sync:function(){
+    var marked=this.read(this.SUPPORTED_KEY),button=document.getElementById('summer-support-button');
+    if(button){button.dataset.supported=String(marked);button.textContent=marked?'谢谢支持':'支持作者';button.setAttribute('aria-label',marked?'查看作者支持说明':'支持作者 1 元');}
+    var state=document.getElementById('thanks-support-state');if(state)state.textContent=marked?'已记下你的支持，谢谢你。':'';
+  },
+  stop:function(){if(this.timer)clearInterval(this.timer);this.timer=null;},
+  eligible:function(){
+    if(this.read(this.SEEN_KEY)||this.read(this.SUPPORTED_KEY)||GameStorage.get(GameState.KEY,'0')==='1')return 0;
+    if(/\/forum\/thread\.html$/.test(location.pathname)&&new URLSearchParams(location.search).get('p')==='2')return 8000;
+    if(/\/chat\/index\.html$/.test(location.pathname))return 12000;
+    return 0;
+  },
+  tick:function(){
+    var now=Date.now(),delta=Math.min(1000,Math.max(0,now-this.lastTick));this.lastTick=now;
+    var delay=this.eligible();if(!delay){this.stop();return;}
+    var focused=document.activeElement;
+    if(document.hidden||!document.hasFocus()||RuntimeUI.shade||document.querySelector('.popup-win')||(focused&&/^(INPUT|TEXTAREA|SELECT)$/.test(focused.tagName)))return;
+    this.activeMs+=delta;if(this.activeMs<delay)return;
+    this.stop();
+    // If neither storage nor cookies can remember the visit, keep the manual
+    // entry and skip automatic prompting rather than repeating it on reload.
+    if(this.remember(this.SEEN_KEY))this.show(null,true);
+  },
+  start:function(){var self=this;if(this.timer||!this.eligible())return;this.lastTick=Date.now();this.timer=setInterval(function(){self.tick();},500);},
+  show:function(trigger,automatic){
+    this.remember(this.SEEN_KEY);this.stop();
+    var self=this,box=RuntimeUI.dialog('支持《盛夏往事》'),shade=RuntimeUI.shade;
+    box.classList.add('summer-support');
+    var byline=document.createElement('p');byline.className='support-byline';byline.textContent='abc 工作室 · 自愿支持作者 1 元';box.appendChild(byline);
+    var body=document.createElement('div');body.className='support-body';
+    var code=document.createElement('figure');code.className='support-code';
+    var image=document.createElement('img');image.src=rootPrefix()+'images/support/paycode.png';image.alt='abc工作室支付宝1元收款码';image.width=940;image.height=1128;
+    var caption=document.createElement('figcaption');caption.textContent='支付宝扫码支持 1 元';code.appendChild(image);code.appendChild(caption);
+    var save=document.createElement('a');save.href=image.src;save.download='shengxia-support.png';save.textContent='保存收款码';code.appendChild(save);
+    var open=document.createElement('a');open.href=image.src;open.target='_blank';open.rel='noopener';open.textContent='打开原图';code.appendChild(document.createTextNode('　'));code.appendChild(open);
+    var error=document.createElement('p');error.className='support-load-error';error.hidden=true;error.textContent='收款码没有加载出来，可以重试或打开原图。';
+    var retry=document.createElement('button');retry.type='button';retry.textContent='重新加载收款码';retry.className='support-retry';retry.hidden=true;retry.onclick=function(){image.src=rootPrefix()+'images/support/paycode.png';};
+    image.onerror=function(){error.hidden=false;retry.hidden=false;};image.onload=function(){error.hidden=true;retry.hidden=true;};code.appendChild(error);code.appendChild(retry);
+    var copy=document.createElement('div');copy.className='support-copy';
+    ['你好，我是 abc，《盛夏往事》的作者。谢谢你翻到这里。',
+     '做这部作品时，我很在意那些看上去没什么用的闲聊。几个孩子说着说着就跑了题，过两天又接着闹，我希望读起来能像你以前逛过的论坛。',
+     '如果你喜欢这些画和回帖，也愿意留一块钱支持我继续做下去，我会很开心。'].forEach(function(text){var p=document.createElement('p');p.textContent=text;copy.appendChild(p);});
+    body.appendChild(code);body.appendChild(copy);box.appendChild(body);
+    var choice=document.createElement('p');choice.className='support-choice';choice.textContent='这是给作者的自愿打赏。关闭后可以继续完整游玩，后面的内容都能看到。';box.appendChild(choice);
+    var actions=document.createElement('div');actions.className='support-actions';var done=document.createElement('button'),later=document.createElement('button');done.type=later.type='button';done.className='support-confirm';done.textContent=this.read(this.SUPPORTED_KEY)?'已标记支持':'我已支持';done.disabled=this.read(this.SUPPORTED_KEY);later.textContent='继续浏览';
+    done.onclick=function(){self.remember(self.SUPPORTED_KEY);self.sync();shade.close();var notice=document.createElement('p');notice.className='support-response';notice.setAttribute('role','status');notice.textContent='谢谢你的支持，接着看吧。';var host=document.querySelector('.author-support,.pager,.back-link')||document.getElementById('footer-box');if(host){var old=host.querySelector('.support-response');if(old)old.remove();host.appendChild(notice);}};
+    later.onclick=function(){shade.close();};actions.appendChild(done);actions.appendChild(later);box.appendChild(actions);
+    var marked=document.createElement('p');marked.className='reading-meta';marked.textContent=this.read(this.SUPPORTED_KEY)?'你已经标记支持过了，不必重复付款。':'扫码付款后，可点“我已支持”做个标记。';box.appendChild(marked);
+  },
+  init:function(){
+    var css=document.createElement('link');css.rel='stylesheet';css.href=rootPrefix()+'css/support.css';document.head.appendChild(css);
+    var button=document.createElement('button');button.id='summer-support-button';button.type='button';button.className='runtime-tool';button.textContent='支持作者';var self=this;button.onclick=function(){self.show(button);};document.body.appendChild(button);
+    this.sync();this.start();
+    window.addEventListener('storage',function(e){if(e.key===self.SEEN_KEY||e.key===self.SUPPORTED_KEY){self.sync();if(!self.eligible())self.stop();}});
+    window.addEventListener('pagehide',function(){self.stop();});window.addEventListener('pageshow',function(){self.sync();self.start();});
+    if(document.body.classList.contains('creator-thanks')){
+      var paper=document.getElementById('return-paper');if(paper&&GameState.is2013())paper.textContent='再翻翻2013年的报纸';
+    }
+  }
+};
+document.addEventListener('DOMContentLoaded',function(){SummerSupport.init();});

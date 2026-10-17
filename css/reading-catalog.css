@@ -1,0 +1,22 @@
+
+  body { background: #d7dbd2; }
+  .archive-top { background: #4a5a4a; color: #eef2e8; padding: 10px 20px; }
+  .archive-top h1 { font-size: 22px; display: inline-block; margin-right: 26px; }
+  .archive-top nav a { color: #dfe6d6; margin-right: 18px; font-size: 13px; }
+  .archive-top nav a:hover { color: #fff; }
+  .crumb { background: #e9ebde; border-bottom: 1px solid #c2c7b4; padding: 6px 20px; font-size: 12px; color: #555; }
+  .panel { background: #f8f8f2; border: 1px solid #b8bca8; margin: 18px auto; padding: 18px 22px; }
+  .dir-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dir-table th { background: #e4e6d6; border: 1px solid #c0c3b0; padding: 6px 8px; text-align: left; }
+  .dir-table td { border: 1px solid #d4d6c6; padding: 5px 8px; }
+  .dir-table tr:nth-child(even) td { background: #f3f4ec; }
+  .dir-table .fname { font-family: "Courier New", monospace; }
+  .dir-table a { color: #2a4a8a; }
+  tr.summer td { background: #d9d9d9 !important; color: #666; }
+  tr.summer .fname { color: #888; }
+  tr.summer .fname a { color: #777; }
+  tr.summer .fname a:hover { color: #c00; }
+  .badge { font-size: 11px; color: #8a6d2a; background: #f3ecc9; border: 1px solid #d8c98a; padding: 0 5px; margin-left: 6px; border-radius: 2px; }
+  .note { color: #8a6d2a; font-size: 12px; }
+  .disclaim { font-size: 12px; color: #666; margin-top: 16px; line-height: 2; }
+  .search-box { float: right; margin-top: 6px; }

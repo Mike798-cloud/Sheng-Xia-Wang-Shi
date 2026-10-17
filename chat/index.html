@@ -105,7 +105,7 @@
 <div class="qq-shell">
   <div class="qq-titlebar">
     讯聊 Web 版 V2.0 —— 欢迎回来，栀栀
-    <span class="win-btns"><span title="最小化">_</span><span title="关闭" onclick="alert('讯聊网页版将在关闭页面后断开连接。')">×</span></span>
+    <span class="win-btns"><button type="button" title="最小化" aria-label="最小化讯聊" onclick="hideChat(false)">_</button><button type="button" title="关闭" aria-label="关闭讯聊窗口" onclick="hideChat(true)">×</button></span>
   </div>
   <div style="display:table;width:100%;">
     <!-- 左侧分组 -->
@@ -219,7 +219,7 @@
           <div class="sys-line">以下消息发送于 2013-08-26</div>
           <div class="msg">
             <div class="who">周子浩 2013-08-26 22:40</div>
-            <span class="failed-mark" title="重发" onclick="alert('对方账号已于2012年8月注销。')">！</span><span class="bubble">栀栀，一中初中部的名单出来了，有我。你以前说我到哪都要喊你一声，我喊了。蓝蜡笔还在，没拿去画黑板报。</span>
+            <span class="failed-mark" title="重发" onclick="chatNotice('对方账号已于2012年8月注销，消息无法重发。')">！</span><span class="bubble">栀栀，一中初中部的名单出来了，有我。你以前说我到哪都要喊你一声，我喊了。蓝蜡笔还在，没拿去画黑板报。</span>
             <div class="failed-note">消息发送失败：对方账号不存在或已注销。</div>
           </div>
           <div class="sys-line">您的好友已离线</div>
@@ -236,6 +236,7 @@
   </div>
 </div>
 
+<div id="chat-task" class="chat-task" hidden><button type="button" onclick="restoreChatWindow()">讯聊 · 恢复窗口</button><span id="chat-window-state" role="status"></span></div>
 <div id="footer-box"></div>
 <script src="../js/common.js"></script>
 <script>
@@ -264,8 +265,25 @@ function insertEmo(e) {
   ta.focus();
 }
 function sendMsg() {
-  alert('您的好友已离线。');
+  chatNotice('好友已离线，本条消息未发送。输入内容仍保留在这里。');
 }
+var chatWindowScroll=0,chatWindowFocus=null;
+function chatNotice(text){
+ var panel=document.querySelector('.chat-panel:not(.hidden-panel)'),host=panel.querySelector('.chat-input-bar')||panel;
+ var old=panel.querySelector('.chat-notice');if(old)old.remove();
+ var n=document.createElement('div');n.className='chat-notice';n.setAttribute('role','status');n.textContent=text;host.appendChild(n);
+}
+function hideChat(closed){
+ var shell=document.querySelector('.qq-shell'),log=shell.querySelector('.chat-panel:not(.hidden-panel) .chat-log');
+ RuntimeUI.saveChat();chatWindowScroll=log?log.scrollTop:0;chatWindowFocus=document.activeElement;shell.hidden=true;
+ var task=document.getElementById('chat-task');task.hidden=false;document.getElementById('chat-window-state').textContent=closed?'窗口已关闭，点击恢复可继续查看。':'窗口已最小化。';task.querySelector('button').focus();
+}
+function restoreChatWindow(){
+ var shell=document.querySelector('.qq-shell');shell.hidden=false;document.getElementById('chat-task').hidden=true;
+ requestAnimationFrame(function(){var log=shell.querySelector('.chat-panel:not(.hidden-panel) .chat-log');if(log)log.scrollTop=chatWindowScroll;if(chatWindowFocus&&document.contains(chatWindowFocus))chatWindowFocus.focus();});
+}
+document.addEventListener('keydown',function(e){if(!e.isComposing&&e.altKey&&e.key.toLowerCase()==='s'&&e.target.tagName==='TEXTAREA'){e.preventDefault();sendMsg();}});
+
 </script>
 </body>
 </html>

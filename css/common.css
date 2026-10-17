@@ -396,3 +396,20 @@ html:not(.runtime-motion) .ad-blink { animation:none!important;opacity:1!importa
 /* Keep fixed-width album and hospital pages inside intermediate tablet widths. */
 .album-page,.hosp-body{max-width:96%}
 .archive-unavailable:focus-visible{outline:3px solid #215ca5;outline-offset:2px}
+
+/* Local service feedback belongs to the current site, without browser alerts. */
+[hidden]{display:none!important}.site-message{display:flex;align-items:flex-start;gap:12px;justify-content:space-between;clear:both;background:#f4f8ed;border:1px solid #b9cbaa;color:#43533a;padding:8px 12px;margin:10px 0;font-size:12px;line-height:1.9;overflow-wrap:anywhere;text-align:left}.site-message button{flex:0 0 auto;font:inherit;color:inherit;border:0;border-bottom:1px dotted currentColor;background:transparent;cursor:pointer;padding:0 2px}.site-message-pet{background:#faf4ea;border-color:#d9c6a5;color:#755433}.site-message-news{background:#f8f1df;border-color:#c9bd97;color:#655336}.site-message-hospital,.site-message-chat{background:#eef5fc;border-color:#b9c8dc;color:#154f85}.site-message-weiyu{background:#fff6eb;border-color:#ebcbaa;color:#855523}.site-message-search{background:#f5f5f5;border-color:#ccc;color:#555}.site-message-catalog{background:#eef0e6;border-color:#b8bca8;color:#4a5a4a}.footer-note{font-size:11px;color:#888}.chat-notice{font-size:12px;padding:5px 8px;background:#fff8e4;border-top:1px solid #e5d5a0;color:#7b591c;line-height:1.7;clear:both}.win-btns button{display:inline-block;width:22px;height:21px;line-height:16px;text-align:center;margin-left:4px;background:#d9efff;border:1px solid #76a5c4;color:#24628d;padding:0;cursor:pointer;font:14px Arial}.chat-task{width:90%;max-width:780px;margin:26px auto 12px;background:#d9ecfa;border:1px solid #8db2cc;padding:12px;font-size:12px}.chat-task button{font:inherit;margin-right:12px;padding:5px 10px;color:#164f7c;background:#f3faff;border:1px solid #8db2cc;cursor:pointer}.wy-collection{padding:8px 12px;background:#fff9ef;border-bottom:1px solid #f0d5bb;font-size:12px;color:#866242;line-height:2}.wy-collection label{display:inline-block;margin-left:12px}.wy-collection select{font:inherit;border:1px solid #d6b997;background:#fff;color:#6e4d30}.archive-unavailable:focus-visible{outline:3px solid #215ca5;outline-offset:2px}
+a:visited{color:#655187}.tb-header a:visited,.pet-header a:visited,.mast-nav a:visited,.hosp-nav a:visited,.archive-top a:visited{color:inherit}.mast-nav a:visited,.native-header-nav a:visited{color:#fff}.post-body,.thread-title h1,.site-footer{overflow-wrap:anywhere}.thread-meta:after{content:'';display:block;clear:both}
+@media(max-width:768px){.site-message{gap:8px;padding:8px}.chat-task span{display:block;margin-top:6px}.win-btns button{width:27px;height:25px}.wy-collection label{margin-left:6px}.thread-meta>span[style*='float']{float:none!important;display:block;margin-top:5px}}
+@media(max-width:768px){
+  body{padding-bottom:62px}
+  .floor .u-col{display:grid!important;grid-template-columns:44px minmax(0,1fr);column-gap:10px;text-align:left;align-content:start}
+  .floor .avatar{grid-row:1 / span 3;width:42px;height:42px;line-height:40px;font-size:22px;margin:0}
+  .floor .avatar.anon{font-size:10px;line-height:13px;padding-top:7px}
+  .floor .u-name,.floor .u-level,.floor .u-stat{grid-column:2}
+  .floor .sig{grid-column:1 / -1;margin-top:8px;padding-top:4px;font-size:11px;line-height:1.9}
+  .floor .sig br{display:none}.floor .sig a{display:inline-block;margin-left:8px}
+  .hosp-nav{white-space:normal!important;display:flex;flex-wrap:wrap}
+  .hosp-nav a{padding:8px 10px}
+  body:has(textarea:focus) .runtime-tool,body:has(textarea:focus) #speaker-btn{visibility:hidden}
+}
